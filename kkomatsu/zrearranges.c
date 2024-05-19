@@ -8,18 +8,15 @@ typedef struct s_data
 } t_data;
 
 
-// void	pri(char **ss)
-// {
-// 	int	i;
-
-// 	while (i < 7)
-// 	{
-// 		printf("---%s\n", *ss);
-// 		ss++;
-// 		i++;
-// 	}
-// 	printf("|||||||||||||||||\n");
-// }
+void	pri(char **ss)
+{
+	while (*ss)
+	{
+		printf("---%s\n", *ss);
+		ss++;
+	}
+	printf("|||||||||||||||||\n");
+}
 
 static int	count_sankaku(char **line, int len)
 {
@@ -52,13 +49,13 @@ static void logic_component(char **dest, char **src, t_data *data, int num)
 		if (!num && (!ft_strcmp(src[k], "<") || !ft_strcmp(src[k], "<<")))
 		{
 			dest[i + data->len - (data->sankaku_count * 2) - data->is_ass] = src[k];
-			dest[i + data->len - (data->sankaku_count * 2) + 1 - data->is_ass] = src[k + 1];
+			dest[i + data->len - (data->sankaku_count * 2) - data->is_ass + 1] = src[k + 1];
 			data->sankaku_count--;
 		}
 		if (num && (!ft_strcmp(src[k], ">") || !ft_strcmp(src[k], ">>")))
 		{
 			dest[i + data->len - (data->sankaku_count * 2) - data->is_ass] = src[k];
-			dest[i + data->len - (data->sankaku_count * 2) + 1 - data->is_ass] = src[k + 1];
+			dest[i + data->len - (data->sankaku_count * 2) - data->is_ass + 1] = src[k + 1];
 			data->sankaku_count--;
 		}
 		k++;
@@ -83,7 +80,7 @@ static void	logic(char **dest, char **src, int len, int is_ass)
 	logic_component(dest, src, &data, 0);
 	logic_component(dest, src, &data, 1);
 	k = 0;
-	while (src[k] && k != len - 1 + is_ass)
+	while (src[k] && k < len - 1 - is_ass)
 	{
 		if (is_sankaku(src[k]))
 			k += 2;

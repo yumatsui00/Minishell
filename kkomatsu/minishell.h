@@ -6,7 +6,7 @@
 /*   By: komatsukotarou <komatsukotarou@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:26:43 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/19 23:58:10 by komatsukota      ###   ########.fr       */
+/*   Updated: 2024/05/20 00:34:33 by komatsukota      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char				*get_next_line(int fd);
 void expan_env_var_main(char **line, char **ep);
 int	is_sankaku(char *item);
 
-
+char	**union_friends(char **line);
 char	**rearranges_main(char **line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: komatsukotarou <komatsukotarou@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/19 23:58:14 by komatsukota      ###   ########.fr       */
+/*   Updated: 2024/05/20 00:52:26 by komatsukota      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,64 +120,6 @@ int	find_syntax_error(char **line)
 	return (0);
 }
 
-int count_union(char **line)
-{
-	int count;
-	int is;
-
-	count = 0;
-	is = 0;
-	while (*line)
-	{
-		while (*line && ft_strcmp(*line, "|") && ft_strcmp(*line, ";"))
-		{
-			line++;
-			is = 1;
-			if (is_sankaku(*line))
-				break ;
-		}
-		count++;
-		if (!is)
-			line++;
-		is = 0;
-	}
-	return count;
-}
-
-char	**union_friends(char **line)
-{
-	char	**ret;
-	char	*stk;
-	int		i;
-	int		is;
-
-	ret = (char **)malloc(sizeof(char *) * (count_union(line) + 1));
-	i = 0;
-	is = 0;
-	while (*line)
-	{
-		stk = NULL;
-		while (*line && ft_strcmp(*line, "|") && ft_strcmp(*line, ";"))
-		{
-			stk = ft_strjoin(stk, *line);
-			stk = ft_strjoin(stk, " ");
-			line++;
-			is = 1;
-			if (is_sankaku(*line))
-				break ;
-		}
-		if (!is)
-			stk = ft_strjoin(stk, *line);
-		ret[i] = stk;
-		if (!is)
-			line++;
-		i++;
-		is = 0;
-	}
-	*line = NULL;
-	return (ret);
-}
-
 // 1.split: ft_split_for_lexer関数
 // 2.クオートが奇数だったら受付、偶数だったら次に進む:
 // 3.クオートを消す
@@ -211,11 +153,10 @@ char	**lexer(char *before_line, char **ep)
 	if (find_syntax_error(line))
 		return (NULL);
 
-	//irekae
+	//入れ替え
 	line = rearranges_main(line);
-
 	//合体
-	// line = union_friends(line);
+	line = union_friends(line);
 	//連結リストへ代入
 	printf("完璧じゃ！！\n");
 	return (line);
