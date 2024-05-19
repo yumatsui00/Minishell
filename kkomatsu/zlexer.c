@@ -6,7 +6,7 @@
 /*   By: komatsukotarou <komatsukotarou@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/19 16:26:58 by komatsukota      ###   ########.fr       */
+/*   Updated: 2024/05/19 23:58:14 by komatsukota      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,29 @@ int	find_syntax_error(char **line)
 	return (0);
 }
 
+int count_union(char **line)
+{
+	int count;
+	int is;
 
+	count = 0;
+	is = 0;
+	while (*line)
+	{
+		while (*line && ft_strcmp(*line, "|") && ft_strcmp(*line, ";"))
+		{
+			line++;
+			is = 1;
+			if (is_sankaku(*line))
+				break ;
+		}
+		count++;
+		if (!is)
+			line++;
+		is = 0;
+	}
+	return count;
+}
 
 char	**union_friends(char **line)
 {
@@ -129,7 +151,7 @@ char	**union_friends(char **line)
 	int		i;
 	int		is;
 
-	ret = (char **)malloc(sizeof(char *) * 10);
+	ret = (char **)malloc(sizeof(char *) * (count_union(line) + 1));
 	i = 0;
 	is = 0;
 	while (*line)
@@ -147,10 +169,9 @@ char	**union_friends(char **line)
 		if (!is)
 			stk = ft_strjoin(stk, *line);
 		ret[i] = stk;
-		printf("ret = %s\n", ret[i]);
-		i++;
 		if (!is)
 			line++;
+		i++;
 		is = 0;
 	}
 	*line = NULL;
@@ -172,8 +193,8 @@ char	**union_friends(char **line)
 
 syntax error: unexpected end of file
 */
-// 5.仲間で合体
-// 6.後は入れ替えます！！
+// 5.いれかえ
+// 6.仲間で合体
 // 7.コマンドなかったら弾く
 char	**lexer(char *before_line, char **ep)
 {
@@ -189,7 +210,12 @@ char	**lexer(char *before_line, char **ep)
 	}
 	if (find_syntax_error(line))
 		return (NULL);
-	line = union_friends(line);
+
+	//irekae
+	line = rearranges_main(line);
+
+	//合体
+	// line = union_friends(line);
 	//連結リストへ代入
 	printf("完璧じゃ！！\n");
 	return (line);
