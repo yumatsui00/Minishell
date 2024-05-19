@@ -6,13 +6,13 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 13:36:15 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:03:34 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int	check_echo(t_cmd *mini)
+int	check_env(t_cmd *mini)
 {
 	if (mini->input[3] == ' ' || mini->input[3] == '\0')
 	{

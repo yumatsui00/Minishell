@@ -6,13 +6,13 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 13:36:58 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:03:45 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int	check_cd(t_cmd *mini)
+int	check_export(t_cmd *mini)
 {
 	if (mini->input[6] == ' ' || mini->input[6] == '\0')
 	{

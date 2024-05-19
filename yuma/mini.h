@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:47:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 13:27:50 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:42:19 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define COM 0 //(+opt)
 # define RECI 1
 # define SEND 2
-# define HERE 3
-# define POST 4
+# define HERE 4
+# define POST 3
 # define PIPE 5
 # define SEMQ 6
 # define END 7
@@ -55,11 +55,20 @@ typedef struct s_cmd
 
 typedef struct s_nums
 {
-	int		i; //heredoc_index
-	t_cmd	*first;
-	t_cmd	*end;
-	int		end_status;
-	int		pipe_num;
+	int				i; //heredoc_index
+	t_cmd			*first;
+	t_cmd			*end;
+	int				end_status;
+	int				pipe_num;
+	int				*pipe;
+	pid_t			pid;
+	int				*infds;
+	int				*outfds;
+	int				infds_i;
+	int				outfds_i;
+	int				infile;
+	int				outfile;
+	struct s_nums	*next; //after SEMQ
 }	t_nums;
 
 //1
@@ -83,4 +92,15 @@ char	**ft_split(char *s, char c);
 //9
 void	t_cmd_free(t_cmd *mini);
 int	free_utils(char *a, char **b);
+int	allfree_unlink(t_cmd *mini, t_nums *nums);
+
+
+//builtins
+int	check_cd(t_cmd *mini);
+int	check_echo(t_cmd *mini);
+int	check_env(t_cmd *mini);
+int	check_exit(t_cmd *mini);
+int	check_export(t_cmd *mini);
+int	check_pwd(t_cmd *mini);
+int	check_unset(t_cmd *mini);
 #endif

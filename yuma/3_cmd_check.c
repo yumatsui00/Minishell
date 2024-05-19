@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:15:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 13:25:01 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:02:44 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_bin_or_builtin(t_cmd *cpy)
 	int	flag;
 
 	if (ft_strncmp(cpy->input, "echo", 4) == 0)
-		flag = chekc_echo(cpy);
+		flag = check_echo(cpy);
 	else if (ft_strncmp(cpy->input, "cd", 2) == 0)
 		flag = check_cd(cpy);
 	else if (ft_strncmp(cpy->input, "pwd", 3) == 0)

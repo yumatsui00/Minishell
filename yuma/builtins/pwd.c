@@ -6,13 +6,13 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 13:37:11 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:03:52 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int	check_cd(t_cmd *mini)
+int	check_pwd(t_cmd *mini)
 {
 	if (mini->input[3] == ' ' || mini->input[3] == '\0')
 	{

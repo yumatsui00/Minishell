@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 22:48:02 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/17 23:21:43 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:01:47 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	initialize_nums(t_cmd *mini, t_nums *nums)
 {
 	t_cmd	*cpy;
 
+	nums->i = -1;
 	nums->first = mini;
 	cpy = mini;
 	nums->pipe_num = 0;

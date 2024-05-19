@@ -45,3 +45,17 @@
 // 	while (*str)
 // 		printf("str = %s\n", *str++);
 // }
+
+int main(int argc, char **argv, char **envp)
+{
+	int	fd;
+	char *s = "infile";
+
+	fd = open("hello", O_RDONLY);
+	write(2, "minishell: ", 11);
+	write(2, s, strlen(s));
+	perror(" ");
+}
+
+
+// minishell : filename:
