@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-static int count_union(char **line)
+static int	count_union(char **line)
 {
-	int count;
-	int is;
+	int	count;
+	int	is;
 
 	count = 0;
 	is = 0;
@@ -21,19 +21,13 @@ static int count_union(char **line)
 			line++;
 		is = 0;
 	}
-	return count;
+	return (count);
 }
 
-char	**union_friends(char **line)
+static void	logic(char **line, char **ret, int i, int is)
 {
-	char	**ret;
 	char	*stk;
-	int		i;
-	int		is;
 
-	ret = (char **)malloc(sizeof(char *) * (count_union(line) + 1));
-	i = 0;
-	is = 0;
 	while (*line)
 	{
 		stk = NULL;
@@ -55,5 +49,18 @@ char	**union_friends(char **line)
 		is = 0;
 	}
 	*line = NULL;
+}
+
+char	**union_friends(char **line)
+{
+	char	**ret;
+	char	*stk;
+	int		i;
+	int		is;
+
+	ret = (char **)malloc(sizeof(char *) * (count_union(line) + 1));
+	i = 0;
+	is = 0;
+	logic(line, ret, i, is);
 	return (ret);
 }
