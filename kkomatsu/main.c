@@ -1,34 +1,36 @@
 #include "minishell.h"
+// #include <libc.h>
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q a.out");
+// }
+
+void signal_handler(int signum)
+{
+    /* シグナルをキャッチしたときに実行したい内容 */
+    write(1, "exit\n", 5);
+    exit(0);
+}
 
 void	minishell(char **ep)
 {
 	char	*line;
-	int		ret;
+	t_cmd	**cmd;
+	int		is_exit;
 
-	ret = 0;
-	while (1)
+	is_exit = 0;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	while (!is_exit)
 	{
-		line = NULL;
-		if (signal(SIGINT, sig_int_input) == SIG_ERR)
-		{
-			ft_putstr_fd(strerror(errno), STDERR);
-			exit(1);
-		}
-		if (signal(SIGQUIT, sig_quit_input) == SIG_ERR)
-		{
-			ft_putstr_fd(strerror(errno), STDERR);
-			exit(1);
-		}
 		line = readline(MINISHELL);
-		// add_history(line);
-		if (!line)
-		{
-			ft_putstr_fd("\b\bexit\n", STDERR);
-			exit(ret);
-		}
-		//ここに実行部が来ます！！！
-		ft_putstr_fd(line, STDERR);
+		if (*line)
+			add_history(line);
+		cmd = lexer(line, ep);
 	}
+	// free(cmd);
+	write(1, "exit\n", 5);
 }
 
 int	main(int ac, char **av, char **ep)

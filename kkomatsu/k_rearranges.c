@@ -12,7 +12,7 @@ void	pri(char **ss)
 {
 	int	i;
 
-	while (i < 8)
+	while (*ss)
 	{
 		printf("---%s\n", *ss);
 		ss++;
@@ -103,7 +103,6 @@ char	**rearranges_main(char **line)
 	char	**stk;
 	int		len;
 
-
 	len = 0;
 	while (line[len])
 		len++;
@@ -122,5 +121,6 @@ char	**rearranges_main(char **line)
 			logic(ret, stk, line - stk, 0);
 	}
 	*line = NULL;
+	// free_double_ptr(line);
 	return (ret);
 }

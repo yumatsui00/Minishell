@@ -9,10 +9,11 @@ void debug_cmd(t_cmd **cmd_po)
     i = 0;
     while (cmd->next)
     {
-        cmd = cmd->next;
         printf("%d: %s %d\n", i, cmd->input, cmd->status);
+        cmd = cmd->next;
         i++;
     }
+    printf("%d: %s %d\n", i, cmd->input, cmd->status);
     return;   
 }
 
@@ -34,11 +35,11 @@ static int select_status(char *input)
         return COMM;
 }
 
-static t_cmd *ft_cmdnew(void *input)
+static t_cmd *ft_cmdnew(char *input)
 {
     t_cmd *ret;
 
-    ret = malloc(sizeof(t_cmd));
+    ret = (t_cmd *)malloc(sizeof(t_cmd));
     if (!ret)
         return (NULL);
     ret->input = input;
@@ -64,16 +65,17 @@ static void ft_cmdadd_back(t_cmd **lst, t_cmd *new)
 
 t_cmd **make_cmd_line(char **line)
 {
-    t_cmd **ret_ptr;
     t_cmd *new;
-
+    t_cmd **ret_ptr = (t_cmd **)malloc(sizeof(t_cmd *));
+    if (!ret_ptr)
+        return NULL;
+    *ret_ptr = ft_cmdnew(*line);
+    line++;
     while (*line && line)
     {
         new = ft_cmdnew(*line);
-        // printf("new:  %s %d\n", new->input, new->status);
         ft_cmdadd_back(ret_ptr, new);
         line++;
     }
-    ft_cmdadd_back(ret_ptr, NULL);
     return ret_ptr;
 }

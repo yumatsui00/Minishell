@@ -75,8 +75,10 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 
 int	ft_strcmp(char *s1, char *s2);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
+char	*ft_strndup(const char *s, size_t n);
 
 
 char **ft_split_for_lexer(char *line);
+char *ft_strjoin_free(char *s1, const char *s2);
 
 #endif

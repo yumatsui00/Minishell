@@ -52,19 +52,23 @@ typedef struct s_cmd
 }					t_cmd;
 
 void				minishell(char **envp);
-void				sig_int_input(void);
-void				sig_quit_input(void);
+
+void				sig_int_input(int signum);
+void				sig_quit_input(int signum);
 
 char				*get_next_line(int fd);
-
 
 void expan_env_var_main(char **line, char **ep);
 int	is_sankaku(char *item);
 
-
+t_cmd	**lexer(char *before_line, char **ep);
 char	**rearranges_main(char **line);
 t_cmd **make_cmd_line(char **line);
 
 void debug_cmd(t_cmd **cmd_po);
+void free_cmd(t_cmd **cmd);
+void free_double_ptr(char **s);
 
+
+void	pri(char **ss);
 #endif

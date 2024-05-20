@@ -149,11 +149,11 @@ char	**union_friends(char **line)
 	char	**ret;
 	char	*stk;
 	int		i;
-	int		is;
+	int		is_ass;
 
 	ret = (char **)malloc(sizeof(char *) * (count_union(line) + 1));
 	i = 0;
-	is = 0;
+	is_ass = 0;
 	while (*line)
 	{
 		stk = NULL;
@@ -162,19 +162,21 @@ char	**union_friends(char **line)
 			stk = ft_strjoin(stk, *line);
 			stk = ft_strjoin(stk, " ");
 			line++;
-			is = 1;
+			is_ass = 1;
 			if (is_sankaku(*line))
 				break ;
 		}
-		if (!is)
-			stk = ft_strjoin(stk, *line);
+		if (!is_ass)
+			stk = ft_strjoin_free(stk, *line);
 		ret[i] = stk;
-		if (!is)
+		if (!is_ass)
 			line++;
 		i++;
-		is = 0;
+		is_ass = 0;
 	}
-	*line = NULL;
+	ret[i] = NULL;
+	// free(stk);
+	// free_double_ptr(line);
 	return (ret);
 }
 
@@ -211,24 +213,25 @@ t_cmd	**lexer(char *before_line, char **ep)
 	}
 	if (find_syntax_error(line))
 		return (NULL);
-
 	line = rearranges_main(line);
 	line = union_friends(line);
 	ret = make_cmd_line(line);
+	// printf("-------------\n");
+	debug_cmd(ret);
 	return (ret);
 }
 
-int	main(int ac, char **av, char **ep)
-{
-	t_cmd	**ret;
+// int	main(int ac, char **av, char **ep)
+// {
+// 	t_cmd	**ret;
 
-	ret = lexer(av[1], ep);
-	printf("完璧じゃ！！\n");
-	debug_cmd(ret);
-	// if (ret)
-	// {
-	// 	for (int i = 0; ret[i] != NULL; i++)
-	// 		printf("ret[%d]: %s\n", i, ret[i]);
-	// }
-	return (0);
-}
+// 	ret = lexer(av[1], ep);
+// 	printf("完璧じゃ！！\n");
+// 	debug_cmd(ret);
+// 	// if (ret)
+// 	// {
+// 	// 	for (int i = 0; ret[i] != NULL; i++)
+// 	// 		printf("ret[%d]: %s\n", i, ret[i]);
+// 	// }
+// 	return (0);
+// }
