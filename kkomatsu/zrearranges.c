@@ -8,18 +8,18 @@ typedef struct s_data
 } t_data;
 
 
-// void	pri(char **ss)
-// {
-// 	int	i;
+void	pri(char **ss)
+{
+	int	i;
 
-// 	while (i < 7)
-// 	{
-// 		printf("---%s\n", *ss);
-// 		ss++;
-// 		i++;
-// 	}
-// 	printf("|||||||||||||||||\n");
-// }
+	while (i < 8)
+	{
+		printf("---%s\n", *ss);
+		ss++;
+		i++;
+	}
+	printf("|||||||||||||||||\n");
+}
 
 static int	count_sankaku(char **line, int len)
 {
@@ -83,10 +83,13 @@ static void	logic(char **dest, char **src, int len, int is_ass)
 	logic_component(dest, src, &data, 0);
 	logic_component(dest, src, &data, 1);
 	k = 0;
-	while (src[k] && k != len - 1 + is_ass)
+	while (src[k] && k < len - is_ass)
 	{
 		if (is_sankaku(src[k]))
+		{
 			k += 2;
+			continue;
+		}
 		if (src[k] && ft_strcmp(src[k], "|") && ft_strcmp(src[k], ";"))
 			dest[i] = src[k];
 		k++;

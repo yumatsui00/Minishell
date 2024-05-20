@@ -63,5 +63,8 @@ int	is_sankaku(char *item);
 
 
 char	**rearranges_main(char **line);
+t_cmd **make_cmd_line(char **line);
+
+void debug_cmd(t_cmd **cmd_po);
 
 #endif

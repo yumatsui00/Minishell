@@ -196,10 +196,11 @@ syntax error: unexpected end of file
 // 5.いれかえ
 // 6.仲間で合体
 // 7.コマンドなかったら弾く
-char	**lexer(char *before_line, char **ep)
+t_cmd	**lexer(char *before_line, char **ep)
 {
 	char	**line;
 	int		error_check;
+	t_cmd **ret;
 
 	line = ft_split_for_lexer(before_line);
 	expan_env_var_main(line, ep);
@@ -211,25 +212,23 @@ char	**lexer(char *before_line, char **ep)
 	if (find_syntax_error(line))
 		return (NULL);
 
-	//irekae
 	line = rearranges_main(line);
-
-	//合体
-	// line = union_friends(line);
-	//連結リストへ代入
-	printf("完璧じゃ！！\n");
-	return (line);
+	line = union_friends(line);
+	ret = make_cmd_line(line);
+	return (ret);
 }
 
 int	main(int ac, char **av, char **ep)
 {
-	char	**ret;
+	t_cmd	**ret;
 
 	ret = lexer(av[1], ep);
-	if (ret)
-	{
-		for (int i = 0; ret[i] != NULL; i++)
-			printf("ret[%d]: %s\n", i, ret[i]);
-	}
+	printf("完璧じゃ！！\n");
+	debug_cmd(ret);
+	// if (ret)
+	// {
+	// 	for (int i = 0; ret[i] != NULL; i++)
+	// 		printf("ret[%d]: %s\n", i, ret[i]);
+	// }
 	return (0);
 }
