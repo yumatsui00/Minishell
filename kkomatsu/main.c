@@ -28,6 +28,7 @@ void	minishell(char **ep)
 		if (*line)
 			add_history(line);
 		cmd = lexer(line, ep);
+		// debug_cmd(cmd);
 	}
 	// free(cmd);
 	write(1, "exit\n", 5);
@@ -36,5 +37,9 @@ void	minishell(char **ep)
 int	main(int ac, char **av, char **ep)
 {
 	if (ac == 1)
+	{
+		ep = envp_to_heap(ep);
 		minishell(ep);
+	}
+	return 0;
 }

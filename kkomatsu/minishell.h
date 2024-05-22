@@ -36,13 +36,15 @@
 
 //< fileを一体化させるならsend reciのみでいい
 // heredoc , >>
-# define COMM 0 //(+opt)
+# define COM 0 //(+opt)
 # define RECI 1
 # define SEND 2
-# define HERE 3
-# define POST 4
+# define HERE 4
+# define POST 3
 # define PIPE 5
 # define SEMQ 6
+# define END 7
+
 
 typedef struct s_cmd
 {
@@ -56,10 +58,11 @@ void				minishell(char **envp);
 void				sig_int_input(int signum);
 void				sig_quit_input(int signum);
 
+char **envp_to_heap(char **ep);
 char *cut_in_main(char *line);
 void expan_env_var_main(char **line, char **ep);
 int	is_sankaku(char *item);
-
+char	**union_friends(char **line);
 t_cmd	**lexer(char *before_line, char **ep);
 char	**rearranges_main(char **line);
 t_cmd **make_cmd_line(char **line);

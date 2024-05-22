@@ -32,7 +32,7 @@ static int select_status(char *input)
     else if (!ft_strncmp(input, ";", 1))
         return SEMQ;
     else
-        return COMM;
+        return COM;
 }
 
 static t_cmd *ft_cmdnew(char *input)
