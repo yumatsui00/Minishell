@@ -56,8 +56,7 @@ void				minishell(char **envp);
 void				sig_int_input(int signum);
 void				sig_quit_input(int signum);
 
-char				*get_next_line(int fd);
-
+char *cut_in_main(char *line);
 void expan_env_var_main(char **line, char **ep);
 int	is_sankaku(char *item);
 

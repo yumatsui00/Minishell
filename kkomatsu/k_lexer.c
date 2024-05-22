@@ -204,6 +204,7 @@ t_cmd	**lexer(char *before_line, char **ep)
 	int		error_check;
 	t_cmd **ret;
 
+	before_line = cut_in_main(before_line);
 	line = ft_split_for_lexer(before_line);
 	expan_env_var_main(line, ep);
 	if (cut_or_read(line))
