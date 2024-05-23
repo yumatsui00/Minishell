@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   k_union_friends.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 21:09:40 by kkomatsu          #+#    #+#             */
+/*   Updated: 2024/05/22 21:31:40 by kkomatsu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static int count_union(char **line)
+static int	count_union(char **line)
 {
-	int count;
-	int is;
+	int	count;
+	int	is;
 
 	count = 0;
 	is = 0;
@@ -21,7 +33,7 @@ static int count_union(char **line)
 			line++;
 		is = 0;
 	}
-	return count;
+	return (count);
 }
 
 char	**union_friends(char **line)

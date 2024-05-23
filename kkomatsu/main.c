@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
+/*   Updated: 2024/05/22 21:36:31 by kkomatsu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-// #include <libc.h>
+#include <libc.h>
 
-// __attribute__((destructor))
-// static void destructor() {
-//     system("leaks -q a.out");
-// }
-
-void signal_handler(int signum)
+__attribute__((destructor)) static void destructor()
 {
-    /* シグナルをキャッチしたときに実行したい内容 */
-    write(1, "exit\n", 5);
-    exit(0);
+	system("leaks -q a.out");
+}
+
+void	signal_handler(int signum)
+{
+	/* シグナルをキャッチしたときに実行したい内容 */
+	write(1, "exit\n", 5);
+	exit(0);
 }
 
 void	minishell(char **ep)
@@ -28,18 +40,24 @@ void	minishell(char **ep)
 		if (*line)
 			add_history(line);
 		cmd = lexer(line, ep);
-		// debug_cmd(cmd);
+		debug_cmd(cmd);
+		exit(0);
+		free(line);
 	}
-	// free(cmd);
 	write(1, "exit\n", 5);
+	return ;
 }
 
 int	main(int ac, char **av, char **ep)
 {
+	char	**new_ep;
+
 	if (ac == 1)
 	{
-		ep = envp_to_heap(ep);
-		minishell(ep);
+		new_ep = envp_to_heap(ep);
+		minishell(new_ep);
 	}
-	return 0;
+	// printf("-----\n");
+	free_double_ptr(new_ep);
+	return (0);
 }

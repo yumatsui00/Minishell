@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   k_rearranges.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 21:09:36 by kkomatsu          #+#    #+#             */
+/*   Updated: 2024/05/22 21:29:47 by kkomatsu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 typedef struct s_data
 {
-	int sankaku_count;
-	int len;
-	int is_ass;
-} t_data;
-
+	int		sankaku_count;
+	int		len;
+	int		is_ass;
+}			t_data;
 
 void	pri(char **ss)
 {
@@ -38,10 +49,10 @@ static int	count_sankaku(char **line, int len)
 	return (count);
 }
 
-static void logic_component(char **dest, char **src, t_data *data, int num)
+static void	logic_component(char **dest, char **src, t_data *data, int num)
 {
-	int i;
-	int k;
+	int	i;
+	int	k;
 
 	i = 0;
 	while (dest[i])
@@ -51,14 +62,18 @@ static void logic_component(char **dest, char **src, t_data *data, int num)
 	{
 		if (!num && (!ft_strcmp(src[k], "<") || !ft_strcmp(src[k], "<<")))
 		{
-			dest[i + data->len - (data->sankaku_count * 2) - data->is_ass] = src[k];
-			dest[i + data->len - (data->sankaku_count * 2) + 1 - data->is_ass] = src[k + 1];
+			dest[i + data->len - (data->sankaku_count * 2)
+				- data->is_ass] = src[k];
+			dest[i + data->len - (data->sankaku_count * 2) + 1
+				- data->is_ass] = src[k + 1];
 			data->sankaku_count--;
 		}
 		if (num && (!ft_strcmp(src[k], ">") || !ft_strcmp(src[k], ">>")))
 		{
-			dest[i + data->len - (data->sankaku_count * 2) - data->is_ass] = src[k];
-			dest[i + data->len - (data->sankaku_count * 2) + 1 - data->is_ass] = src[k + 1];
+			dest[i + data->len - (data->sankaku_count * 2)
+				- data->is_ass] = src[k];
+			dest[i + data->len - (data->sankaku_count * 2) + 1
+				- data->is_ass] = src[k + 1];
 			data->sankaku_count--;
 		}
 		k++;
@@ -67,10 +82,10 @@ static void logic_component(char **dest, char **src, t_data *data, int num)
 
 static void	logic(char **dest, char **src, int len, int is_ass)
 {
-	int	i;
-	int	j;
-	int	k;
-	t_data data;
+	int		i;
+	int		j;
+	int		k;
+	t_data	data;
 
 	i = 0;
 	data.is_ass = is_ass;
@@ -88,7 +103,7 @@ static void	logic(char **dest, char **src, int len, int is_ass)
 		if (is_sankaku(src[k]))
 		{
 			k += 2;
-			continue;
+			continue ;
 		}
 		if (src[k] && ft_strcmp(src[k], "|") && ft_strcmp(src[k], ";"))
 			dest[i] = src[k];
@@ -106,7 +121,7 @@ char	**rearranges_main(char **line)
 	len = 0;
 	while (line[len])
 		len++;
-	ret = (char **)malloc(sizeof(char *) * (len + 1));
+	ret = (char **)ft_calloc(len + 1, sizeof(char *));
 	while (*line)
 	{
 		stk = line;

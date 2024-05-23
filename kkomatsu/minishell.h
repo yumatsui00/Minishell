@@ -68,6 +68,7 @@ char	**rearranges_main(char **line);
 t_cmd **make_cmd_line(char **line);
 
 void debug_cmd(t_cmd **cmd_po);
+
 void free_cmd(t_cmd **cmd);
 void free_double_ptr(char **s);
 

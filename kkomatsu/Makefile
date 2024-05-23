@@ -1,5 +1,5 @@
 NAME = minishell
-SRCS = main.c signal.c get_next_line.c 
+SRCS = *.c
 OBJ = $(SRCS:.c=.o)
 INCLUDE = minishell.h
 

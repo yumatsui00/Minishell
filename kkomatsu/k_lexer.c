@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zlexer.c                                           :+:      :+:    :+:   */
+/*   k_lexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: komatsukotarou <komatsukotarou@student.    +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/19 23:58:14 by komatsukota      ###   ########.fr       */
+/*   Updated: 2024/05/22 21:35:12 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,12 @@ t_cmd	**lexer(char *before_line, char **ep)
 {
 	char	**line;
 	int		error_check;
-	t_cmd **ret;
+	t_cmd	**ret;
 
 	before_line = cut_in_main(before_line);
 	line = ft_split_for_lexer(before_line);
 	expan_env_var_main(line, ep);
+	exit(0); //return (NULL);
 	if (cut_or_read(line))
 	{
 		printf("エラー\n");
@@ -156,7 +157,7 @@ t_cmd	**lexer(char *before_line, char **ep)
 		return (NULL);
 	line = rearranges_main(line);
 	line = union_friends(line);
-	ret = make_cmd_line(line);	
+	ret = make_cmd_line(line);
 	return (ret);
 }
 
