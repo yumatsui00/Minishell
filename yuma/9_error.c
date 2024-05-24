@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:58:15 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 18:00:38 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/23 13:04:51 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,24 @@ int	free_utils2(char *a, char **b)
 	return (ERROR);
 }
 
-int	allfree_unlink(t_cmd *mini, t_nums *nums)
+void	fd_closer(t_nums *nums)
 {
-	t_cmd	*tmp;
-	char	filename[6];
+	int	i;
 
-	while (mini != NULL)
-	{
-		free(mini->input);
-		free(mini->abs_path); //NULLポインタフリーは問題ない。それ以外はアウト
-		tmp = mini;
-		mini = mini->next;
-		free(tmp);
-	}
-	while (nums->i >= 0)
-	{
-		set_filename(filename, nums->i);
-		unlink(filename);
-		nums->i--;
-	}
+	i = 0;
+	while (nums->infds[++i])
+		close(nums->infds[i]);
+	i = 0;
+	while (nums->outfds[++i])
+		close(nums->outfds[i]);
+	free(nums->infds);
+	free(nums->outfds);
+}
+
+int	piderror_process(t_nums *nums)
+{
+	close_pipe(nums);
+	write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
+	stts(WRITE, 1);
+	return (free(nums->pipe), OK);
 }

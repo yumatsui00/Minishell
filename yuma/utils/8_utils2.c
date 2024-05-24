@@ -6,11 +6,46 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 21:05:20 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/18 21:52:51 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/24 21:09:16 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "mini.h"
+# include "../mini.h"
+
+void	freefree(char **ans)
+{
+	int	i;
+
+	i = -1;
+	while (ans[++i])
+		free(ans[i]);
+	free(ans);
+}
+
+char	**ft_strdupdup(char **str, int i)
+{
+	char	**ans;
+	int		count;
+	int		index;
+
+	count = 0;
+	while (str[count])
+		count++;
+	ans = (char **)malloc(sizeof(char *) * (count + 1 + i));
+	if (!ans)
+		return (NULL);
+	index = -1;
+	while (++index < count + 1 + i)
+		ans[index] = NULL;
+	index = -1;
+	while (str[++index])
+	{
+		ans[index] = ft_strdup(str[index]);
+		if (ans[index] == NULL)
+			freefree(ans);
+	}
+	return (ans);
+}
 
 char	*ft_strjoin_mini(char *s1, char *s2)
 {

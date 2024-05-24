@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:47:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 20:42:19 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:59:51 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <readline/readline.h>
 
 //general
@@ -42,15 +43,18 @@
 # define ELSE 12
 # define ERRORCMD -10
 
+//!EXITダケ、トクベツナショリガイル
+//!パイプ内にいる関係で、exitでそのまま抜けれないので、強制的に終わらせる方法を考える
+
 typedef struct s_cmd
 {
     char			*input;
     int				status;
 	struct s_cmd	*next;
 	//以上小matu
+	char			**sec_args;
 	int				cmd_kind;
 	char			*abs_path;
-
 }            t_cmd;
 
 typedef struct s_nums
@@ -59,6 +63,7 @@ typedef struct s_nums
 	t_cmd			*first;
 	t_cmd			*end;
 	int				end_status;
+	int				builtin;
 	int				pipe_num;
 	int				*pipe;
 	pid_t			pid;
@@ -71,36 +76,73 @@ typedef struct s_nums
 	struct s_nums	*next; //after SEMQ
 }	t_nums;
 
+int		stts(int mode, int num);
+void	exec_main(t_cmd *mini, char **envp);
+void	exec_main1(t_cmd *mini, t_nums *nums, char **envp);
+void	exec_main2(t_cmd *mini, t_nums *nums, char **envp);
+
 //1
 int		change_heredoc_into_redirect(t_cmd *mini, t_nums *nums);
 void	set_filename(char filename[6], int i);
 
-void	initialize_nums(t_cmd *mini, t_nums *nums);
+//2
+void	initializer(t_cmd *mini, t_nums *nums);
+//3
+int		cmd_check(t_cmd *mini, t_nums *nums);
+int		check_bin_or_builtin(t_cmd *cpy, t_nums *nums);
+//4
+void	get_start_location(t_cmd *mini, t_nums *nums);
+int	redirect(t_cmd *mini, t_nums *nums);
 
-int	cmd_check(t_cmd *mini, t_nums *nums);
-//8
+//6
+void	builtin_execute(t_cmd *mini, char **envp);
+//builtins
+int		check_cd(t_cmd *mini, t_nums *nums);
+int		check_echo(t_cmd *mini, t_nums *nums);
+int		check_env(t_cmd *mini, t_nums *nums);
+int		check_exit(t_cmd *mini, t_nums *nums);
+int		check_export(t_cmd *mini, t_nums *nums);
+int		ft_atoi(char *str);
+int		check_pwd(t_cmd *mini, t_nums *nums);
+int		check_unset(t_cmd *mini, t_nums *nums);
+int		execute_echo(t_cmd *mini);
+int		execute_cd(t_cmd *mini);
+int		execute_env(char **envp);
+int		execute_exit(t_cmd *mini);
+int		execute_export(t_cmd *mini, char **envp);
+int		execute_pwd(t_cmd *mini);
+int		execute_unset(t_cmd *mini, char **envp);
+int		ft_atoi(char *str);
+int	atoerror(char *str);
+
+
+//utils
+char	**ft_split(char *s, char c);
 int		ft_strlen(char *str);
 int		ft_strncmp(char *s1, char *s2, int	n);
 char	*ft_strdup(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strlcpy(char *dst, char *src, int size);
-t_cmd	*ft_listadd(void);
+void	freefree(char **ans);
+char	**ft_strdupdup(char **str, int i);
 char	*ft_strjoin_mini(char *s1, char *s2);
 char	*ft_strdup2(char *str);
-
-char	**ft_split(char *s, char c);
-//9
+int		ft_strlen_tillspace(char *str);
+void	unlink_allfile(char filename[6], int i);
 void	t_cmd_free(t_cmd *mini);
+
+//9error
+void	fd_closer(t_nums *nums);
+
 int	free_utils(char *a, char **b);
-int	allfree_unlink(t_cmd *mini, t_nums *nums);
+int	free_utils2(char *a, char **b);
+
+//pipe
+int		creat_pipe(t_nums *nums, t_cmd *mini);
+void	close_pipe(t_nums *nums);
 
 
-//builtins
-int	check_cd(t_cmd *mini);
-int	check_echo(t_cmd *mini);
-int	check_env(t_cmd *mini);
-int	check_exit(t_cmd *mini);
-int	check_export(t_cmd *mini);
-int	check_pwd(t_cmd *mini);
-int	check_unset(t_cmd *mini);
+
+void	output(t_cmd *mini);
+
 #endif

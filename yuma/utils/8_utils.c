@@ -6,11 +6,11 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:38:26 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/17 22:10:42 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:53:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../mini.h"
 
 int	ft_strlen(char *str)
 {

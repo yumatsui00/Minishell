@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   8_list_utils.c                                     :+:      :+:    :+:   */
+/*   4_get_start_location.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 10:36:28 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/17 22:26:42 by yumatsui         ###   ########.fr       */
+/*   Created: 2024/05/24 10:25:11 by yumatsui          #+#    #+#             */
+/*   Updated: 2024/05/24 12:31:50 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-t_cmd	*ft_listadd(void)
+void	get_start_location(t_cmd *mini, t_nums *nums)
 {
-	t_cmd	*mini;
+	t_cmd	*cpy;
+	int		i;
 
-	mini = (t_cmd *)malloc(sizeof(t_cmd));
-	if (mini == NULL)
-		return (NULL);
-	return (mini);
+	cpy = mini;
+	if (nums->i == 0)
+	{
+		nums->first = mini;
+		while (cpy != NULL && cpy->status != PIPE && cpy->status != SEMQ)
+			cpy = cpy->next;
+		nums->end = cpy;
+	}
+	else
+	{
+		i = 0;
+		while (i != nums->i)
+		{
+			if (cpy->status == PIPE)
+				i++;
+			cpy = cpy->next;
+		}
+		nums->first = cpy;
+	}
 }
+//パイプがELSEになっててやりづらい

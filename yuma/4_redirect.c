@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_1redirection.c                                   :+:      :+:    :+:   */
+/*   4_redirect.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 15:33:53 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 21:05:35 by yumatsui         ###   ########.fr       */
+/*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
+/*   Updated: 2024/05/24 13:56:42 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int	red_send(t_cmd *mini, t_nums *nums, int	status)
+int	dup2_error(int	fd, char *file)
 {
-	char	*outfile;
+	write(2, "minishell: ", 11);
+	write(2, &fd, sizeof(int));
+	perror("");
+	stts(WRITE, 1);
+	close(fd);
+	return (free_utils2(file, NULL));
+}
+
+int	red_send(t_cmd *mini, t_nums *nums, int status)
+{
+	char *outfile;
 
 	outfile = ft_strdup(nums->first->input + status);
 	if (outfile == NULL)
@@ -26,19 +36,13 @@ int	red_send(t_cmd *mini, t_nums *nums, int	status)
 	if (nums->outfds[nums->outfds_i] < 0)
 	{
 		write(2, "minishell: ", 11);
-		write(2, outfile, ft_strlen(outfile));
-		perror(" ");
+		perror(outfile);
+		stts(WRITE, 1);
 		return (free_utils2(outfile, NULL));
 	}
-	if (dup2(nums->outfds[nums->outfds_i], nums->outfds[nums->outfds_i - 1]) < 0)
-	{
-		write(2, "minishell: ", 11);
-		write(2, &nums->outfds[nums->outfds_i], 4);
-		perror(" ");
-		return (free_utils2(outfile, NULL));
-	}
-	free(outfile);
-	return (OK);
+	if (dup2(nums->outfds[nums->outfds_i], nums->outfds[nums->outfds_i] - 1) < 0)
+		return (dup2_error(nums->outfds_i, outfile));
+	return (free(outfile), OK);
 }
 
 int	red_recieve(t_cmd *mini, t_nums *nums)
@@ -47,44 +51,25 @@ int	red_recieve(t_cmd *mini, t_nums *nums)
 
 	infile = ft_strdup(nums->first->input + 2);
 	if (infile == NULL)
-		reuturn (MALLOCERROR);
+		return (MALLOCERROR);
 	nums->infds[nums->infds_i] = open(infile, O_RDONLY);
 	if (nums->infds[nums->infds_i] < 0)
 	{
-		write(2, "minishell: ", 11);
-		write(2, infile, ft_strlen(infile));
-		perror(" ");
+		write(2, "minishell ", 11);
+		perror(infile);
+		stts(WRITE, 1);
 		return (free_utils2(infile, NULL));
 	}
 	if (dup2(nums->infds[nums->infds_i], nums->infds[nums->infds_i - 1]) < 0)
-	{
-		write(2, "minishell: ", 11);
-		write(2, &nums->infds[nums->infds_i], 4);
-		perror(" ");
-		return (free_utils2(infile, NULL));
-	}
+		return (dup2_error(nums->infds_i, infile));
 	free(infile);
 	return (OK);
 }
 
-void	fd_initialize(t_nums *nums, int reci, int send)
-{
-	nums->infds[0] = STDIN_FILENO;
-	nums->outfds[0] = STDOUT_FILENO;
-	nums->infds[reci + 1] == NULL;
-	nums->outfds[send + 1] ==NULL;
-	nums->infds_i = 1;
-	nums->outfds_i = 1;
-}
-
-int	allocate_fd(t_nums *nums)
+int	allocate_fd(t_nums *nums, int reci, int send)
 {
 	t_cmd	*first;
-	int		reci;
-	int		send;
 
-	reci = 0;
-	send = 0;
 	first = nums->first;
 	while (first != nums->end)
 	{
@@ -97,37 +82,41 @@ int	allocate_fd(t_nums *nums)
 	nums->infds = (int *)malloc(sizeof(int) * (reci + 2));
 	nums->outfds = (int *)malloc(sizeof(int) * (send + 2));
 	if (nums->infds == NULL || nums->outfds == NULL)
-	{
-		free(nums->infds);
-		free(nums->outfds);
-		return (MALLOCERROR);
-	}
-	fd_initialize(nums, reci, send);
+		return (free(nums->infds), free(nums->outfds), MALLOCERROR);
+	nums->infds[0] = STDIN_FILENO;
+	nums->outfds[0] = STDOUT_FILENO;
+	nums->infds[reci + 1] = '\0';
+	nums->outfds[send + 1] = '\0';
+	nums->infds_i = 1;
+	nums->outfds_i = 1;
 	return (OK);
 }
 
-int	redirect_evaluation(t_cmd *mini, t_nums *nums)
+int	redirect(t_cmd *mini, t_nums *nums)
 {
 	int	flag;
-
-	flag = allocate_fd(nums);
-	while (nums->first != nums->end);
+	if (allocate_fd(nums, 0, 0) == MALLOCERROR)
+		return (MALLOCERROR);
+	while (nums->first && nums->first->status != SEMQ)
 	{
 		if (nums->first->status == RECI)
 		{
 			flag = red_recieve(mini, nums);
-			nums->infds_i++;
+			nums->infds++;
 		}
 		else if (nums->first->status == SEND || nums->first->status == POST)
 		{
 			flag = red_send(mini, nums, nums->first->status);
-			nums->outfds_i++;
+			nums->outfds++;
 		}
 		nums->first = nums->first->next;
-		if (flag == ERROR || flag == MALLOCERROR)
-			return (flag);
+		if (flag == MALLOCERROR)
+			return (fd_closer(nums), MALLOCERROR);
+		else if (flag == ERROR)
+			return (fd_closer(nums), ERROR);
 	}
 	nums->infile = nums->infds[nums->infds_i - 1];
 	nums->outfile = nums->outfds[nums->outfds_i - 1];
-	return (flag);
+	printf("arrived\n");
+	return (OK);
 }

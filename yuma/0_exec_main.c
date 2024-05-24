@@ -5,105 +5,167 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 18:53:04 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 22:14:32 by yumatsui         ###   ########.fr       */
+/*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
+/*   Updated: 2024/05/24 20:58:32 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int	exec_main1(t_cmd *mini, char **envp, t_nums *nums)
+int	stts(int mode, int num)
 {
+	static int	i = 0;
 
-	initialize_nums(mini, nums);
-	if (cmd_check(mini, nums) == MALLOCERROR)
-		{
-			//!mallocerrorの表示,セミコロンがあったら再帰、なかったら終わり、てかパイプも繋がってるおおわた
-		}
-	if (creat_pipe(nums) == ERROR)
-		return (allfree_unlink(mini, nums)); //! $? = 1 にする
+	if (mode == READ)
+		return (i);
+	else if (mode == WRITE)
+	{
+		i = num;
+		return (i);
+	}
+	return (i);
+}
+
+void	end_or_recurse(t_cmd **mini, t_nums *nums, char **envp)
+{
+	if (nums->end_status == END)
+		return ;
+	else if (nums->end_status == SEMQ)
+	{
+		while ((*mini)->status != SEMQ)
+			(*mini) = (*mini)->next;
+		(*mini) = (*mini)->next;
+		exec_main1((*mini), nums, envp);
+	}
+	else
+		printf("ここにきてるのおかしいて\n");
+	return ;
+}
+
+void	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
+{
+	int	flag;
+
 	while (++(nums->i) <= nums->pipe_num)
 	{
-		nums->pid = fork();
-		if (nums->pid < 0)
+		get_start_location(mini, nums);
+		printf("nums->i = %d, start = %s end = %s\n", nums->i, nums->first->input, nums->end->input);
+		flag = redirect(mini, nums);
+		if (flag == MALLOCERROR)
 		{
-			close_pipe(nums);
-			write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
-			return (allfree_unlink(mini, nums));
+			stts(WRITE, 1);
+			return (free(nums->pipe));
 		}
-		else if (nums->pid == 0)
-			child_process(mini, nums, envp);
-		else
-			parent_process1(&mini, nums);
+		else if (flag == ERROR)
+			return (free(nums->pipe), end_or_recurse(&mini, nums, envp));
+		printf("\n\n\n------------------------------------------\n");
+		if (nums->pipe_num == 0 && mini->cmd_kind == BUILTIN)
+			builtin_execute(mini, envp);
+		printf("--------------------------------------------\n\n\n");
+		
+		
+
+		printf("have i got here? i think so!\n");
+		
+		// else if (flag == ERROR)
+		
+
+		// if (nums->first != NULL)//!この２行は、再帰の直前に必要
+		// 	nums->first = nums->first->next;//!
+		printf("nums->first = %s\n", nums->first->input);
+		printf("mini->inoput = %s\n", mini->input);//!最後のparentprocessで変更する必要あり
 	}
-	parent_process2(nums);
-	return (0);
 }
 
-void	exec_main0(t_cmd *mini, char **envp)
+void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
+{
+	initializer(mini, nums);
+	//!end_statusで終わりを確認
+	if (cmd_check(mini, nums) == MALLOCERROR)
+		return (end_or_recurse(&mini, nums, envp));
+	// printf("input = %s, cmd_kind = %d, abs path = %s , end_status = %d\n", mini->input, mini->cmd_kind, mini->abs_path, nums->end_status);
+	if (creat_pipe(nums, mini) == ERROR)
+		return ;
+	exec_main2(mini, nums, envp);
+}
+
+void	exec_main(t_cmd *mini, char **envp)
 {
 	t_nums	nums;
+	t_cmd	*tmp;
+	char	filename[6];
 
-	if (change_heredoc_into_redirect(mini, &nums) == ERROR)
+	if (change_heredoc_into_redirect(mini, &nums) == MALLOCERROR)
 	{
 		t_cmd_free(mini);
+		stts(WRITE, 1);
 		return ;
 	}
-	exec_main1(mini, envp, &nums);
-	//!unlinkと、　miniのfreeはここでする
+	exec_main1(mini, &nums, envp);
+	
 }
 
+// void	output(t_cmd *mini)
+// {
+// 	t_cmd *tmp;
 
-//!以下メイン用
-void	ft_listadd_back(t_cmd *mini)
-{
-	t_cmd	*new;
-	t_cmd	*cpy;
-
-	new = (t_cmd *)malloc(sizeof(t_cmd));
-	if (new == NULL)
-		return ;
-	//!初期化がいるならここで
-	new->status = SEMQ;
-	new->input = strdup("|");
-	new->next = NULL;
-	cpy = mini;
-	while (cpy->next != NULL)
-		cpy = cpy->next;
-	cpy->next = new;
-}
+// 	while (mini != NULL)
+// 	{
+// 		printf("input = %s, status = %d\n", mini->input, mini->status);
+// 		tmp = mini;
+// 		mini = mini->next;
+// 		free(tmp);
+// 	}
+// }
 
 int main(int argc, char **argv, char **envp)
 {
 	t_cmd *mini;
-	t_cmd *cpy;
-	int i;
+	t_cmd *tmp, *first;
+	int i = 1;
 
-	mini = ft_listadd();
+	mini = (t_cmd *)malloc(sizeof(t_cmd));
+	mini->input = strdup(argv[1]);
 	mini->status = COM;
-	mini->input = strdup("pwd -ls");
 	mini->next = NULL;
-	i = 0;
-	while (i++ < 4)
+	first = mini;
+	while (++i < argc)
 	{
-		ft_listadd_back(mini);
+		tmp = (t_cmd *)malloc(sizeof(t_cmd));
+		tmp->input = strdup(argv[i]);
+		if (argv[i][0] == '<' && argv[i][1] == '<')
+			tmp->status = HERE;
+		else if (argv[i][0] == '<')
+			tmp->status = RECI;
+		else if (argv[i][0] == '>' && argv[i][1] == '>')
+			tmp->status = POST;
+		else if (argv[i][0] == '>')
+			tmp->status = SEND;
+		else if (argv[i][0] == '|')
+			tmp->status = PIPE;
+		else if (argv[i][0] == ';')
+			tmp->status = SEMQ;
+		else
+			tmp->status = COM;
+		tmp->next = NULL;
+		mini->next = tmp;
+		mini = tmp;
 	}
-	cpy = mini;
-	while (cpy != NULL)
+	mini = first;
+	while (mini != NULL)
 	{
-		printf("status = %d, input = %s\n", cpy->status, cpy->input);
-		cpy = cpy->next;
+		printf("input = %s,  status = %d\n", mini->input, mini->status);
+		mini = mini->next;
 	}
-	exec_main0(mini, envp);
-	cpy = mini;
-	while (cpy != NULL)
+	char **e;
+	e = ft_strdupdup(envp, 0);
+	printf("e = %s\n", e[0]);
+	exec_main(first, e);
+	write(2, "この下で行かれている可能性が非常に高いのであります\n", 100);
+	mini = first;
+	while (mini != NULL)
 	{
-		printf("status = %d, input = %s\n", cpy->status, cpy->input);
-		cpy = cpy->next;
+		printf("input = %s,  status = %d\n", mini->input, mini->status);
+		mini = mini->next;
 	}
-	printf("abs_path = %s\n", mini->abs_path);
-	printf("cmd_kind = %d",  (mini)->cmd_kind);
 }
-
-//! free list
-//!t_cmd->input, unlink, abs_path, pipeclose, closeinfds, closeoutfds freeも

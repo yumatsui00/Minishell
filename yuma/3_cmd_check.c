@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/18 18:15:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/19 21:02:44 by yumatsui         ###   ########.fr       */
+/*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
+/*   Updated: 2024/05/24 12:30:29 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,25 @@ int	check_abs_bin(t_cmd *cpy)
 	return (OK);
 }
 
-int	check_bin_or_builtin(t_cmd *cpy)
+
+int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums)
 {
 	int	flag;
 
 	if (ft_strncmp(cpy->input, "echo", 4) == 0)
-		flag = check_echo(cpy);
+		flag = check_echo(cpy, nums);
 	else if (ft_strncmp(cpy->input, "cd", 2) == 0)
-		flag = check_cd(cpy);
+		flag = check_cd(cpy, nums);
 	else if (ft_strncmp(cpy->input, "pwd", 3) == 0)
-		flag = check_pwd(cpy);
+		flag = check_pwd(cpy, nums);
 	else if (ft_strncmp(cpy->input, "export", 6) == 0)
-		flag = check_export(cpy);
+		flag = check_export(cpy, nums);
 	else if (ft_strncmp(cpy->input, "unset", 5) == 0)
-		flag = check_unset(cpy);
+		flag = check_unset(cpy, nums);
 	else if (ft_strncmp(cpy->input, "exit", 4) == 0)
-		flag = check_exit(cpy);
+		flag = check_exit(cpy, nums);
 	else if (ft_strncmp(cpy->input, "env", 3) == 0)
-		flag = check_env(cpy);
+		flag = check_env(cpy, nums);
 	else
 	{
 		if (cpy->input[0] != '/')
@@ -118,15 +119,18 @@ int	cmd_check(t_cmd *mini, t_nums *nums)
 	t_cmd	*cpy;
 
 	cpy = mini;
-	while (cpy->status != SEMQ && cpy != NULL && cpy->status != END)
+	while (cpy && cpy->status != SEMQ)
 	{
 		if (cpy->status == COM)
 		{
-			if (check_bin_or_builtin(cpy) == MALLOCERROR)
+			if (check_bin_or_builtin(cpy, nums) == MALLOCERROR)
+			{
+				stts(WRITE, 1);
 				return (MALLOCERROR);
+			}
 		}
 		else
-			cpy->status= ELSE;
+			cpy->cmd_kind = ELSE;
 		cpy = cpy->next;
 	}
 	return (OK);
