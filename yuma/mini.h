@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:47:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 18:59:51 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:58:56 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_nums
 int		stts(int mode, int num);
 void	exec_main(t_cmd *mini, char **envp);
 void	exec_main1(t_cmd *mini, t_nums *nums, char **envp);
-void	exec_main2(t_cmd *mini, t_nums *nums, char **envp);
+int		exec_main2(t_cmd *mini, t_nums *nums, char **envp);
 
 //1
 int		change_heredoc_into_redirect(t_cmd *mini, t_nums *nums);
@@ -93,6 +93,11 @@ int		check_bin_or_builtin(t_cmd *cpy, t_nums *nums);
 //4
 void	get_start_location(t_cmd *mini, t_nums *nums);
 int	redirect(t_cmd *mini, t_nums *nums);
+//5
+void	child_process(t_cmd *mini, t_nums *nums, char **envp);
+void	parent_process(t_cmd **mini, t_nums *nums);
+
+
 
 //6
 void	builtin_execute(t_cmd *mini, char **envp);
@@ -110,8 +115,16 @@ int		execute_cd(t_cmd *mini);
 int		execute_env(char **envp);
 int		execute_exit(t_cmd *mini);
 int		execute_export(t_cmd *mini, char **envp);
+char    **add_line(char *str, char **envp);
+char	**add_line2(char *str, char **envp, int i, int flag);
+char	**change_line(char *str, char **envp, int count);
+char	**post_line(char *str, char **envp, int count);
+int		isalnum(int c);
+int		execute_export(t_cmd *mini, char **envp);
 int		execute_pwd(t_cmd *mini);
-int		execute_unset(t_cmd *mini, char **envp);
+void	execute_unset(t_cmd *mini, char **envp);
+void	unset_checker(char *str, char **envp);
+int		check_unset2(char *str, char **envp);
 int		ft_atoi(char *str);
 int	atoerror(char *str);
 
@@ -134,9 +147,9 @@ void	t_cmd_free(t_cmd *mini);
 //9error
 void	fd_closer(t_nums *nums);
 
-int	free_utils(char *a, char **b);
-int	free_utils2(char *a, char **b);
-
+int		free_utils(char *a, char **b);
+int		free_utils2(char *a, char **b);
+void	piderror_process(t_nums *nums);
 //pipe
 int		creat_pipe(t_nums *nums, t_cmd *mini);
 void	close_pipe(t_nums *nums);

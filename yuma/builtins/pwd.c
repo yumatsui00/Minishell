@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 17:20:29 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:20:53 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	execute_pwd(t_cmd *mini)
 {
 	char	pwd[PATH_MAX];
 
-	stts(WRITE, 1);
+	stts(WRITE, 0);
 	if (mini->input[3] == ' ')
 	{
 		if (mini->input[4] == '-')

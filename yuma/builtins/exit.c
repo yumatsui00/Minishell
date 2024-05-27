@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 19:21:13 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/25 11:06:20 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	atoi2(long long *ans, long long *ans_stock, char *str, int *i)
     }
 	return (OK);
 }
-
 
 static int	init(int *i, long long *ans, long long *ans_stock, char *str)
 {

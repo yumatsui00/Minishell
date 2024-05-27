@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 13:56:42 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/25 11:20:12 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	redirect(t_cmd *mini, t_nums *nums)
 	int	flag;
 	if (allocate_fd(nums, 0, 0) == MALLOCERROR)
 		return (MALLOCERROR);
-	while (nums->first && nums->first->status != SEMQ)
+	while (nums->first && nums->first->status != SEMQ && nums->first->status != PIPE)
 	{
 		if (nums->first->status == RECI)
 		{
@@ -117,6 +117,5 @@ int	redirect(t_cmd *mini, t_nums *nums)
 	}
 	nums->infile = nums->infds[nums->infds_i - 1];
 	nums->outfile = nums->outfds[nums->outfds_i - 1];
-	printf("arrived\n");
 	return (OK);
 }
