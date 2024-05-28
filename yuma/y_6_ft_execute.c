@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   6_ft_execute.c                                     :+:      :+:    :+:   */
+/*   y_6_ft_execute.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/27 13:41:11 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:44:49 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	bin_execute(t_cmd *mini, char **envp)
 	exit(1);
 }
 
-void	ft_execute(t_cmd *mini, char *envp)
+void	ft_execute(t_cmd *mini, char **envp)
 {
 	if (mini->cmd_kind == BUILTIN)
 		builtin_execute(mini, envp);

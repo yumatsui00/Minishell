@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/25 14:49:15 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:33:13 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static char	*ft_strjoin_tillspace(char *s1, char *s2)
 
 char	**post_line(char *str, char **envp, int count)
 {
-    int		i;
-    int		j;
     char	*tmp;
 
     while (*str != '=')

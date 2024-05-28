@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:14 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/27 16:00:09 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:30:02 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,9 @@
 // 	return (OK);
 // }
 
-
-
-
-#include "../mini.h"
 #include "../../kkomatsu/minishell.h"
+#include "../mini.h"
 
-//条件です。
 static int    is_ok(char *line)
 {
     if (ft_isdigit(*line))
@@ -177,14 +173,14 @@ static void    logic(char *name, char **ep)
     return;
 }
 
-void    execute_unset(t_cmd *cmd, char **ep)
+int	execute_unset(t_cmd *cmd, char **ep)
 {
     char    **line;
     int i;
 
     line = ft_split(cmd->input, ' ');
     if (!line)
-        return ;
+        return (ERROR);
     i = 0;
     //line[1]がない時の処理
     while (line[i])
@@ -192,17 +188,17 @@ void    execute_unset(t_cmd *cmd, char **ep)
     if (i == 0)
     {
         free_double_ptr(line);
-        return ;
+        return (OK);
     }
     line++;
     if (!is_ok(*line))
     {
         free_double_ptr(line);
-        return ;
+        return (ERROR);
     }
     logic(*line, ep);
     free_double_ptr(line);
-    return ;
+    return (OK);
 }
 
 // void    test(char *line, char **ep)
@@ -220,28 +216,3 @@ void    execute_unset(t_cmd *cmd, char **ep)
 // {
 //     test(av[1], ep);
 // }
-
-
-int	check_unset(t_cmd *mini, t_nums *nums)
-{
-	if (mini->input[5] == ' ' || mini->input[5] == '\0')
-	{
-		mini->cmd_kind = BUILTIN;
-		mini->abs_path = NULL;
-		nums->builtin++;
-	}
-	else
-	{
-		mini->cmd_kind = ERRORCMD;
-		mini->abs_path = ft_strdup2(mini->input);
-		if (mini->abs_path == NULL)
-			return (MALLOCERROR);
-		write(2, "minishell: ", 11);
-		write(2, mini->abs_path, ft_strlen(mini->abs_path));
-		write(2, ": command not found\n", 20);
-		stts(WRITE, 127);
-		free(mini->abs_path);
-		mini->abs_path = NULL;
-	}
-	return (OK);
-}

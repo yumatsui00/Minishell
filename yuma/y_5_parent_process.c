@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   5_parent_process.c                                 :+:      :+:    :+:   */
+/*   y_5_parent_process.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:34:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/27 15:51:07 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:47:38 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-void	parent_process2(t_cmd *mini, t_nums *nums, char *envp)
+void	parent_process2(t_cmd *mini, t_nums *nums, char **envp)
 {
 	int	i;
 
@@ -20,12 +20,12 @@ void	parent_process2(t_cmd *mini, t_nums *nums, char *envp)
 		waitpid(-1, NULL, 0);
 	close_pipe(nums);
 	i = 0;
-	while (nums->infds[++i] != NULL)
+	while (nums->infds[++i])
 		close(nums->infds[i]);
 	i = 0;
-	while (nums->outfds[++i] != NULL)
+	while (nums->outfds[++i])
 		close(nums->outfds[++i]);
-	end_or_recurese(mini, nums, envp);
+	end_or_recurse(&mini, nums, envp);
 }
 
 void	parent_process(t_cmd **mini, t_nums *nums)

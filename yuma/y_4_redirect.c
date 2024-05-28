@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   4_redirect.c                                       :+:      :+:    :+:   */
+/*   y_4_redirect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/25 11:20:12 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:42:51 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	dup2_error(int	fd, char *file)
 	return (free_utils2(file, NULL));
 }
 
-int	red_send(t_cmd *mini, t_nums *nums, int status)
+int	red_send(t_nums *nums, int status)
 {
 	char *outfile;
 
@@ -45,7 +45,7 @@ int	red_send(t_cmd *mini, t_nums *nums, int status)
 	return (free(outfile), OK);
 }
 
-int	red_recieve(t_cmd *mini, t_nums *nums)
+int	red_recieve(t_nums *nums)
 {
 	char	*infile;
 
@@ -92,7 +92,7 @@ int	allocate_fd(t_nums *nums, int reci, int send)
 	return (OK);
 }
 
-int	redirect(t_cmd *mini, t_nums *nums)
+int	redirect(t_nums *nums)
 {
 	int	flag;
 	if (allocate_fd(nums, 0, 0) == MALLOCERROR)
@@ -101,12 +101,12 @@ int	redirect(t_cmd *mini, t_nums *nums)
 	{
 		if (nums->first->status == RECI)
 		{
-			flag = red_recieve(mini, nums);
+			flag = red_recieve(nums);
 			nums->infds++;
 		}
 		else if (nums->first->status == SEND || nums->first->status == POST)
 		{
-			flag = red_send(mini, nums, nums->first->status);
+			flag = red_send(nums, nums->first->status);
 			nums->outfds++;
 		}
 		nums->first = nums->first->next;

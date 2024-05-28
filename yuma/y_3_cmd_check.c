@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   3_cmd_check.c                                      :+:      :+:    :+:   */
+/*   y_3_cmd_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 12:30:29 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:40:55 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int	check_bin2(t_cmd *mini, char *str, char *path, char **tmp)
+int	check_bin2(t_cmd *mini, char *path, char **tmp)
 {
 	int	i;
 
@@ -59,15 +59,13 @@ int	check_bin(t_cmd *mini, char *str)
 	tmp = ft_split(getenv("PATH"), ':');
 	if (tmp == NULL)
 		return (free_utils(path, NULL));
-	if (check_bin2(mini, str, path, tmp) == MALLOCERROR)
+	if (check_bin2(mini, path, tmp) == MALLOCERROR)
 		return (MALLOCERROR);
 	return (OK);
 }
 
 int	check_abs_bin(t_cmd *cpy)
 {
-	int	i;
-
 	cpy->abs_path = ft_strdup2(cpy->input);
 	if (cpy->abs_path == NULL)
 		return (MALLOCERROR);

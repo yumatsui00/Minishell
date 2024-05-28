@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:35:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 17:37:27 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:58:34 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	find_directory(t_cmd *mini, char *pwd)
 	char	*cd;
 	char	*path;
 
+	cd = NULL;
 	if (ft_strncmp(mini->input, "cd -", 4) == 0)
 	{
 		write(2, "minishell: cd: -", 16);

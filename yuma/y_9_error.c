@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   9_error.c                                          :+:      :+:    :+:   */
+/*   y_9_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:58:15 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/23 13:04:51 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:51:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,4 @@ void	fd_closer(t_nums *nums)
 		close(nums->outfds[i]);
 	free(nums->infds);
 	free(nums->outfds);
-}
-
-int	piderror_process(t_nums *nums)
-{
-	close_pipe(nums);
-	write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
-	stts(WRITE, 1);
-	return (free(nums->pipe), OK);
 }

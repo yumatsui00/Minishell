@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:09:34 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 20:04:17 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:32:37 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	atoerror(char *str)
 	return (1);
 }
 
-int	ft_atoi(char *str)
+int	ft_atoi2(char *str)
 {
     int			i;
     int			minus;

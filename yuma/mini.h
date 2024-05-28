@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:47:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/27 15:58:56 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:34:15 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		stts(int mode, int num);
 void	exec_main(t_cmd *mini, char **envp);
 void	exec_main1(t_cmd *mini, t_nums *nums, char **envp);
 int		exec_main2(t_cmd *mini, t_nums *nums, char **envp);
-
+void	end_or_recurse(t_cmd **mini, t_nums *nums, char **envp);
 //1
 int		change_heredoc_into_redirect(t_cmd *mini, t_nums *nums);
 void	set_filename(char filename[6], int i);
@@ -92,22 +92,23 @@ int		cmd_check(t_cmd *mini, t_nums *nums);
 int		check_bin_or_builtin(t_cmd *cpy, t_nums *nums);
 //4
 void	get_start_location(t_cmd *mini, t_nums *nums);
-int	redirect(t_cmd *mini, t_nums *nums);
+int		redirect(t_nums *nums);
 //5
 void	child_process(t_cmd *mini, t_nums *nums, char **envp);
 void	parent_process(t_cmd **mini, t_nums *nums);
-
+void	parent_process2(t_cmd *mini, t_nums *nums, char **envp);
 
 
 //6
 void	builtin_execute(t_cmd *mini, char **envp);
+void	ft_execute(t_cmd *mini, char **envp);
 //builtins
 int		check_cd(t_cmd *mini, t_nums *nums);
 int		check_echo(t_cmd *mini, t_nums *nums);
 int		check_env(t_cmd *mini, t_nums *nums);
 int		check_exit(t_cmd *mini, t_nums *nums);
 int		check_export(t_cmd *mini, t_nums *nums);
-int		ft_atoi(char *str);
+int		ft_atoi2(char *str);
 int		check_pwd(t_cmd *mini, t_nums *nums);
 int		check_unset(t_cmd *mini, t_nums *nums);
 int		execute_echo(t_cmd *mini);
@@ -122,12 +123,11 @@ char	**post_line(char *str, char **envp, int count);
 int		isalnum(int c);
 int		execute_export(t_cmd *mini, char **envp);
 int		execute_pwd(t_cmd *mini);
-void	execute_unset(t_cmd *mini, char **envp);
+int		execute_unset(t_cmd *mini, char **envp);
 void	unset_checker(char *str, char **envp);
 int		check_unset2(char *str, char **envp);
-int		ft_atoi(char *str);
-int	atoerror(char *str);
-
+int		ft_atoi2(char *str);
+int		atoerror(char *str);
 
 //utils
 char	**ft_split(char *s, char c);
@@ -151,7 +151,7 @@ int		free_utils(char *a, char **b);
 int		free_utils2(char *a, char **b);
 void	piderror_process(t_nums *nums);
 //pipe
-int		creat_pipe(t_nums *nums, t_cmd *mini);
+int		creat_pipe(t_nums *nums);
 void	close_pipe(t_nums *nums);
 
 

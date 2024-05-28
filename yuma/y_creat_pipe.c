@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   creat_pipe.c                                       :+:      :+:    :+:   */
+/*   y_creat_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 14:19:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/24 10:51:16 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:51:29 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	close_pipe(t_nums *nums)
 		close(nums->pipe[i]);
 }
 
-int	creat_pipe(t_nums *nums, t_cmd *mini)
+int	creat_pipe(t_nums *nums)
 {
 	int	i;
 

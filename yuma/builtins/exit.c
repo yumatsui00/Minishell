@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/25 11:06:20 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:33:39 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	execute_exit(t_cmd *mini)
 	{
 		if (argument_check(mini->input + 5) == ERROR)
 			return (ERROR);
-		i = (int)ft_atoi(mini->input + 5);
+		i = (int)ft_atoi2(mini->input + 5);
 		stts(WRITE, i % 256);
 		exit(i % 256);
 	}
