@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   k_free.c                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 21:09:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/22 21:09:17 by kkomatsu         ###   ########.fr       */
+/*   Created: 2024/04/16 12:33:34 by kkomatsu          #+#    #+#             */
+/*   Updated: 2024/04/16 13:03:43 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	free_double_ptr(char **s)
+char *ft_strdup(const char *s1)
 {
-	int	i;
-	int	j;
+	int i;
+	char *ret;
 
 	i = 0;
-	while (s[i])
-		i++;
-	j = 0;
-	while (j < i)
+	ret = (char *)malloc(ft_strlen(s1) + 1);
+	if (!ret)
+		return (NULL);
+	while (s1[i])
 	{
-		free(s[j]);
-		j++;
+		ret[i] = s1[i];
+		i++;
 	}
-	free(s);
+	ret[i] = '\0';
+	return ret;
 }
 
-void	free_cmd(t_cmd **cmd)
-{
-	if (cmd && *cmd)
-	{
-		free_cmd(&(*cmd)->next);
-		free(*cmd);
-		*cmd = NULL;
-	}
-}
+// int	main(void)
+// {
+// 	char	*str;
+
+// 	str = ft_strdup("");
+// 	printf("%s\n", str);
+// }

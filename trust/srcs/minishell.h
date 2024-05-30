@@ -130,16 +130,16 @@ int					atoerror(char *str);
 
 // utils
 // char	**ft_split(char *s, char c);
-// int		ft_strlen(char *str);
+// int					ft_strlen(char *str);
 // int		ft_strncmp(char *s1, char *s2, int	n);
-// char	*ft_strdup(char *str);
+// char				*ft_strdup(char *str);
 // char	*ft_strjoin(char *s1, char *s2);
 // int		ft_strlcpy(char *dst, char *src, int size);
 void				freefree(char **ans);
 char				**ft_strdupdup(char **str, int i);
 char				*ft_strjoin_mini(char *s1, char *s2);
 char				*ft_strdup2(char *str);
-int					ft_strlen_tillspace(char *str);
+int	ft_strlen_tillspace(char *str); //!
 void				unlink_allfile(char filename[6], int i);
 void				t_cmd_free(t_cmd *mini);
 
@@ -156,16 +156,25 @@ void				close_pipe(t_nums *nums);
 //! kkomatsu
 void				minishell(char **envp);
 
+void				sig_int_input(int signum);
+void				sig_quit_input(int signum);
+
+char				*ft_getenv(char *name, char **ep);
+char				**ft_split_for_lexer(char *line);
+int					is_sankaku(char *item);
+
 char				**envp_to_heap(char **ep);
 char				*cut_in_main(char *line);
-void				expan_env_var_main(char **line, char **ep);
-int					is_sankaku(char *item);
+char				**expan_env_var_main(char **line, char **ep);
+char				**expand_ep_main(char **line, char **ep);
+int					find_syntax_error(char **line);
 char				**union_friends(char **line);
 t_cmd				**lexer(char *before_line, char **ep);
 char				**rearranges_main(char **line);
 t_cmd				**make_cmd_line(char **line);
 
 void				debug_cmd(t_cmd **cmd_po);
+void				debug_double_ptr(char **ss);
 
 void				free_cmd(t_cmd **cmd);
 void				free_double_ptr(char **s);

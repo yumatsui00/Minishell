@@ -6,11 +6,23 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 21:05:20 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:20:08 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:30:50 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_strlen_tillspace(char *str)
+{
+	int	count;
+
+	if (str == NULL)
+		return (0);
+	count = 0;
+	while (str[count] && str[count] != ' ')
+		count++;
+	return (count);
+}
 
 void	freefree(char **ans)
 {

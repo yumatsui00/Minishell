@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:17:32 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:31:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,54 +122,54 @@ void	exec_main(t_cmd *mini, char **envp)
 // 	}
 // }
 
-int main(int argc, char **argv, char **envp)
-{
-	t_cmd *mini;
-	t_cmd *tmp, *first;
-	int i = 1;
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd *mini;
+// 	t_cmd *tmp, *first;
+// 	int i = 1;
 
-	mini = (t_cmd *)malloc(sizeof(t_cmd));
-	mini->input = strdup(argv[1]);
-	mini->status = COM;
-	mini->next = NULL;
-	first = mini;
-	while (++i < argc)
-	{
-		tmp = (t_cmd *)malloc(sizeof(t_cmd));
-		tmp->input = strdup(argv[i]);
-		if (argv[i][0] == '<' && argv[i][1] == '<')
-			tmp->status = HERE;
-		else if (argv[i][0] == '<')
-			tmp->status = RECI;
-		else if (argv[i][0] == '>' && argv[i][1] == '>')
-			tmp->status = POST;
-		else if (argv[i][0] == '>')
-			tmp->status = SEND;
-		else if (argv[i][0] == '|')
-			tmp->status = PIPE;
-		else if (argv[i][0] == ';')
-			tmp->status = SEMQ;
-		else
-			tmp->status = COM;
-		tmp->next = NULL;
-		mini->next = tmp;
-		mini = tmp;
-	}
-	mini = first;
-	while (mini != NULL)
-	{
-		printf("input = %s,  status = %d\n", mini->input, mini->status);
-		mini = mini->next;
-	}
-	char **e;
-	e = ft_strdupdup(envp, 0);
-	printf("e = %s\n", e[0]);
-	exec_main(first, e);
-	write(2, "この下で行かれている可能性が非常に高いのであります\n", 100);
-	mini = first;
-	while (mini != NULL)
-	{
-		printf("input = %s,  status = %d\n", mini->input, mini->status);
-		mini = mini->next;
-	}
-}
+// 	mini = (t_cmd *)malloc(sizeof(t_cmd));
+// 	mini->input = strdup(argv[1]);
+// 	mini->status = COM;
+// 	mini->next = NULL;
+// 	first = mini;
+// 	while (++i < argc)
+// 	{
+// 		tmp = (t_cmd *)malloc(sizeof(t_cmd));
+// 		tmp->input = strdup(argv[i]);
+// 		if (argv[i][0] == '<' && argv[i][1] == '<')
+// 			tmp->status = HERE;
+// 		else if (argv[i][0] == '<')
+// 			tmp->status = RECI;
+// 		else if (argv[i][0] == '>' && argv[i][1] == '>')
+// 			tmp->status = POST;
+// 		else if (argv[i][0] == '>')
+// 			tmp->status = SEND;
+// 		else if (argv[i][0] == '|')
+// 			tmp->status = PIPE;
+// 		else if (argv[i][0] == ';')
+// 			tmp->status = SEMQ;
+// 		else
+// 			tmp->status = COM;
+// 		tmp->next = NULL;
+// 		mini->next = tmp;
+// 		mini = tmp;
+// 	}
+// 	mini = first;
+// 	while (mini != NULL)
+// 	{
+// 		printf("input = %s,  status = %d\n", mini->input, mini->status);
+// 		mini = mini->next;
+// 	}
+// 	char **e;
+// 	e = ft_strdupdup(envp, 0);
+// 	printf("e = %s\n", e[0]);
+// 	exec_main(first, e);
+// 	write(2, "この下で行かれている可能性が非常に高いのであります\n", 100);
+// 	mini = first;
+// 	while (mini != NULL)
+// 	{
+// 		printf("input = %s,  status = %d\n", mini->input, mini->status);
+// 		mini = mini->next;
+// 	}
+// }

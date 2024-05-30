@@ -6,21 +6,9 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:14 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:51 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:30:25 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// int	ft_strlen_tillspace(char *str)
-// {
-// 	int	count;
-
-// 	if (str == NULL)
-// 		return (0);
-// 	count = 0;
-// 	while (str[count] && str[count] != ' ')
-// 		count++;
-// 	return (count);
-// }
 
 // void	letsunset(int i, char **envp)
 // {

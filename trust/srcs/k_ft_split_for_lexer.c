@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
 typedef struct s_split
 {
@@ -84,7 +84,7 @@ static int	logic(t_split *data, char **start, char *line, char ***ret)
 	{
 		if (*start)
 		{
-			(*ret)[data->index] = malloc(line - *start + 1);
+			(*ret)[data->index] = (char *)malloc(line - *start + 1);
 			if (!(*ret)[data->index])
 				return (1);
 			ft_strncpy((*ret)[data->index], *start, line - *start);
@@ -106,7 +106,7 @@ char	**ft_split_for_lexer(char *line)
 
 	init(&data);
 	start = NULL;
-	ret = malloc((count_word(line) + 1) * sizeof(char *));
+	ret = (char **)malloc((count_word(line) + 1) * sizeof(char *));
 	if (!ret)
 		return (NULL);
 	while (*line)

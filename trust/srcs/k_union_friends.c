@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:40 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/22 21:31:40 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:27:22 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,36 +38,38 @@ static int	count_union(char **line)
 
 char	**union_friends(char **line)
 {
+	char	**line_ptr;
 	char	**ret;
 	char	*stk;
 	int		i;
 	int		is_ass;
 
+	line_ptr = line;
 	ret = (char **)malloc(sizeof(char *) * (count_union(line) + 1));
 	i = 0;
 	is_ass = 0;
-	while (*line)
+	while (*line_ptr)
 	{
 		stk = NULL;
-		while (*line && ft_strcmp(*line, "|") && ft_strcmp(*line, ";"))
+		while (*line_ptr && ft_strcmp(*line_ptr, "|") && ft_strcmp(*line_ptr,
+				";"))
 		{
-			stk = ft_strjoin(stk, *line);
-			stk = ft_strjoin(stk, " ");
-			line++;
+			stk = ft_strjoin_free(stk, *line_ptr);
+			stk = ft_strjoin_free(stk, " ");
+			line_ptr++;
 			is_ass = 1;
-			if (is_sankaku(*line))
+			if (is_sankaku(*line_ptr))
 				break ;
 		}
 		if (!is_ass)
-			stk = ft_strjoin_free(stk, *line);
+			stk = ft_strjoin_free(stk, *line_ptr);
 		ret[i] = stk;
 		if (!is_ass)
-			line++;
+			line_ptr++;
 		i++;
 		is_ass = 0;
 	}
 	ret[i] = NULL;
-	// free(stk);
-	// free_double_ptr(line);
+	free_double_ptr(line);
 	return (ret);
 }

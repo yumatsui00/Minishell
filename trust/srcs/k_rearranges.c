@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:36 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/22 21:29:47 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/05/26 15:27:37 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,6 @@ typedef struct s_data
 	int		len;
 	int		is_ass;
 }			t_data;
-
-void	pri(char **ss)
-{
-	int	i;
-
-	while (*ss)
-	{
-		printf("---%s\n", *ss);
-		ss++;
-		i++;
-	}
-	printf("|||||||||||||||||\n");
-}
 
 static int	count_sankaku(char **line, int len)
 {
@@ -83,7 +70,6 @@ static void	logic_component(char **dest, char **src, t_data *data, int num)
 static void	logic(char **dest, char **src, int len, int is_ass)
 {
 	int		i;
-	int		j;
 	int		k;
 	t_data	data;
 
@@ -114,6 +100,7 @@ static void	logic(char **dest, char **src, int len, int is_ass)
 
 char	**rearranges_main(char **line)
 {
+	char	**line_ptr;
 	char	**ret;
 	char	**stk;
 	int		len;
@@ -122,20 +109,21 @@ char	**rearranges_main(char **line)
 	while (line[len])
 		len++;
 	ret = (char **)ft_calloc(len + 1, sizeof(char *));
-	while (*line)
+	line_ptr = line;
+	while (*line_ptr)
 	{
-		stk = line;
-		while (*line && ft_strcmp(*line, "|") && ft_strcmp(*line, ";"))
-			line++;
-		if (!ft_strcmp(*line, "|") || !ft_strcmp(*line, ";"))
+		stk = line_ptr;
+		while (*line_ptr && ft_strcmp(*line_ptr, "|") && ft_strcmp(*line_ptr,
+				";"))
+			line_ptr++;
+		if (!ft_strcmp(*line_ptr, "|") || !ft_strcmp(*line_ptr, ";"))
 		{
-			logic(ret, stk, line - stk + 1, 1);
-			line++;
+			logic(ret, stk, line_ptr - stk + 1, 1);
+			line_ptr++;
 		}
 		else
-			logic(ret, stk, line - stk, 0);
+			logic(ret, stk, line_ptr - stk, 0);
 	}
-	*line = NULL;
-	// free_double_ptr(line);
+	free(line);
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_lexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: komatsukotarou <komatsukotarou@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/22 21:35:12 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/05/28 10:10:49 by komatsukota      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int	is_sankaku(char *item)
 {
-	if (!ft_strcmp(item, "<") | !ft_strcmp(item, ">") | !ft_strcmp(item,
-			"<<") | !ft_strcmp(item, ">>"))
+	if (!ft_strcmp(item, "<") || !ft_strcmp(item, ">") || !ft_strcmp(item,
+			"<<") || !ft_strcmp(item, ">>"))
 		return (1);
 	return (0);
 }
@@ -65,61 +65,6 @@ int	cut_or_read(char **line)
 	return (0);
 }
 
-int	output_error(char *item)
-{
-	ft_putstr_fd("syntax error near unexpected token `", 1);
-	if (item)
-		ft_putstr_fd(item, 1);
-	else
-		ft_putstr_fd("newline", 1);
-	ft_putstr_fd("'\n", 1);
-	return (1);
-}
-
-int	select_output(char *item, char *next, int is_first)
-{
-	if (!ft_strcmp(item, "|") | !ft_strcmp(item, ";"))
-	{
-		if (!next && is_first)
-			return (output_error(item));
-		else if (!ft_strcmp(next, "|") | !ft_strcmp(next, ";"))
-			return (output_error(next));
-	}
-	if (is_sankaku(item))
-	{
-		if (!next)
-			return (output_error(next));
-		else if (!ft_strcmp(next, "|") | !ft_strcmp(next,
-				";") | is_sankaku(next))
-			return (output_error(next));
-	}
-	return (0);
-}
-
-//左から一つずつ見ていく。
-//一つ右を確認
-// itemだったらsyntax error
-int	find_syntax_error(char **line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (select_output(line[i], line[i + 1], i == 0))
-			return (1);
-		i++;
-	}
-	if (!ft_strcmp(line[i - 1], "|"))
-	{
-		printf("直ちに読み込みなさい\n");
-		//読み込みます
-		// line = ~
-		// find_syntax_error(line);
-	}
-	return (0);
-}
-
 // 1.split: ft_split_for_lexer関数
 // 2.クオートが奇数だったら受付、偶数だったら次に進む:
 // 3.クオートを消す
@@ -141,13 +86,21 @@ syntax error: unexpected end of file
 t_cmd	**lexer(char *before_line, char **ep)
 {
 	char	**line;
-	int		error_check;
 	t_cmd	**ret;
 
+	if (!ft_strcmp(before_line, ""))
+	{
+		free(before_line);
+		return (NULL);
+	}
 	before_line = cut_in_main(before_line);
+	if (!before_line)
+		return (NULL);
 	line = ft_split_for_lexer(before_line);
-	expan_env_var_main(line, ep);
-	exit(0); //return (NULL);
+	free(before_line);
+	if (!line)
+		return (NULL);
+	line = expand_ep_main(line, ep);
 	if (cut_or_read(line))
 	{
 		printf("エラー\n");
@@ -158,6 +111,8 @@ t_cmd	**lexer(char *before_line, char **ep)
 	line = rearranges_main(line);
 	line = union_friends(line);
 	ret = make_cmd_line(line);
+	// exit(0);
+	free(line);
 	return (ret);
 }
 

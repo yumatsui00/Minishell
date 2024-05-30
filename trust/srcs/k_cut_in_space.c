@@ -6,11 +6,17 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:01 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/22 21:09:02 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:18:15 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+typedef struct s_data
+{
+	int		in_double_quotes;
+	int		in_single_quotes;
+}			t_data;
 
 static int	count_space(char *line)
 {
@@ -34,12 +40,18 @@ static int	count_space(char *line)
 
 static void	logic(char *line, char *new)
 {
-	int	i;
+	t_data	data;
 
-	i = 0;
+	data.in_single_quotes = 0;
+	data.in_double_quotes = 0;
 	while (*line)
 	{
-		if (!ft_strncmp(line, "<<", 2) || !ft_strncmp(line, ">>", 2))
+		if (*line == '\"' && !data.in_single_quotes)
+			data.in_double_quotes = !data.in_double_quotes;
+		else if (*line == '\'' && !data.in_double_quotes)
+			data.in_single_quotes = !data.in_single_quotes;
+		if (!data.in_double_quotes && !data.in_single_quotes
+			&& (!ft_strncmp(line, "<<", 2) || !ft_strncmp(line, ">>", 2)))
 		{
 			*new = ' ';
 			*++new = *line;
@@ -47,8 +59,9 @@ static void	logic(char *line, char *new)
 			*++new = ' ';
 			line++;
 		}
-		else if (!ft_strncmp(line, "<", 1) || !ft_strncmp(line, ">", 1)
-			|| !ft_strncmp(line, "|", 1) || !ft_strncmp(line, ";", 1))
+		else if (!data.in_double_quotes && !data.in_single_quotes
+			&& (!ft_strncmp(line, "<", 1) || !ft_strncmp(line, ">", 1)
+				|| !ft_strncmp(line, "|", 1) || !ft_strncmp(line, ";", 1)))
 		{
 			*new = ' ';
 			*++new = *line;
@@ -63,6 +76,7 @@ static void	logic(char *line, char *new)
 }
 
 //  <,>,<<,>>,|,;の前後に空白を入れる
+// ", 'の中は入れない。。
 char	*cut_in_main(char *line)
 {
 	int		space_count;
@@ -70,6 +84,11 @@ char	*cut_in_main(char *line)
 
 	space_count = count_space(line);
 	new = (char *)malloc(ft_strlen(line) + space_count * 2 + 1);
+	if (!new)
+	{
+		free(line);
+		return (NULL);
+	}
 	logic(line, new);
 	free(line);
 	return (new);

@@ -6,28 +6,11 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:29 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/22 21:09:31 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:28:38 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	debug_cmd(t_cmd **cmd_po)
-{
-	t_cmd	*cmd;
-	int		i;
-
-	cmd = *cmd_po;
-	i = 0;
-	while (cmd->next)
-	{
-		printf("%d: %s %d\n", i, cmd->input, cmd->status);
-		cmd = cmd->next;
-		i++;
-	}
-	printf("%d: %s %d\n", i, cmd->input, cmd->status);
-	return ;
-}
 
 static int	select_status(char *input)
 {
