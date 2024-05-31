@@ -64,7 +64,8 @@ char **expand_ep_main(char **line, char **ep)
 	{
 		if (line[i][0] == '\'')
 		{
-			line++;
+			ret[i] = line[i];
+			i++;
 			continue;
 		}
 		ret[i] = expand_ep(line[i], ep);
@@ -76,7 +77,7 @@ char **expand_ep_main(char **line, char **ep)
 		i++;
 	}
 	ret[i] = NULL;
-	free_double_ptr(line);
+	// free_double_ptr(line);
 	return (ret);
 }
 

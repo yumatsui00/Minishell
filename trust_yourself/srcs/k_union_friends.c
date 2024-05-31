@@ -76,7 +76,6 @@ char	**union_friends(char **line)
 		ret[i] = stk;
 		if (!is_ass)
 			line_ptr++;
-		printf("%s--\n", stk);
 		i++;
 		is_ass = 0;
 	}
