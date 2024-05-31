@@ -36,11 +36,12 @@ static int	count_union(char **line)
 	return (count);
 }
 
-void ass_space_delete(char *s)
+static void ass_space_delete(char *s)
 {
 	int len;
 
 	len = ft_strlen(s);
+	//len <= 0のときの処理
 	s[len - 1] = '\0';
 }
 
