@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/31 13:11:32 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:07:38 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	piderror_process(t_nums *nums)
 	return ;
 }
 
-void	builtin_execute(t_cmd *mini, char **envp)
+void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 {
 	int	flag;
 
 	flag = OK;
 	if (ft_strncmp(mini->input, "echo", 4) == 0)
-		flag = execute_echo(mini);
+		flag = execute_echo(mini, nums);
 	else if (ft_strncmp(mini->input, "cd", 2) == 0)
 		flag = execute_cd(mini);
 	else if (ft_strncmp(mini->input, "pwd", 3) == 0)
@@ -60,11 +60,10 @@ void	bin_execute(t_cmd *mini, char **envp)
 	exit(1);
 }
 
-void	ft_execute(t_cmd *mini, char **envp)
+void	ft_execute(t_cmd *mini, t_nums *nums, char **envp)
 {
-	printf("cmd kind = %d\n", mini->cmd_kind);
 	if (mini->cmd_kind == BUILTIN)
-		builtin_execute(mini, envp);
+		builtin_execute(mini, nums, envp);
 	else if (mini->cmd_kind == BIN)
 		bin_execute(mini, envp);
 	else
@@ -75,7 +74,7 @@ void	ft_execute(t_cmd *mini, char **envp)
 void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 {
 	if ((*mini)->cmd_kind == BUILTIN)
-		builtin_execute(*mini, envp);
+		builtin_execute(*mini, nums, envp);
 	else if ((*mini)->cmd_kind == BIN)
 	{
 		nums->pid = fork();
@@ -90,7 +89,7 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 				stts(WRITE, 1);
 				exit(1);
 			}
-			ft_execute(*mini, envp);
+			ft_execute(*mini, nums, envp);
 		}
 		else
 		{

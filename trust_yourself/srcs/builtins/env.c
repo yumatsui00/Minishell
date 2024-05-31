@@ -6,21 +6,21 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:19 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:09:32 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	execute_env(char **envp)
+int	execute_env(t_nums *nums, char **envp)
 {
 	int	i;
 
 	i = -1;
 	while (envp[++i] != NULL)
 	{
-		write(1, envp[i], ft_strlen(envp[i]));
-		write(1, "\n", 1);
+		write(nums->outfile, envp[i], ft_strlen(envp[i]));
+		write(nums->outfile, "\n", 1);
 	}
 	stts(WRITE, 0);
 	return (OK);

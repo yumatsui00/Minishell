@@ -6,23 +6,23 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:15 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:09:12 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	echo_output(char *str)
+void	echo_output(char *str, t_nums *nums)
 {
 	int	i;
 
 	i = -1;
 	while (str[++i])
-		write(1, &str[i], 1);
+		write(nums->outfile, &str[i], 1);
 	return ;
 }
 
-int	execute_echo(t_cmd *mini)
+int	execute_echo(t_cmd *mini, t_nums *nums)
 {
 	stts(WRITE, 0);
 	if (ft_strncmp(mini->input, "echo -n", 7) == 0)
@@ -31,12 +31,12 @@ int	execute_echo(t_cmd *mini)
 			return (OK);
 		else if (mini->input[7] == ' ')
 		{
-			echo_output(mini->input + 7);
+			echo_output(mini->input + 7, nums);
 			return (OK);
 		}
 	}
-	echo_output(mini->input + 4);
-	write(1, "\n", 1);
+	echo_output(mini->input + 4, nums);
+	write(nums->outfile, "\n", 1);
 	return (OK);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 13:26:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/30 19:50:41 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:05:59 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ void	child_process(t_cmd *mini, t_nums *nums, char **envp)
 		flag = dupdupdup(nums->pipe[nums->i * 2 - 2], nums->pipe[nums->i * 2 + 1]);
 	if (flag == ERROR)
 		exit(1);
-	ft_execute(mini, envp);
+	ft_execute(mini, nums, envp);
 }

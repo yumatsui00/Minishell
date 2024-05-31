@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/31 13:41:30 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:53:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	stts(int mode, int num)
 
 void	end_or_recurse(t_cmd **mini, t_nums *nums, char **envp)
 {
-	printf("end_status == %d\n", nums->end_status);
 	if (nums->end_status == END)
 		return ;
 	else if (nums->end_status == SEMQ)

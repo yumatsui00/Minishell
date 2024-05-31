@@ -99,8 +99,8 @@ void				parent_process(t_cmd **mini, t_nums *nums);
 void				parent_process2(t_cmd *mini, t_nums *nums, char **envp);
 int					dupdupdup(int fd1, int fd2);
 // 6
-void				builtin_execute(t_cmd *mini, char **envp);
-void				ft_execute(t_cmd *mini, char **envp);
+void				builtin_execute(t_cmd *mini, t_nums *nums, char **envp);
+void				ft_execute(t_cmd *mini, t_nums *nums, char **envp);
 void				execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp);
 // builtins
 int					check_cd(t_cmd *mini, t_nums *nums);
@@ -111,9 +111,9 @@ int					check_export(t_cmd *mini, t_nums *nums);
 int					ft_atoi2(char *str);
 int					check_pwd(t_cmd *mini, t_nums *nums);
 int					check_unset(t_cmd *mini, t_nums *nums);
-int					execute_echo(t_cmd *mini);
+int					execute_echo(t_cmd *mini, t_nums *nums);
 int					execute_cd(t_cmd *mini);
-int					execute_env(char **envp);
+int					execute_env(t_nums *nums, char **envp);
 int					execute_exit(t_cmd *mini);
 int					execute_export(t_cmd *mini, char **envp);
 char				**add_line(char *str, char **envp);
