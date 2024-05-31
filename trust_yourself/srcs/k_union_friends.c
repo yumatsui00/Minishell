@@ -36,6 +36,14 @@ static int	count_union(char **line)
 	return (count);
 }
 
+void ass_space_delete(char *s)
+{
+	int len;
+
+	len = ft_strlen(s);
+	s[len - 1] = '\0';
+}
+
 char	**union_friends(char **line)
 {
 	char	**line_ptr;
@@ -63,9 +71,12 @@ char	**union_friends(char **line)
 		}
 		if (!is_ass)
 			stk = ft_strjoin_free(stk, *line_ptr);
+		
+		ass_space_delete(stk);
 		ret[i] = stk;
 		if (!is_ass)
 			line_ptr++;
+		printf("%s--\n", stk);
 		i++;
 		is_ass = 0;
 	}
