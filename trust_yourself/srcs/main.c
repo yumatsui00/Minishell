@@ -42,16 +42,21 @@ void	minishell(char **ep)
 
 	is_exit = 0;
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	// signal(SIGQUIT, signal_handler);
 	while (!is_exit)
 	{
 		line = readline(MINISHELL);
+		if (!line)
+		{
+			write(1, "\b\b", 2);
+			break;
+		}
 		if (*line)
 			add_history(line);
 		cmd = lexer(line, ep);
 ;		if (cmd)
 		{
-			// debug_cmd(cmd);
+			debug_cmd(cmd);
 			exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
