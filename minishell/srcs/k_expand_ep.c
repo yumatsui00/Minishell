@@ -64,7 +64,7 @@ char **expand_ep_main(char **line, char **ep)
 	{
 		if (line[i][0] == '\'')
 		{
-			ret[i] = line[i];
+			ret[i] = ft_strdup(line[i]);
 			i++;
 			continue;
 		}
