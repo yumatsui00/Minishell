@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/02 19:28:01 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:09:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	minishell(char **ep)
 		cmd = lexer(line, ep);
 		if (cmd)
 		{
-			// exec_main(*cmd, ep);
+			exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
 		}
