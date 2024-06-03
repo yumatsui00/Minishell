@@ -32,7 +32,7 @@ void	signal_handler(int signum)
 	(void)signum;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	// rl_replace_line("\b\b", 0);
+	// rl_replace_line("\r\033[0K", 0);
 	rl_redisplay();
 	// exit(0);
 }
@@ -58,7 +58,7 @@ void	minishell(char **ep)
 		cmd = lexer(line, ep);
 		if (cmd)
 		{
-			exec_main(*cmd, ep);
+			// exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
 		}
