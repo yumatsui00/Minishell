@@ -98,7 +98,7 @@ t_cmd	**lexer(char *before_line, char **ep)
 		return (NULL);
 	line = ft_split_for_lexer(before_line);
 	free(before_line);
-	if (!line)
+	if (!*line)
 		return (NULL);
 	line = expand_ep_main(line, ep);
 	if (cut_or_read(line))
