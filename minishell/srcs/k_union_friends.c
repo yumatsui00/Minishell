@@ -40,6 +40,8 @@ static void ass_space_delete(char *s)
 {
 	int len;
 
+	if (!ft_strcmp(s, "|") || !ft_strcmp(s, "|"))
+		return ;
 	len = ft_strlen(s);
 	//len <= 0のときの処理
 	s[len - 1] = '\0';

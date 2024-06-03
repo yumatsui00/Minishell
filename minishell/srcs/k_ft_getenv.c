@@ -30,6 +30,8 @@ char *ft_getenv(char *name, char **ep)
     while (*ep)
     {
         ep_name = until_eq(*ep);
+        if (!ft_strcmp(ep_name, "?"))
+            return (ft_itoa(stts(WRITE, 1)));
         if (!ft_strcmp(name, ep_name))
         {
             free(ep_name);
