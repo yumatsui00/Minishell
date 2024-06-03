@@ -40,7 +40,7 @@ void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 	else if (ft_strncmp(mini->input, "exit", 4) == 0)
 		flag = execute_exit(mini);
 	else if (ft_strncmp(mini->input, "env", 3) == 0)
-		flag = execute_env(envp);
+		flag = execute_env(nums, envp);
 	if (flag == MALLOCERROR || flag == ERROR)
 		stts(WRITE, 1);
 }
