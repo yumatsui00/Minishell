@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:07:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:17:38 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:48:32 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,11 @@ static int	creat_heredoc(t_cmd *mini, t_nums *nums)
 	char	filename[6];
 	int		fd;
 
-	printf("numsi = %d\n", nums->i);
-	set_filename(filename, nums->i);
-	printf("filename = %s\n", filename);
+	set_filename(filename, nums->index);
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0000644);
 	if (fd < 0)
 	{
-		unlink_allfile(filename, nums->i);
+		unlink_allfile(filename, nums->index);
 		write(2, "minishell: ", 11);
 		write(2, &fd, sizeof(int));
 		perror("");
@@ -76,7 +74,7 @@ static int	creat_heredoc(t_cmd *mini, t_nums *nums)
 	}
 	if (read_heredoc(fd, filename, mini) == MALLOCERROR)
 	{
-		unlink_allfile(filename, nums->i);
+		unlink_allfile(filename, nums->index);
 		return (MALLOCERROR);
 	}
 	return (close(fd));
@@ -88,12 +86,13 @@ int	change_heredoc_into_redirect(t_cmd *mini, t_nums *nums)
 	int		flag;
 
 	cpy = mini;
-	nums->i = -1;
+	nums->index = -1;
 	while (cpy != NULL)
 	{
 		if (cpy->status == HERE)
 		{
-			(nums->i)++;
+			(nums->index)++;
+			cpy->status = RECI;
 			flag = creat_heredoc(cpy, nums);
 			{
 				if (flag == MALLOCERROR)

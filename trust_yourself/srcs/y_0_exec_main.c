@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/31 13:53:11 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:47:42 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 		return (end_or_recurse(&mini, nums, envp));
 	if (creat_pipe(nums) == ERROR)
 		return ;
+	printf("index = %d\n", nums->index);
 	exec_main2(mini, nums, envp);
 	parent_process2(mini, nums, envp);
 	return ;
@@ -102,10 +103,12 @@ void	exec_main(t_cmd *mini, char **envp)
 	// 	free(mini);
 	// 	mini = tmp;
 	// }
-	while (--nums.i >= 0)
+	printf("fileNo = %d\n", nums.index);
+	while (nums.index >= 0)
 	{
-		set_filename(filename, nums.i);
+		set_filename(filename, nums.index);
 		unlink(filename);
+		nums.index--;
 	}
 }
 

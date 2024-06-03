@@ -6,13 +6,13 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:40 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:33:42 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	execute_pwd(t_cmd *mini)
+int	execute_pwd(t_cmd *mini, t_nums *nums)
 {
 	char	pwd[PATH_MAX];
 
@@ -34,8 +34,8 @@ int	execute_pwd(t_cmd *mini)
 		perror("");
 	else
 	{
-		write(1, pwd, ft_strlen(pwd));
-		write(1, "\n", 1);
+		write(nums->outfile, pwd, ft_strlen(pwd));
+		write(nums->outfile, "\n", 1);
 		stts(WRITE, 0);
 	}
 	return (OK);

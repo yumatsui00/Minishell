@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/31 14:07:38 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:34:01 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 	else if (ft_strncmp(mini->input, "cd", 2) == 0)
 		flag = execute_cd(mini);
 	else if (ft_strncmp(mini->input, "pwd", 3) == 0)
-		flag = execute_pwd(mini);
+		flag = execute_pwd(mini, nums);
 	else if (ft_strncmp(mini->input, "export", 6) == 0)
-		flag = execute_export(mini, envp);
+		flag = execute_export(mini, nums, envp);
 	else if (ft_strncmp(mini->input, "unset", 5) == 0)
 		flag = execute_unset(mini, envp);
 	else if (ft_strncmp(mini->input, "exit", 4) == 0)

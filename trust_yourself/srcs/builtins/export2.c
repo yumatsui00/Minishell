@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 21:24:28 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:34 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:30:30 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static int	check_more(char *str, char **envp)
     return (check_more2(str, envp, i));
 }
 
-int	execute_export(t_cmd *mini, char **envp)
+int	execute_export(t_cmd *mini, t_nums *nums, char **envp)
 {
     int		i;
     char	*str;
@@ -127,9 +127,9 @@ int	execute_export(t_cmd *mini, char **envp)
     {
         while (envp[++i])
         {
-            write(1, "declare -x ", 11);
-            write(1, envp[i], ft_strlen(envp[i]));
-            write(1, "\n", 1);
+            write(nums->outfile, "declare -x ", 11);
+            write(nums->outfile, envp[i], ft_strlen(envp[i]));
+            write(nums->outfile, "\n", 1);
         }
         stts(WRITE, 0);
         return (OK);

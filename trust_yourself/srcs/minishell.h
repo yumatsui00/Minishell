@@ -57,7 +57,8 @@ typedef struct s_cmd
 
 typedef struct s_nums
 {
-	int i; // heredoc_index
+	int 			i;
+	int				index;// heredoc_index
 	t_cmd			*first;
 	t_cmd			*end;
 	int				end_status;
@@ -115,14 +116,13 @@ int					execute_echo(t_cmd *mini, t_nums *nums);
 int					execute_cd(t_cmd *mini);
 int					execute_env(t_nums *nums, char **envp);
 int					execute_exit(t_cmd *mini);
-int					execute_export(t_cmd *mini, char **envp);
+int					execute_export(t_cmd *mini, t_nums *nums, char **envp);
 char				**add_line(char *str, char **envp);
 char				**add_line2(char *str, char **envp, int i, int flag);
 char				**change_line(char *str, char **envp, int count);
 char				**post_line(char *str, char **envp, int count);
 // int					isalnum(int c);
-int					execute_export(t_cmd *mini, char **envp);
-int					execute_pwd(t_cmd *mini);
+int					execute_pwd(t_cmd *mini, t_nums *nums);
 int					execute_unset(t_cmd *mini, char **envp);
 void				unset_checker(char *str, char **envp);
 int					check_unset2(char *str, char **envp);
