@@ -111,7 +111,6 @@ t_cmd	**lexer(char *before_line, char **ep)
 	line = rearranges_main(line);
 	line = union_friends(line);
 	ret = make_cmd_line(line);
-	// exit(0);
 	free(line);
 	return (ret);
 }

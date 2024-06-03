@@ -77,7 +77,7 @@ char **expand_ep_main(char **line, char **ep)
 		i++;
 	}
 	ret[i] = NULL;
-	// free_double_ptr(line);
+	free_double_ptr(line);
 	return (ret);
 }
 

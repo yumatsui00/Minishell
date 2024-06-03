@@ -42,7 +42,10 @@ int	find_syntax_error(char **line)
 	while (line[i])
 	{
 		if (select_output(line[i], line[i + 1], i == 0))
+		{
+			free_double_ptr(line);
 			return (1);
+		}
 		i++;
 	}
 	if (!ft_strcmp(line[i - 1], "|"))
