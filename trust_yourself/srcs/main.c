@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/30 19:44:57 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:28:01 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,23 @@ __attribute__((destructor)) static void destructor()
 	system("leaks -q a.out");
 }
 
-
 void	ready(void)
 {
-	write(1, " __  __ ___ _  _ ___ ___ _  _ ___ _    _     \n", 47);
+	write(1, "  __  __ ___ _  _ ___ ___ _  _ ___ _    _     \n", 47);
 	write(1, " |  \\/  |_ _| \\| |_ _/ __| || | __| |  | |   \n", 47);
 	write(1, " | |\\/| || || .` || |\\__ \\ __ | _|| |__| |__ \n", 47);
 	write(1, " |_|  |_|___|_|\\_|___|___/_||_|___|____|____|\n", 47);
+	write(1, "\n", 1);
 }
 
 void	signal_handler(int signum)
 {
-	(void) signum;
-	write(1, "exit\n", 5);
-	exit(0);
+	(void)signum;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	// rl_replace_line("\b\b", 0);
+	rl_redisplay();
+	// exit(0);
 }
 
 void	minishell(char **ep)
@@ -42,21 +45,19 @@ void	minishell(char **ep)
 
 	is_exit = 0;
 	signal(SIGINT, signal_handler);
-	// signal(SIGQUIT, signal_handler);
 	while (!is_exit)
 	{
 		line = readline(MINISHELL);
 		if (!line)
 		{
 			write(1, "\b\b", 2);
-			break;
+			break ;
 		}
 		if (*line)
 			add_history(line);
 		cmd = lexer(line, ep);
-;		if (cmd)
+		if (cmd)
 		{
-			debug_cmd(cmd);
 			exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
@@ -71,7 +72,7 @@ int	main(int ac, char **av, char **ep)
 {
 	char	**new_ep;
 
-	(void) av;
+	(void)av;
 	if (ac == 1)
 	{
 		ready();
