@@ -120,7 +120,7 @@ char				**add_line(char *str, char **envp);
 char				**add_line2(char *str, char **envp, int i, int flag);
 char				**change_line(char *str, char **envp, int count);
 char				**post_line(char *str, char **envp, int count);
-int					isalnum(int c);
+// int					isalnum(int c);
 int					execute_export(t_cmd *mini, char **envp);
 int					execute_pwd(t_cmd *mini);
 int					execute_unset(t_cmd *mini, char **envp);
