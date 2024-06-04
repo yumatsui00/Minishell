@@ -6,17 +6,17 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/04 17:48:06 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:21:12 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <libc.h>
+// #include <libc.h>
 
-__attribute__((destructor)) static void destructor()
-{
-	system("leaks -q a.out");
-}
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q a.out");
+// }
 
 void	ready(void)
 {
@@ -57,7 +57,7 @@ void	minishell(char **ep)
 		if (*line)
 			add_history(line);
 		cmd = lexer(line, ep);
-		debug_cmd(cmd);
+		// debug_cmd(cmd);
 		if (cmd)
 		{
 			exec_main(*cmd, ep);
@@ -66,7 +66,7 @@ void	minishell(char **ep)
 		}
 	}
 	free_double_ptr(ep);
-	write(1, "exit\n", 5);
+	write(1, "exit\nz", 5);
 	return ;
 }
 
@@ -83,3 +83,4 @@ int	main(int ac, char **av, char **ep)
 	}
 	return (0);
 }
+
