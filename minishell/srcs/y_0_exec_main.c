@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 17:37:04 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:24:52 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
 	while (++(nums->i) <= nums->pipe_num)
 	{
 		get_start_location(mini, nums);
-		// printf("nums->i = %d\n", nums->i);
 		flag = redirect(nums);
-
 		if (flag == MALLOCERROR)
 			return (free(nums->pipe), stts(WRITE, 1));
 		else if (flag == ERROR)

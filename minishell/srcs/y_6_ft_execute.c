@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 17:39:38 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:54:52 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	ft_execute(t_cmd *mini, t_nums *nums, char **envp)
 		builtin_execute(mini, nums, envp);
 	else if (mini->cmd_kind == BIN)
 		bin_execute(mini, envp);
+	else if (mini->cmd_kind == ERRORCMD)
+		exit(1);
 	else
 		write(2, "ここには来ないはずなんだが\n", 25);
 	exit(1);
@@ -93,9 +95,10 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 		}
 		else
 		{
-			while (((*mini)->next) && (*mini)->status != PIPE && (*mini)->status != SEMQ)
+			waitpid(-1, NULL, 0);
+			while (((*mini)->next) && (*mini)->status != SEMQ)
 				(*mini) = (*mini)->next;
-			if (((*mini)->next) && (*mini)->status == PIPE)
+			if ((*mini)->next)
 				(*mini) = (*mini)->next;
 		}
 	}

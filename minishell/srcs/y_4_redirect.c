@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 17:39:09 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:27:02 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	red_send(t_nums *nums, int status)
 	if (dup2(nums->outfds[nums->outfds_i], nums->outfds[nums->outfds_i] - 1) < 0)
 		return (dup2_error(nums->outfds_i, outfile));
 	return (free(outfile), OK);
+	// return (OK);
 }
 
 int	red_recieve(t_nums *nums)
@@ -52,10 +53,10 @@ int	red_recieve(t_nums *nums)
 	infile = ft_strdup(nums->first->input + 2);
 	if (infile == NULL)
 		return (MALLOCERROR);
-	nums->infds[nums->infds_i] = open(infile, O_RDONLY);
+	nums->infds[nums->infds_i] = open((const char *)infile, O_RDONLY, 0000644);
 	if (nums->infds[nums->infds_i] < 0)
 	{
-		write(2, "minishell ", 11);
+		write(2, "minishell :", 11);
 		perror(infile);
 		stts(WRITE, 1);
 		return (free_utils2(infile, NULL));
@@ -108,12 +109,12 @@ int	redirect(t_nums *nums)
 		if (nums->first->status == RECI)
 		{
 			flag = red_recieve(nums);
-			nums->infds++;
+			nums->infds_i++;
 		}
 		else if (nums->first->status == SEND || nums->first->status == POST)
 		{
 			flag = red_send(nums, nums->first->status);
-			nums->outfds++;
+			nums->outfds_i++;
 		}
 		nums->first = nums->first->next;
 		if (flag == MALLOCERROR)
