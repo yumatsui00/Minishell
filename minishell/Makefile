@@ -53,16 +53,22 @@ $(OBJDIR)/%.o: $(SRCDIR)%.c | $(OBJDIR)
 	$(CC) $(CCFLAGS) -o $@ -c $<
 
 clean:
-	make clean -C srcs/libft
+	@make clean -C srcs/libft
 	@rm -rf $(OBJDIR)
 	@echo $(BRIGHT_MAGENTA)CLEAN DONE
 
-fclean:
+fclean: coffee
+	@make clean -C srcs/libft
 	@rm -rf $(OBJDIR)
 	@rm -f $(TARGET) $(TARGET1) $(TARGET2)
 	@echo $(BRIGHT_MAGENTA)----------------------FCLEAN DONE----------------------
 
-re: fclean all
+re:
+	@make clean -C srcs/libft
+	@rm -rf $(OBJDIR)
+	@rm -f $(TARGET) $(TARGET1) $(TARGET2)
+	@echo $(BRIGHT_RED)----------------------FCLEAN DONE----------------------
+	@make all
 
 .PHONY: all clean fclean re
 

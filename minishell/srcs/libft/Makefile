@@ -31,14 +31,14 @@ $(NAME): $(OBJ)
 bonus: $(NAME)
 
 .c.o:
-	cc $(CFLAGS) -I $(INCLUDE) -c $< -o $@
+	@cc $(CFLAGS) -I $(INCLUDE) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ)
-	$(RM) $(BONUS_OBJ)
+	@$(RM) $(OBJ)
+	@$(RM) $(BONUS_OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
