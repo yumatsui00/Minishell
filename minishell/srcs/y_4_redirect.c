@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:17:50 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:39:09 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	allocate_fd(t_nums *nums, int reci, int send)
 	nums->infds = (int *)malloc(sizeof(int) * (reci + 2));
 	nums->outfds = (int *)malloc(sizeof(int) * (send + 2));
 	if (nums->infds == NULL || nums->outfds == NULL)
-		return (free(nums->infds), free(nums->outfds), MALLOCERROR);
+		return (MALLOCERROR);
 	nums->infds[0] = STDIN_FILENO;
 	nums->outfds[0] = STDOUT_FILENO;
 	nums->infds[reci + 1] = '\0';
@@ -95,6 +95,12 @@ int	allocate_fd(t_nums *nums, int reci, int send)
 int	redirect(t_nums *nums)
 {
 	int	flag;
+
+	if (nums->i != 0)
+	{
+		free(nums->infds);
+		free(nums->outfds);
+	}
 	if (allocate_fd(nums, 0, 0) == MALLOCERROR)
 		return (MALLOCERROR);
 	while (nums->first && nums->first->status != SEMQ && nums->first->status != PIPE)

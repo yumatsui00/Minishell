@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_free.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/26 15:39:31 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:44:52 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_cmd(t_cmd **cmd)
 	{
 		free_cmd(&(*cmd)->next);
 		free((*cmd)->input);
+		free((*cmd)->abs_path);
 		free(*cmd);
 	}
 }

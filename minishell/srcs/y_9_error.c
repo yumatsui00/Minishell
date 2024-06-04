@@ -6,23 +6,11 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:58:15 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:25:40 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:37:13 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	t_cmd_free(t_cmd *mini)
-{
-	t_cmd	*tmp;
-
-	while (mini != NULL)
-	{
-		tmp = mini;
-		mini = mini->next;
-		free(tmp);
-	}
-}
 
 int	free_utils(char *a, char **b)
 {

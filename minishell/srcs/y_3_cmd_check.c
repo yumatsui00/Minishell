@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:17:43 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:38:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	check_abs_bin(t_cmd *cpy)
 		write(2, "minishell: ", 11);
 		write(2, cpy->abs_path, ft_strlen(cpy->abs_path));
 		write(2, ": command not found\n", 20);
-		free(cpy->abs_path);
 		cpy->abs_path = NULL;
 	}
 	return (OK);

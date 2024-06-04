@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/03 14:47:42 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:37:04 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
 	while (++(nums->i) <= nums->pipe_num)
 	{
 		get_start_location(mini, nums);
+		// printf("nums->i = %d\n", nums->i);
 		flag = redirect(nums);
+
 		if (flag == MALLOCERROR)
 			return (free(nums->pipe), stts(WRITE, 1));
 		else if (flag == ERROR)
@@ -77,7 +79,6 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 		return (end_or_recurse(&mini, nums, envp));
 	if (creat_pipe(nums) == ERROR)
 		return ;
-	printf("index = %d\n", nums->index);
 	exec_main2(mini, nums, envp);
 	parent_process2(mini, nums, envp);
 	return ;
@@ -86,30 +87,23 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 void	exec_main(t_cmd *mini, char **envp)
 {
 	t_nums	nums;
-	// t_cmd	*tmp;
 	char	filename[6];
 
 	if (change_heredoc_into_redirect(mini, &nums) == MALLOCERROR)
 	{
-		t_cmd_free(mini);
 		stts(WRITE, 1);
 		return ;
 	}
 	exec_main1(mini, &nums, envp);
-	// while (mini != NULL)
-	// {
-	// 	printf("count\n");
-	// 	tmp = mini->next;
-	// 	free(mini);
-	// 	mini = tmp;
-	// }
-	printf("fileNo = %d\n", nums.index);
 	while (nums.index >= 0)
 	{
 		set_filename(filename, nums.index);
 		unlink(filename);
 		nums.index--;
 	}
+	free(nums.infds);
+	free(nums.outfds);
+	free(nums.pipe);
 }
 
 // void	output(t_cmd *mini)

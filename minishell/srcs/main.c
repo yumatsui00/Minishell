@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/03 15:09:11 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:48:06 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ __attribute__((destructor)) static void destructor()
 
 void	ready(void)
 {
-	write(1, "  __  __ ___ _  _ ___ ___ _  _ ___ _    _     \n", 47);
+	write(1, "\x1b[35m  __  __ ___ _  _ ___ ___ _  _ ___ _    _     ", 47);
+	write(1, "\n", 1);
 	write(1, " |  \\/  |_ _| \\| |_ _/ __| || | __| |  | |   \n", 47);
 	write(1, " | |\\/| || || .` || |\\__ \\ __ | _|| |__| |__ \n", 47);
 	write(1, " |_|  |_|___|_|\\_|___|___/_||_|___|____|____|\n", 47);
@@ -56,6 +57,7 @@ void	minishell(char **ep)
 		if (*line)
 			add_history(line);
 		cmd = lexer(line, ep);
+		debug_cmd(cmd);
 		if (cmd)
 		{
 			exec_main(*cmd, ep);
