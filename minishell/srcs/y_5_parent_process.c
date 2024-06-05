@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:34:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 14:52:53 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:30:24 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,4 @@ void	parent_process(t_cmd **mini, t_nums *nums)
 		(*mini) = (*mini)->next;
 	if (((*mini)->next) && (*mini)->status == PIPE)
 		(*mini) = (*mini)->next;
-	// exit(printf("exit ok\n"));
 }

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 17:19:38 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:30:19 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 			}
 			else if (flag == ERROR)
 				return (end_or_recurse(mini, nums, envp));
-			printf("infile = %d, outfile = %d\n", nums->infile, nums->outfile);
 			if (dupdupdup(nums->infile, nums->outfile) == ERROR)
 			{
 				write(2, "minishell: fork: Resource temporarily \
