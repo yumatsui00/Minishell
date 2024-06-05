@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 17:45:20 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:48:56 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	echo_output(char *str, t_nums *nums)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		write(nums->outfile, &str[i + 1], 1);
+	write(nums->outfile, str, ft_strlen(str));
 	return ;
 }
 
@@ -31,11 +27,11 @@ int	execute_echo(t_cmd *mini, t_nums *nums)
 			return (OK);
 		else if (mini->input[7] == ' ')
 		{
-			echo_output(mini->input + 7, nums);
+			echo_output(mini->input + 8, nums);
 			return (OK);
 		}
 	}
-	echo_output(mini->input + 4, nums);
+	echo_output(mini->input + 5, nums);
 	write(nums->outfile, "\n", 1);
 	return (OK);
 }

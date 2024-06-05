@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 17:19:33 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:41:20 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	red_send(t_nums *nums, int status)
 	if (outfile == NULL)
 		return (MALLOCERROR);
 	if (status == SEND)
-		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_RDWR | O_TRUNC, 0000644);
+		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_WRONLY | O_TRUNC, 0000644);
 	else if (status == POST)
-		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_RDWR | O_APPEND, 0000644);
+		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_WRONLY | O_APPEND, 0000644);
 	if (nums->outfds[nums->outfds_i] < 0)
 	{
 		write(2, "minishell: ", 11);

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 16:53:12 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:46:52 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
 	while (++(nums->i) <= nums->pipe_num)
 	{
 		get_start_location(mini, nums);
-
 		if (nums->pipe_num == 0)
 			execute_without_pipe(&mini, nums, envp);
 		else
