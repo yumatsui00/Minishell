@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:34:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 20:16:21 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:52:53 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 void	parent_process2(t_cmd *mini, t_nums *nums, char **envp)
 {
-	int	i;
-
-	while ((nums->i)-- >= 0)
-		waitpid(-1, NULL, 0);
+	if (nums->pipe_num != 0)
+	{
+		while ((nums->i)-- > 0)
+			waitpid(-1, NULL, 0);
+	}
 	close_pipe(nums);
-	i = 0;
-	while (nums->infds[++i])
-		close(nums->infds[i]);
-	i = 0;
-	while (nums->outfds[++i])
-		close(nums->outfds[++i]);
 	end_or_recurse(&mini, nums, envp);
 }
 

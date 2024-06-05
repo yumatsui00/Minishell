@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 14:13:04 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:19:38 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,22 @@ void	ft_execute(t_cmd *mini, t_nums *nums, char **envp)
 
 void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 {
+	int	flag;
+
 	if ((*mini)->cmd_kind == BUILTIN)
+	{
+		flag = redirect(nums);
+		if (flag == MALLOCERROR)
+		{
+			stts(WRITE, 1);
+			return ;
+		}
+		else if (flag == ERROR)
+			return (end_or_recurse(mini, nums, envp));
 		builtin_execute(*mini, nums, envp);
+		free(nums->infds);
+		free(nums->outfds);
+	}
 	else if ((*mini)->cmd_kind == BIN)
 	{
 		nums->pid = fork();
@@ -82,6 +96,15 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 			return (piderror_process(nums));
 		else if (nums->pid == 0)
 		{
+			flag = redirect(nums);
+			if (flag == MALLOCERROR)
+			{
+				stts(WRITE, 1);
+				return ;
+			}
+			else if (flag == ERROR)
+				return (end_or_recurse(mini, nums, envp));
+			printf("infile = %d, outfile = %d\n", nums->infile, nums->outfile);
 			if (dupdupdup(nums->infile, nums->outfile) == ERROR)
 			{
 				write(2, "minishell: fork: Resource temporarily \
@@ -92,12 +115,6 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 			ft_execute(*mini, nums, envp);
 		}
 		else
-		{
 			waitpid(-1, NULL, 0);
-			while (((*mini)->next) && (*mini)->status != SEMQ)
-				(*mini) = (*mini)->next;
-			if ((*mini)->next)
-				(*mini) = (*mini)->next;
-		}
 	}
 }

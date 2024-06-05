@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 14:28:25 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:53:12 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,7 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
 	while (++(nums->i) <= nums->pipe_num)
 	{
 		get_start_location(mini, nums);
-		flag = redirect(nums);
-		if (flag == MALLOCERROR)
-			return (stts(WRITE, 1));
-		else if (flag == ERROR)
-			return (end_or_recurse(&mini, nums, envp), OK);
+
 		if (nums->pipe_num == 0)
 			execute_without_pipe(&mini, nums, envp);
 		else
@@ -62,7 +58,14 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
 			if (nums->pid < 0)
 				return (piderror_process(nums), OK);
 			else if (nums->pid == 0)
+			{
+				flag = redirect(nums);
+				if (flag == MALLOCERROR)
+					return (stts(WRITE, 1));
+				else if (flag == ERROR)
+					return (end_or_recurse(&mini, nums, envp), OK);
 				child_process(mini, nums, envp);
+			}
 			else
 				parent_process(&mini, nums);
 		}
@@ -103,8 +106,6 @@ void	exec_main(t_cmd *mini, char **envp)
 		unlink(filename);
 		nums.index--;
 	}
-	free(nums.infds);
-	free(nums.outfds);
 	free(nums.pipe);
 }
 

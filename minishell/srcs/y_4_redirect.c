@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 14:12:08 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:19:33 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	red_send(t_nums *nums, int status)
 	if (outfile == NULL)
 		return (MALLOCERROR);
 	if (status == SEND)
-		nums->outfds[nums->outfds_i] = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0000644);
+		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_RDWR | O_TRUNC, 0000644);
 	else if (status == POST)
-		nums->outfds[nums->outfds_i] = open(outfile, O_CREAT | O_RDWR | O_APPEND, 0000644);
+		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_RDWR | O_APPEND, 0000644);
 	if (nums->outfds[nums->outfds_i] < 0)
 	{
 		write(2, "minishell: ", 11);
@@ -40,8 +40,8 @@ int	red_send(t_nums *nums, int status)
 		stts(WRITE, 1);
 		return (free_utils2(outfile, NULL));
 	}
-	if (dup2(nums->outfds[nums->outfds_i], nums->outfds[nums->outfds_i] - 1) < 0)
-		return (dup2_error(nums->outfds_i, outfile));
+	// if (dup2(nums->outfds[nums->outfds_i], nums->outfds[nums->outfds_i] - 1) < 0)
+	// 	return (dup2_error(nums->outfds_i, outfile));
 	return (free(outfile), OK);
 }
 
@@ -60,8 +60,8 @@ int	red_recieve(t_nums *nums)
 		stts(WRITE, 1);
 		return (free(infile), ERROR);
 	}
-	if (dup2(nums->infds[nums->infds_i], nums->infds[nums->infds_i - 1]) < 0)
-		return (dup2_error(nums->infds_i, infile));
+	// if (dup2(nums->infds[nums->infds_i], nums->infds[nums->infds_i - 1]) < 0)
+	// 	return (dup2_error(nums->infds_i, infile));
 	free(infile);
 	return (OK);
 }
@@ -96,11 +96,6 @@ int	redirect(t_nums *nums)
 {
 	int	flag;
 
-	if (nums->i != 0)
-	{
-		free(nums->infds);
-		free(nums->outfds);
-	}
 	if (allocate_fd(nums, 0, 0) == MALLOCERROR)
 		return (MALLOCERROR);
 	while (nums->first && nums->first->status != SEMQ && nums->first->status != PIPE)
