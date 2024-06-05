@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/31 14:09:12 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:45:20 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	echo_output(char *str, t_nums *nums)
 
 	i = -1;
 	while (str[++i])
-		write(nums->outfile, &str[i], 1);
+		write(nums->outfile, &str[i + 1], 1);
 	return ;
 }
 
