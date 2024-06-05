@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 14:19:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 17:39:47 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:42:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	creat_pipe(t_nums *nums)
 		if (pipe(nums->pipe + (i * 2)) < 0)
 		{
 			close_pipe(nums);
+			free(nums->pipe);
+			nums->pipe = NULL;
 			write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
 			stts(WRITE, 1);
 			return (ERROR);

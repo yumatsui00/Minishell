@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:58:15 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 17:37:13 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:49:37 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,4 @@ void	fd_closer(t_nums *nums)
 	i = 0;
 	while (nums->outfds[++i])
 		close(nums->outfds[i]);
-	free(nums->infds);
-	free(nums->outfds);
 }

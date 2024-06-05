@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 21:24:52 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:28:25 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
 		get_start_location(mini, nums);
 		flag = redirect(nums);
 		if (flag == MALLOCERROR)
-			return (free(nums->pipe), stts(WRITE, 1));
+			return (stts(WRITE, 1));
 		else if (flag == ERROR)
-			return (free(nums->pipe), end_or_recurse(&mini, nums, envp), OK);
+			return (end_or_recurse(&mini, nums, envp), OK);
 		if (nums->pipe_num == 0)
 			execute_without_pipe(&mini, nums, envp);
 		else
@@ -76,7 +76,11 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 	if (cmd_check(mini, nums) == MALLOCERROR)
 		return (end_or_recurse(&mini, nums, envp));
 	if (creat_pipe(nums) == ERROR)
+	{
+		nums->infds = NULL;
+		nums->outfds = NULL;
 		return ;
+	}
 	exec_main2(mini, nums, envp);
 	parent_process2(mini, nums, envp);
 	return ;

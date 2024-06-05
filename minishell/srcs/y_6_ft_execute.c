@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 20:54:52 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:13:04 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	piderror_process(t_nums *nums)
 {
-	close_pipe(nums);
 	write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
 	stts(WRITE, 1);
 	close_pipe(nums);
@@ -56,7 +55,6 @@ void	bin_execute(t_cmd *mini, char **envp)
 	execve(mini->abs_path, mini->sec_args, envp);
 	perror("");
 	stts(WRITE, 1);
-	// write(2, "execute!\n", 10);
 	exit(1);
 }
 
