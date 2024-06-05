@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 17:38:11 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:56:36 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_bin(t_cmd *mini, char *str)
 	int		i;
 
 	i = 0;
-	while (str[i] != ' ' &&  str[i])
+	while (str[i] != ' ' && str[i])
 		i++;
 	path = (char *)malloc(sizeof(char) * (i + 1));
 	if (path == NULL)
@@ -81,7 +81,6 @@ int	check_abs_bin(t_cmd *cpy)
 	}
 	return (OK);
 }
-
 
 int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums)
 {

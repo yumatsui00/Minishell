@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 22:48:02 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 17:43:41 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:56:00 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	initializer(t_cmd *mini, t_nums *nums)
 	while (cpy != NULL && cpy->status != SEMQ)
 	{
 		cpy->abs_path = NULL;
-		// printf(" status = %d\n", cpy->status);
 		if (cpy->status == PIPE)
 			nums->pipe_num++;
 		cpy = cpy->next;

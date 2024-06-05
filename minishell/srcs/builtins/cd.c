@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:35:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:20:38 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:06:55 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	find_directory(t_cmd *mini, char *pwd)
 		write(2, ": invalid option\ncd: usage: [-L|-P] [dir]\n", 42);
 		return (ERROR);
 	}
-	path = ft_strdup2(mini->input + 3);//cd の３文字を飛ばし、cd a b c dとあったら、a のみを抽出しpathに入れる
+	path = ft_strdup2(mini->input + 3);
 	if (path == NULL)
 		return (MALLOCERROR);
 	if (*path == '/')
@@ -53,31 +53,38 @@ int	find_directory(t_cmd *mini, char *pwd)
 	return (free(path), free(cd), OK);
 }
 
+int	norm(char pwd[PATH_MAX])
+{
+	char	*cd;
+
+	cd = ft_strjoin(pwd, "/..");
+	if (cd == NULL)
+		return (MALLOCERROR);
+	chdir(cd);
+	free(cd);
+	return (OK);
+}
+
 int	execute_cd(t_cmd *mini)
 {
 	char	pwd[PATH_MAX];
-	char	*cd;
 
-	if (ft_strncmp(mini->input, "cd", 3) == 0 || ft_strncmp(mini->input, "cd ~", 5) == 0)
+	if (ft_strncmp(mini->input, "cd", 3) == 0 || \
+			ft_strncmp(mini->input, "cd ~", 5) == 0)
 		chdir(getenv("HOME"));
 	else if (ft_strncmp(mini->input, "cd ..", 6) == 0)
 	{
 		if (getcwd(pwd, sizeof(pwd)) == NULL)
 			return (perror(""), ERROR);
 		else
-		{
-			cd = ft_strjoin(pwd, "/..");
-			if (cd == NULL)
-				return (MALLOCERROR);
-			chdir(cd);
-			free(cd);
-		}
+			return (norm(pwd));
 	}
 	else
 	{
 		if (getcwd(pwd, sizeof(pwd)) != NULL)
 			return (find_directory(mini, pwd));
-		return (perror(""), ERROR);
+		perror("");
+		return (ERROR);
 	}
 	return (OK);
 }

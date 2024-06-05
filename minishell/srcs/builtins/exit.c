@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:22 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:29:42 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static int	atoi2(long long *ans, long long *ans_stock, char *str, int *i)
 {
 	while ('0' <= str[*i] && str[*i] <= '9')
-    {
-        *ans = (*ans * 10) + (str[*i] - '0');
-        *i = *i + 1;
+	{
+		*ans = (*ans * 10) + (str[*i] - '0');
+		*i = *i + 1;
 		if (*ans <= 0 && *ans_stock != 0)
 		{
 			write(2, "exit\n", 5);
@@ -28,7 +28,7 @@ static int	atoi2(long long *ans, long long *ans_stock, char *str, int *i)
 			exit(1);
 		}
 		*ans_stock = *ans;
-    }
+	}
 	return (OK);
 }
 
@@ -36,9 +36,9 @@ static int	init(int *i, long long *ans, long long *ans_stock, char *str)
 {
 	int	flag;
 
-    *i = 0;
-    *ans = 0;
-    *ans_stock = 0;
+	*i = 0;
+	*ans = 0;
+	*ans_stock = 0;
 	flag = 1;
 	if (str[*i] == '+')
 		*i = 1;
@@ -52,15 +52,15 @@ static int	init(int *i, long long *ans, long long *ans_stock, char *str)
 
 static int	argument_check(char *str)
 {
-    int			i;
-    int			minus;
-    long long	ans;
-    long long	ans_stock;
+	int			i;
+	int			minus;
+	long long	ans;
+	long long	ans_stock;
 
-    minus = init(&i, &ans, &ans_stock, str);
+	minus = init(&i, &ans, &ans_stock, str);
 	atoi2(&ans, &ans_stock, str, &i);
 	if (str[i] && str[i] != ' ')
-	   	atoerror(str);
+		atoerror(str);
 	if (str[i])
 	{
 		while (str[i] == ' ')

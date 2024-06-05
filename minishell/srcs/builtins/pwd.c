@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/03 13:33:42 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:41:44 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ int	execute_pwd(t_cmd *mini, t_nums *nums)
 {
 	char	pwd[PATH_MAX];
 
-	stts(WRITE, 0);
+	stts(WRITE, 1);
 	if (mini->input[3] == ' ')
 	{
 		if (mini->input[4] == '-')
 		{
-			if (mini->input[5] != 'L' && mini->input[5] != 'P' && mini->input[5] != '\0')
+			if (mini->input[5] != 'L' && mini->input[5] != 'P' \
+				&& mini->input[5] != '\0')
 			{
 				write(2, "minishell: pwd: -", 17);
 				write(2, &mini->input[5], 1);
@@ -31,14 +32,13 @@ int	execute_pwd(t_cmd *mini, t_nums *nums)
 		}
 	}
 	if (getcwd(pwd, sizeof(pwd)) == NULL)
-		perror("");
+		return (perror(""), ERROR);
 	else
 	{
 		write(nums->outfile, pwd, ft_strlen(pwd));
 		write(nums->outfile, "\n", 1);
-		stts(WRITE, 0);
 	}
-	return (OK);
+	return (stts(WRITE, 0), OK);
 }
 
 int	check_pwd(t_cmd *mini, t_nums *nums)

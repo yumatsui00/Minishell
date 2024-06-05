@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 13:00:04 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:30 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:33:16 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ int	add_line_2(char **ans)
 
 char	**add_line2(char *str, char **envp, int i, int flag)
 {
-    char	**ans;
-    int		count;
-    int		len;
+	char	**ans;
+	int		count;
+	int		len;
 
-    len = ft_strlen_tillspace(str) - 1;
-    ans = ft_strdupdup(envp, 1);
-    count = add_line_2(ans);
+	len = ft_strlen_tillspace(str) - 1;
+	ans = ft_strdupdup(envp, 1);
+	count = add_line_2(ans);
 	ans[count] = (char *)malloc(sizeof(char) * (len + 1));
-    while (++i <= len)
+	while (++i <= len)
 	{
 		if (*str == '+' && flag == 0)
 		{
@@ -48,5 +48,5 @@ char	**add_line2(char *str, char **envp, int i, int flag)
 	freefree(envp);
 	envp = ft_strdupdup(ans, 1);
 	freefree(ans);
-    return (envp);
+	return (envp);
 }

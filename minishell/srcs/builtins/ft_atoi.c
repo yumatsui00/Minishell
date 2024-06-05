@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:09:34 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:36 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:38:10 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,24 @@ int	atoerror(char *str)
 
 int	ft_atoi2(char *str)
 {
-    int			i;
-    int			minus;
-    long long	ans;
+	int			i;
+	int			minus;
+	long long	ans;
 
 	i = 0;
-    minus = 1;
-    ans = 0;
-    if (str[i] == '+')
-        i++;
-    else if (str[i] == '-')
-    {
-        minus = -1;
-        i++;
-    }
-    while ('0' <= str[i] && str[i] <= '9')
-    {
-        ans = (ans * 10) + (str[i] - '0');
-        i++;
-    }
-    return (minus * (int)ans);
+	minus = 1;
+	ans = 0;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+	{
+		minus = -1;
+		i++;
+	}
+	while ('0' <= str[i] && str[i] <= '9')
+	{
+		ans = (ans * 10) + (str[i] - '0');
+		i++;
+	}
+	return (minus * (int)ans);
 }

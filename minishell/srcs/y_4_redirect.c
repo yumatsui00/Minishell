@@ -6,13 +6,13 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 18:41:20 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:59:45 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	dup2_error(int	fd, char *file)
+int	dup2_error(int fd, char *file)
 {
 	write(2, "minishell: ", 11);
 	write(2, &fd, sizeof(int));
@@ -24,15 +24,17 @@ int	dup2_error(int	fd, char *file)
 
 int	red_send(t_nums *nums, int status)
 {
-	char *outfile;
+	char	*outfile;
 
 	outfile = ft_strdup(nums->first->input + status);
 	if (outfile == NULL)
 		return (MALLOCERROR);
 	if (status == SEND)
-		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_WRONLY | O_TRUNC, 0000644);
+		nums->outfds[nums->outfds_i] = open((const char *)outfile, \
+					O_CREAT | O_WRONLY | O_TRUNC, 0000644);
 	else if (status == POST)
-		nums->outfds[nums->outfds_i] = open((const char *)outfile, O_CREAT | O_WRONLY | O_APPEND, 0000644);
+		nums->outfds[nums->outfds_i] = open((const char *)outfile, \
+					O_CREAT | O_WRONLY | O_APPEND, 0000644);
 	if (nums->outfds[nums->outfds_i] < 0)
 	{
 		write(2, "minishell: ", 11);
@@ -40,8 +42,6 @@ int	red_send(t_nums *nums, int status)
 		stts(WRITE, 1);
 		return (free_utils2(outfile, NULL));
 	}
-	// if (dup2(nums->outfds[nums->outfds_i], nums->outfds[nums->outfds_i] - 1) < 0)
-	// 	return (dup2_error(nums->outfds_i, outfile));
 	return (free(outfile), OK);
 }
 
@@ -60,8 +60,6 @@ int	red_recieve(t_nums *nums)
 		stts(WRITE, 1);
 		return (free(infile), ERROR);
 	}
-	// if (dup2(nums->infds[nums->infds_i], nums->infds[nums->infds_i - 1]) < 0)
-	// 	return (dup2_error(nums->infds_i, infile));
 	free(infile);
 	return (OK);
 }
@@ -92,13 +90,12 @@ int	allocate_fd(t_nums *nums, int reci, int send)
 	return (OK);
 }
 
-int	redirect(t_nums *nums)
+int	redirect(t_nums *nums, int flag)
 {
-	int	flag;
-
 	if (allocate_fd(nums, 0, 0) == MALLOCERROR)
 		return (MALLOCERROR);
-	while (nums->first && nums->first->status != SEMQ && nums->first->status != PIPE)
+	while (nums->first && nums->first->status != SEMQ \
+							&& nums->first->status != PIPE)
 	{
 		if (nums->first->status == RECI)
 		{

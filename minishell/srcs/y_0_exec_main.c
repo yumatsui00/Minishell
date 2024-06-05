@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 18:46:52 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:00:20 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ void	end_or_recurse(t_cmd **mini, t_nums *nums, char **envp)
 		exec_main1((*mini), nums, envp);
 	}
 	else
-		printf("ここにきてるのおかしいて\n");
+		printf("omg!\n");
 	return ;
 }
 
-int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
+int	exec_main2(t_cmd *mini, t_nums *nums, char **envp, int flag)
 {
-	int	flag;
-
 	while (++(nums->i) <= nums->pipe_num)
 	{
 		get_start_location(mini, nums);
@@ -58,7 +56,7 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp)
 				return (piderror_process(nums), OK);
 			else if (nums->pid == 0)
 			{
-				flag = redirect(nums);
+				flag = redirect(nums, OK);
 				if (flag == MALLOCERROR)
 					return (stts(WRITE, 1));
 				else if (flag == ERROR)
@@ -83,7 +81,7 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 		nums->outfds = NULL;
 		return ;
 	}
-	exec_main2(mini, nums, envp);
+	exec_main2(mini, nums, envp, 0);
 	parent_process2(mini, nums, envp);
 	return ;
 }
