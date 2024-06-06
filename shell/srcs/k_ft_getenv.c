@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:44 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 09:20:17 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:01:54 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_getenv(char *name, char **ep)
 		if (!ft_strcmp(name, "?"))
 		{
 			free(ep_name);
-			return (ft_itoa(stts(WRITE, 1)));
+			return (ft_itoa(stts(READ, 1)));
 		}
 		if (!ft_strcmp(name, ep_name))
 		{

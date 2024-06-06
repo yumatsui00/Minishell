@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:36 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 09:21:32 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:47:43 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef struct s_data
 	int		sankaku_count;
 	int		len;
 	int		is_ass;
+	int		start_len;
 }			t_data;
 
 static int	count_sankaku(char **line, int len)
@@ -38,28 +39,24 @@ static int	count_sankaku(char **line, int len)
 
 static void	logic_component(char **dest, char **src, t_data *data, int num)
 {
-	int	i;
 	int	k;
 
-	i = 0;
-	while (dest[i])
-		i++;
 	k = 0;
 	while (src[k] && k < data->len)
 	{
 		if (!num && (!ft_strcmp(src[k], "<") || !ft_strcmp(src[k], "<<")))
 		{
-			dest[i + data->len - (data->sankaku_count * 2)
+			dest[data->start_len + data->len - (data->sankaku_count * 2)
 				- data->is_ass] = src[k];
-			dest[i + data->len - (data->sankaku_count * 2) + 1
+			dest[data->start_len + data->len - (data->sankaku_count * 2) + 1
 				- data->is_ass] = src[k + 1];
 			data->sankaku_count--;
 		}
 		if (num && (!ft_strcmp(src[k], ">") || !ft_strcmp(src[k], ">>")))
 		{
-			dest[i + data->len - (data->sankaku_count * 2)
+			dest[data->start_len + data->len - (data->sankaku_count * 2)
 				- data->is_ass] = src[k];
-			dest[i + data->len - (data->sankaku_count * 2) + 1
+			dest[data->start_len + data->len - (data->sankaku_count * 2) + 1
 				- data->is_ass] = src[k + 1];
 			data->sankaku_count--;
 		}
@@ -79,6 +76,7 @@ static void	logic(char **dest, char **src, int len, int is_ass)
 	data.sankaku_count = count_sankaku(src, len);
 	while (dest[i])
 		i++;
+	data.start_len = i;
 	if (is_ass)
 		dest[i + len - 1] = src[len - 1];
 	logic_component(dest, src, &data, 0);
@@ -130,5 +128,6 @@ char	**rearranges_main(char **line)
 			logic(ret, stk, line_ptr - stk, 0);
 	}
 	free(line);
+	debug_double_ptr(ret);
 	return (ret);
 }
