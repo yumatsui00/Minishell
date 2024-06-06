@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:06 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 15:42:00 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:06:25 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ char	**envp_to_heap(char **ep)
 		new_ep[i] = ft_strdup(ep[i]);
 		i++;
 	}
-	new_ep[i] = NULL;
 	return (new_ep);
 }
