@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:14 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 19:44:22 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:40:21 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ static void	logic(char *name, char **ep)
 	while (*ep)
 	{
 		ep_name = until_eq(*ep);
+		if (!ep_name)
+			return ;
 		if (!ft_strcmp(name, ep_name))
 		{
+			//ここのep以降を左に詰める
 			delete_ep(ep);
 			free(ep_name);
 			return ;
@@ -76,27 +79,29 @@ static void	logic(char *name, char **ep)
 int	execute_unset(t_cmd *cmd, char **ep)
 {
 	char	**line;
+	char	**line_ptr;
 	int		i;
 
 	line = ft_split(cmd->input, ' ');
-	if (!line)
+	line_ptr = line;
+	if (!*line)
 		return (ERROR);
 	i = 0;
 	while (line[i])
 		i++;
-	if (i == 0)
+	if (i == 1)
 	{
-		free_double_ptr(line);
+		free_double_ptr(line_ptr);
 		return (OK);
 	}
 	line++;
 	if (!is_ok(*line))
 	{
-		free_double_ptr(line);
+		free_double_ptr(line_ptr);
 		return (ERROR);
 	}
 	logic(*line, ep);
-	free_double_ptr(line);
+	free_double_ptr(line_ptr);
 	return (OK);
 }
 
@@ -110,6 +115,7 @@ int	execute_unset(t_cmd *cmd, char **ep)
 //     free_double_ptr(ep);
 //     return ;
 // }
+
 // int main(int ac, char **av, char **ep)
 // {
 //     test(av[1], ep);
