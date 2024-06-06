@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 21:24:28 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 19:37:25 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:03:57 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,14 @@ static int	check_more(char *str, char **envp)
 			return (ERROR);
 		}
 	}
+	if (str[i] == '\0')
+		return (OK);
 	if (str[i + 1] == '\0')
 	{
 		equal_envp(str, envp, i - 1);
+		int i = -1;
+		while (envp[++i])
+			printf("%s\n", envp[i]);
 		return (OK);
 	}
 	return (check_more2(str, envp, i));
