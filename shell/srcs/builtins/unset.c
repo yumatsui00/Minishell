@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:14 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 09:40:21 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:23:49 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,17 @@ static char	*until_eq(char *ep)
 
 static void	delete_ep(char **ep)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
+	tmp = ep[i];
 	while (ep[i])
 	{
 		ep[i] = ep[i + 1];
 		i++;
 	}
+	free(tmp);
 	ep[i - 1] = NULL;
 }
 
@@ -115,7 +118,6 @@ int	execute_unset(t_cmd *cmd, char **ep)
 //     free_double_ptr(ep);
 //     return ;
 // }
-
 // int main(int ac, char **av, char **ep)
 // {
 //     test(av[1], ep);
