@@ -1,51 +1,77 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ex.c                                               :+:      :+:    :+:   */
+/*   export1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:17:09 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 15:55:06 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:51:26 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	gambale(char **envp, char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '+')
+		{
+			while (str[i + 1])
+			{
+				str[i] = str[i + 1];
+				i++;
+			}
+			str[i] = '\0';
+			break ;
+		}
+		i++;
+	}
+	*envp = ft_strdup(str);
+}
+
 static void	add_envp(char *str, char **envp, int i)
 {
 	char	*ans;
-	char	count;
-	int		i;
+	int		count;
+	int		j;
 
 	count = -1;
-	while (envp[++count])
+	j = 0;
+	while (envp[++count] != NULL)
 	{
 		if (!strncmp(str, envp[count], i))
+		{
+			j = 1;
 			break ;
+		}
 	}
-	if (envp[count] == NULL)
-		envp[count] = ft_strdup(str);
+	if (j == 0)
+		gambale(&envp[count], str);
 	else
 	{
-		ans = ft_strjoin(envp[count], &str[i + 1]);
+		ans = ft_strjoin(envp[count], &str[i + 3]);
 		free(envp[count]);
 		envp[count] = ans;
-		i = -1;
-		while (ans[++i])
+		j = -1;
+		while (ans[++j])
 		{
-			if (ans[i] == ' ')
-				ans[i] = '\0';
+			if (ans[j] == ' ')
+				ans[j] = '\0';
 		}
-		envp[count] = ans[i];
+		envp[count] = ans;
 	}
 }
 
 static void	equal_envp(char *str, char **envp, int i)
 {
 	char	*ans;
-	char	count;
-	int		i;
+	int		count;
+	int		j;
 
 	count = -1;
 	while (envp[++count])
@@ -59,13 +85,13 @@ static void	equal_envp(char *str, char **envp, int i)
 	{
 		ans = ft_strdup(str);
 		free(envp[count]);
-		i = -1;
-		while (ans[++i])
-		{
-			if (ans[i] == ' ')
-				ans[i] = '\0';
-		}
-		envp[count] = ans[i];
+		envp[count] = ans;
+	}
+	j = -1;
+	while (envp[count][++j])
+	{
+		if (envp[count][j] == ' ')
+			envp[count][j] = '\0';
 	}
 }
 
@@ -85,7 +111,7 @@ static int	check_more2(char *str, char **envp, int i)
 	else if (str[i] == '+')
 	{
 		if (str[i + 1] && str[i + 1] == '=')
-			add_envp(str, envp, i + 1);
+			add_envp(str, envp, i - 1);
 		else
 		{
 			write(2, "minishell: export: `", 20);

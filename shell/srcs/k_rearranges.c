@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_rearranges.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:36 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 15:47:43 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:09:01 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ char	**rearranges_main(char **line)
 			logic(ret, stk, line_ptr - stk, 0);
 	}
 	free(line);
-	debug_double_ptr(ret);
+	// debug_double_ptr(ret);
 	return (ret);
 }
