@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 18:56:36 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:04:59 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	check_bin2(t_cmd *mini, char *path, char **tmp)
 	}
 	if (mini->abs_path == NULL)
 	{
+		stts(WRITE, 127);
 		mini->cmd_kind = ERRORCMD;
 		write(2, "minishell: ", 11);
 		write(2, path, ft_strlen(path));
