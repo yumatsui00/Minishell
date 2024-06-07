@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// undefine error
-
 #include "minishell.h"
 
 static int	is_space_only(char *s)
@@ -30,49 +28,6 @@ int	is_sankaku(char *item)
 	if (!ft_strcmp(item, "<") || !ft_strcmp(item, ">") || !ft_strcmp(item, "<<")
 		|| !ft_strcmp(item, ">>"))
 		return (1);
-	return (0);
-}
-
-int	quotes_is_odd(char *s)
-{
-	int	single_quotes;
-	int	double_quotes;
-
-	single_quotes = 0;
-	double_quotes = 0;
-	while (*s)
-	{
-		if (*s == '\'')
-			single_quotes++;
-		else if (*s == '\"')
-			double_quotes++;
-		s++;
-	}
-	if (single_quotes % 2 == 1)
-		return (1);
-	else if (double_quotes % 2 == 1)
-		return (1);
-	else
-		return (0);
-}
-
-int	cut_or_read(char **line)
-{
-	char	*stk;
-
-	while (*line)
-	{
-		if (!quotes_is_odd(*line))
-		{
-			stk = ft_strtrim(*line, "\"\'");
-			free(*line);
-			*line = stk;
-		}
-		else
-			return (1);
-		line++;
-	}
-	*line = NULL;
 	return (0);
 }
 
@@ -116,7 +71,8 @@ t_cmd	**lexer(char *before_line, char **ep)
 		return (NULL);
 	if (cut_or_read(line))
 	{
-		printf("エラー\n");
+		printf("エラー!!\n");
+		free_double_ptr(line);
 		return (NULL);
 	}
 	if (find_syntax_error(line))
