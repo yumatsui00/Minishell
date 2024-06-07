@@ -108,6 +108,7 @@ int					check_cd(t_cmd *mini, t_nums *nums);
 int					check_echo(t_cmd *mini, t_nums *nums);
 int					check_env(t_cmd *mini, t_nums *nums);
 int					check_exit(t_cmd *mini, t_nums *nums);
+void				change_stts(t_cmd *mini);
 int					check_export(t_cmd *mini, t_nums *nums);
 int					ft_atoi2(char *str);
 int					check_pwd(t_cmd *mini, t_nums *nums);

@@ -13,7 +13,7 @@ SRCS = srcs/k_cut_in_space.c srcs/k_debug.c srcs/k_envp_to_heap.c srcs/k_expand_
 		srcs/y_4_get_start_location.c srcs/y_4_redirect.c srcs/y_5_child_process.c srcs/y_5_parent_process.c \
 		srcs/y_6_ft_execute.c srcs/y_6_exec_without_pipe.c srcs/y_9_error.c srcs/y_creat_pipe.c \
 		srcs/builtins/cd.c srcs/builtins/echo.c srcs/builtins/env.c \
-		srcs/builtins/exit.c srcs/builtins/export.c srcs/builtins/export1.c \
+		srcs/builtins/exit.c srcs/builtins/exit2.c srcs/builtins/export.c srcs/builtins/export1.c \
 		srcs/builtins/ft_atoi.c srcs/builtins/pwd.c \
 		srcs/builtins/unset.c srcs/builtins/unset2.c \
 		srcs/utils/8_ft_split.c srcs/utils/8_utils.c srcs/utils/8_utils2.c

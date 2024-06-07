@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   exit2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 13:59:54 by yumatsui         ###   ########.fr       */
+/*   Created: 2024/06/07 13:59:31 by yumatsui          #+#    #+#             */
+/*   Updated: 2024/06/07 14:05:37 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@ static int	atoi2(long long *ans, long long *ans_stock, char *str, int *i)
 		*ans = (*ans * 10) + (str[*i] - '0');
 		*i = *i + 1;
 		if (*ans <= 0 && *ans_stock != 0)
-		{
-			write(2, "exit\n", 5);
-			write(2, "minishell: exit: ", 17);
-			write(2, str, ft_strlen_tillspace(str));
-			write(2, ": numeric argument required\n", 28);
-			stts(WRITE, 255);
-			exit(1);
-		}
+			return (255);
 		*ans_stock = *ans;
 	}
 	return (OK);
@@ -66,56 +59,23 @@ static int	argument_check(char *str)
 		while (str[i] == ' ')
 			i++;
 		if (str[i])
-		{
-			write(2, "minishell: exit: too many arguments\n", 31);
-			stts(WRITE, 1);
 			return (ERROR);
-		}
 	}
 	return (OK);
 }
 
-int	execute_exit(t_cmd *mini)
+void	change_stts(t_cmd *mini)
 {
 	int	i;
 
-	if (strncmp(mini->input, "exit", 5) == 0)
-	{
-		stts(WRITE, 0);
-		exit(0);
-	}
-	else if (strncmp(mini->input, "exit ", 5) == 0)
+	if (strncmp(mini->input, "exit ", 5) == 0)
 	{
 		if (argument_check(mini->input + 5) == ERROR)
-			return (ERROR);
+		{
+			stts(WRITE, 255);
+			return ;
+		}
 		i = (int)ft_atoi2(mini->input + 5);
 		stts(WRITE, i % 256);
-		exit(i % 256);
 	}
-	exit(0);
-}
-
-int	check_exit(t_cmd *mini, t_nums *nums)
-{
-	if (mini->input[4] == ' ' || mini->input[4] == '\0')
-	{
-		mini->cmd_kind = BUILTIN;
-		mini->abs_path = NULL;
-		nums->builtin++;
-		change_stts(mini);
-	}
-	else
-	{
-		mini->cmd_kind = ERRORCMD;
-		mini->abs_path = ft_strdup2(mini->input);
-		if (mini->abs_path == NULL)
-			return (MALLOCERROR);
-		write(2, "minishell: ", 11);
-		write(2, mini->abs_path, ft_strlen(mini->abs_path));
-		write(2, ": command not found\n", 20);
-		stts(WRITE, 127);
-		free(mini->abs_path);
-		mini->abs_path = NULL;
-	}
-	return (OK);
 }
