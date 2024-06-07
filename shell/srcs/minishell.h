@@ -90,7 +90,7 @@ void				set_filename(char filename[6], int i);
 void				initializer(t_cmd *mini, t_nums *nums);
 // 3
 int					cmd_check(t_cmd *mini, t_nums *nums);
-int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums);
+int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag);
 // 4
 void				get_start_location(t_cmd *mini, t_nums *nums);
 int					redirect(t_nums *nums, int flag);
@@ -113,11 +113,14 @@ int					check_export(t_cmd *mini, t_nums *nums);
 int					ft_atoi2(char *str);
 int					check_pwd(t_cmd *mini, t_nums *nums);
 int					check_unset(t_cmd *mini, t_nums *nums);
+int					check_bash(t_cmd *mini, t_nums *nums);
 int					execute_echo(t_cmd *mini, t_nums *nums);
 int					execute_cd(t_cmd *mini);
 int					execute_env(t_nums *nums, char **envp);
 int					execute_exit(t_cmd *mini);
 int					execute_export(t_cmd *mini, t_nums *nums, char **envp);
+void				add_envp(char *str, char **envp, int i);
+void				gambale(char **envp, char *str);
 char				**add_line(char *str, char **envp);
 char				**add_line2(char *str, char **envp, int i, int flag);
 char				**change_line(char *str, char **envp, int count);
@@ -129,6 +132,7 @@ void				unset_checker(char *str, char **envp);
 int					check_unset2(char *str, char **envp);
 int					ft_atoi2(char *str);
 int					atoerror(char *str);
+int					execute_bash(t_nums *nums, char **envp);
 
 // utils
 // char	**ft_split(char *s, char c);
@@ -156,11 +160,12 @@ int					creat_pipe(t_nums *nums);
 void				close_pipe(t_nums *nums);
 
 //! kkomatsu
+int					main(int ac, char **av, char **ep);
 void				minishell(char **envp);
 
 void				sig_int_input(int signum);
 void				sig_quit_input(int signum);
-
+int					cut_or_read(char **line);
 char				*ft_getenv(char *name, char **ep);
 char				**ft_split_for_lexer(char *line);
 int					is_sankaku(char *item);

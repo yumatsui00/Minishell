@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 10:04:59 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:46:03 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,23 @@ int	check_bin2(t_cmd *mini, char *path, char **tmp)
 	return (OK);
 }
 
-int	check_bin(t_cmd *mini, char *str)
+int	check_bin(t_cmd *mini, char *str, int i)
 {
 	char	*path;
 	char	**tmp;
-	int		i;
 
-	i = 0;
-	while (str[i] != ' ' && str[i])
+	while (str[i] == ' ')
+		i++;
+	while (str[i] && str[i] != ' ')
 		i++;
 	path = (char *)malloc(sizeof(char) * (i + 1));
 	if (path == NULL)
 		return (MALLOCERROR);
 	i = -1;
-	while (str[++i] != ' ' && str[i])
+	while (str[++i] == ' ')
+		path[i] = str[i];
+	i--;
+	while (str[++i] && str[i] != ' ')
 		path[i] = str[i];
 	path[i] = '\0';
 	tmp = ft_split(getenv("PATH"), ':');
@@ -83,10 +86,8 @@ int	check_abs_bin(t_cmd *cpy)
 	return (OK);
 }
 
-int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums)
+int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag)
 {
-	int	flag;
-
 	if (ft_strncmp(cpy->input, "echo", 4) == 0)
 		flag = check_echo(cpy, nums);
 	else if (ft_strncmp(cpy->input, "cd", 2) == 0)
@@ -101,10 +102,12 @@ int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums)
 		flag = check_exit(cpy, nums);
 	else if (ft_strncmp(cpy->input, "env", 3) == 0)
 		flag = check_env(cpy, nums);
+	else if (ft_strncmp(cpy->input, "./minishell", 11) == 0)
+		flag = check_bash(cpy, nums);
 	else
 	{
 		if (cpy->input[0] != '/')
-			flag = check_bin(cpy, cpy->input);
+			flag = check_bin(cpy, cpy->input, 0);
 		else
 			flag = check_abs_bin(cpy);
 	}
@@ -120,7 +123,7 @@ int	cmd_check(t_cmd *mini, t_nums *nums)
 	{
 		if (cpy->status == COM)
 		{
-			if (check_bin_or_builtin(cpy, nums) == MALLOCERROR)
+			if (check_bin_or_builtin(cpy, nums, OK) == MALLOCERROR)
 			{
 				stts(WRITE, 1);
 				return (MALLOCERROR);

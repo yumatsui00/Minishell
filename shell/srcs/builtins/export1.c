@@ -6,66 +6,11 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:17:09 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 16:51:26 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:44:48 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	gambale(char **envp, char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '+')
-		{
-			while (str[i + 1])
-			{
-				str[i] = str[i + 1];
-				i++;
-			}
-			str[i] = '\0';
-			break ;
-		}
-		i++;
-	}
-	*envp = ft_strdup(str);
-}
-
-static void	add_envp(char *str, char **envp, int i)
-{
-	char	*ans;
-	int		count;
-	int		j;
-
-	count = -1;
-	j = 0;
-	while (envp[++count] != NULL)
-	{
-		if (!strncmp(str, envp[count], i))
-		{
-			j = 1;
-			break ;
-		}
-	}
-	if (j == 0)
-		gambale(&envp[count], str);
-	else
-	{
-		ans = ft_strjoin(envp[count], &str[i + 3]);
-		free(envp[count]);
-		envp[count] = ans;
-		j = -1;
-		while (ans[++j])
-		{
-			if (ans[j] == ' ')
-				ans[j] = '\0';
-		}
-		envp[count] = ans;
-	}
-}
 
 static void	equal_envp(char *str, char **envp, int i)
 {

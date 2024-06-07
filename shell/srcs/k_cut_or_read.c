@@ -72,7 +72,7 @@ static char *delete_quotes_both_ends(char *s)
 	first_quotes = '\0';
 	while (s[++i])
 		if (!first_quotes && (s[i] == '\'' || s[i] == '\"'))
-			first_quotes = s[i];	
+			first_quotes = s[i];
 	ret = (char *)malloc(ft_strlen(s) - how_many_quote(first_quotes, s));
 	if (!ret)
 		return NULL;
@@ -100,7 +100,7 @@ int	cut_or_read(char **line)
 		if (!quotes_is_odd(*line) && exist_quotes(*line))
 		{
 			stk = delete_quotes_both_ends(*line);
-            printf("%p\n", stk);
+            // printf("%p\n", stk);
 			free(*line);
 			*line = stk;
 		}

@@ -6,11 +6,73 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 15:56:00 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:44:23 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	gambale(char **envp, char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '+')
+		{
+			while (str[i + 1])
+			{
+				str[i] = str[i + 1];
+				i++;
+			}
+			str[i] = '\0';
+			break ;
+		}
+		i++;
+	}
+	*envp = ft_strdup(str);
+}
+
+static void	ans_modify(char *ans)
+{
+	int	i;
+
+	i = 0;
+	while (ans[++i])
+	{
+		if (ans[i] == ' ')
+			ans[i] = '\0';
+	}
+}
+
+void	add_envp(char *str, char **envp, int i)
+{
+	char	*ans;
+	int		count;
+	int		j;
+
+	count = -1;
+	j = 0;
+	while (envp[++count] != NULL)
+	{
+		if (!strncmp(str, envp[count], i))
+		{
+			j = 1;
+			break ;
+		}
+	}
+	if (j == 0)
+		gambale(&envp[count], str);
+	else
+	{
+		ans = ft_strjoin(envp[count], &str[i + 3]);
+		free(envp[count]);
+		envp[count] = ans;
+		ans_modify(ans);
+		envp[count] = ans;
+	}
+}
 
 char	*ft_strjoin_tillspace(char *s1, char *s2)
 {
@@ -37,71 +99,6 @@ char	*ft_strjoin_tillspace(char *s1, char *s2)
 	ans[i + j] = '\0';
 	return (ans);
 }
-
-// char	**post_line(char *str, char **envp, int count)
-// {
-// 	char	*tmp;
-
-// 	while (*str != '=')
-// 		str++;
-// 	str++;
-// 	tmp = ft_strjoin_tillspace(envp[count], str);
-// 	if (tmp == NULL)
-// 		return (envp);
-// 	free(envp[count]);
-// 	envp[count] = ft_strdup(tmp);
-// 	free(tmp);
-// 	return (envp);
-// }
-
-// char	**change_line(char *str, char **envp, int count)
-// {
-// 	int		i;
-// 	int		len;
-// 	char	*tmp;
-
-// 	len = ft_strlen_tillspace(str);
-// 	tmp = envp[count];
-// 	envp[count] = NULL;
-// 	envp[count] = (char *)malloc(sizeof(char) * (len + 1));
-// 	if (envp[count] == NULL)
-// 	{
-// 		envp[count] = tmp;
-// 		return (envp);
-// 	}
-// 	i = -1;
-// 	while (++i < len)
-// 		envp[count][i] = str[i];
-// 	envp[count][i] = '\0';
-// 	free(tmp);
-// 	return (envp);
-// }
-
-// char	**add_line(char *str, char **envp)
-// {
-// 	char	**ans;
-// 	int		count;
-// 	int		len;
-// 	int		i;
-
-// 	len = ft_strlen_tillspace(str);
-// 	ans = ft_strdupdup(envp, 1);
-// 	if (ans == NULL)
-// 		return (envp);
-// 	count = 0;
-// 	while (ans[count])
-// 		count++;
-// 	ans[count] = (char *)malloc(sizeof(char) * (len + 1));
-// 	i = -1;
-// 	while (++i < len)
-// 		ans[count][i] = str[i];
-// 	ans[count][i] = '\0';
-// 	ans[count + 1] = NULL;
-// 	freefree(envp);
-// 	envp = ft_strdupdup(ans, 0);
-// 	freefree(ans);
-// 	return (envp);
-// }
 
 int	check_export(t_cmd *mini, t_nums *nums)
 {

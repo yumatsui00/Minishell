@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:14 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 10:23:49 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:39:26 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static void	logic(char *name, char **ep)
 			return ;
 		if (!ft_strcmp(name, ep_name))
 		{
-			//ここのep以降を左に詰める
 			delete_ep(ep);
 			free(ep_name);
 			return ;

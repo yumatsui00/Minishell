@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 13:54:58 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:27:55 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 		flag = execute_exit(mini);
 	else if (ft_strncmp(mini->input, "env", 3) == 0)
 		flag = execute_env(nums, envp);
+	else if (ft_strncmp(mini->input, "./minishell", 11) == 0)
+		flag = execute_bash(nums, envp);
 	if (flag == MALLOCERROR || flag == ERROR)
 		stts(WRITE, 1);
 }
