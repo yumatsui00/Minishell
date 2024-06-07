@@ -55,19 +55,33 @@ $(OBJDIR)/%.o: $(SRCDIR)%.c | $(OBJDIR)
 clean:
 	@make clean -C srcs/libft
 	@rm -rf $(OBJDIR)
-	@echo $(BRIGHT_MAGENTA)CLEAN DONE
+	@echo $(BRIGHT_MAGENTA)
+	@echo ╭━╮╭╮╱╭━╮╭━━╮╭━┳╮╭━┳╮╭━━╮╭━┳╮╭━━╮
+	@echo ┃╭╯┃┃╱┃┳╯┃╭╮┃┃┃┃┃┃┃┃┃╰┃┃╯┃┃┃┃┃╭━┫
+	@echo ┃╰╮┃╰╮┃┻╮┃┣┫┃┃┃┃┃┃┃┃┃╭┃┃╮┃┃┃┃┃╰╮┃╭╮╭╮╭╮
+	@echo ╰━╯╰━╯╰━╯╰╯╰╯╰┻━╯╰┻━╯╰━━╯╰┻━╯╰━━╯╰╯╰╯╰╯
 
-fclean: coffee
+fclean:
 	@make clean -C srcs/libft
 	@rm -rf $(OBJDIR)
 	@rm -f $(TARGET) $(TARGET1) $(TARGET2)
-	@echo $(BRIGHT_MAGENTA)----------------------FCLEAN DONE----------------------
+	@echo $(RED)╭━━━╮$(BRIGHT_MAGENTA)
+	@echo $(RED)┃╭━━╯$(BRIGHT_MAGENTA)
+	@echo $(RED)┃╰━━╮$(BRIGHT_MAGENTA) ╭━╮╭╮╱╭━╮╭━━╮╭━┳╮╭━┳╮╭━━╮╭━┳╮╭━━╮
+	@echo $(RED)┃╭━━╯$(BRIGHT_MAGENTA) ┃╭╯┃┃╱┃┳╯┃╭╮┃┃┃┃┃┃┃┃┃╰┃┃╯┃┃┃┃┃╭━┫
+	@echo $(RED)┃┃ $(BRIGHT_MAGENTA) ╱╱┃╰╮┃╰╮┃┻╮┃┣┫┃┃┃┃┃┃┃┃┃╭┃┃╮┃┃┃┃┃╰╮┃╭╮╭╮╭╮
+	@echo $(RED)╰╯ $(BRIGHT_MAGENTA)╱╱ ╰━╯╰━╯╰━╯╰╯╰╯╰┻━╯╰┻━╯╰━━╯╰┻━╯╰━━╯╰╯╰╯╰╯
 
 re:
 	@make clean -C srcs/libft
 	@rm -rf $(OBJDIR)
 	@rm -f $(TARGET) $(TARGET1) $(TARGET2)
-	@echo $(BRIGHT_RED)----------------------FCLEAN DONE----------------------
+	@echo $(RED)╭━━━╮$(BRIGHT_MAGENTA)
+	@echo $(RED)┃╭━━╯$(BRIGHT_MAGENTA)
+	@echo $(RED)┃╰━━╮$(BRIGHT_MAGENTA) ╭━╮╭╮╱╭━╮╭━━╮╭━┳╮╭━┳╮╭━━╮╭━┳╮╭━━╮
+	@echo $(RED)┃╭━━╯$(BRIGHT_MAGENTA) ┃╭╯┃┃╱┃┳╯┃╭╮┃┃┃┃┃┃┃┃┃╰┃┃╯┃┃┃┃┃╭━┫
+	@echo $(RED)┃┃ $(BRIGHT_MAGENTA) ╱╱┃╰╮┃╰╮┃┻╮┃┣┫┃┃┃┃┃┃┃┃┃╭┃┃╮┃┃┃┃┃╰╮┃╭╮╭╮╭╮
+	@echo $(RED)╰╯ $(BRIGHT_MAGENTA)╱╱ ╰━╯╰━╯╰━╯╰╯╰╯╰┻━╯╰┻━╯╰━━╯╰┻━╯╰━━╯╰╯╰╯╰╯
 	@make all
 
 .PHONY: all clean fclean re
