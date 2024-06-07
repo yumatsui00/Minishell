@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 20:19:41 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 20:49:08 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:59:28 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execute_bash(t_nums *nums, char **envp)
 	{
 		pid = fork();
 		if (pid == 0)
-			main(0, NULL, envp);
+			main(1, NULL, envp);
 		else
 			waitpid(-1, NULL, 0);
 	}
