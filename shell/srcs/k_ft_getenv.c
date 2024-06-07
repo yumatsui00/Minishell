@@ -41,21 +41,18 @@ char	*ft_getenv(char *name, char **ep)
 
 	if (!name)
 		return (NULL);
+	if (!ft_strcmp(name, "?"))
+		return (ft_itoa(stts(READ, 1)));
 	while (*ep)
 	{
 		ep_name = until_eq(*ep);
-		if (!ft_strcmp(name, "?"))
-		{
-			free(ep_name);
-			return (ft_itoa(stts(READ, 1)));
-		}
 		if (!ft_strcmp(name, ep_name))
 		{
 			free(ep_name);
-			ret = ft_strchr(*ep, '=');
+			ret = ft_strdup(ft_strchr(*ep, '=') + 1);
 			if (!ret)
 				return (NULL);
-			return (++ret);
+			return (ret);
 		}
 		ep++;
 		free(ep_name);

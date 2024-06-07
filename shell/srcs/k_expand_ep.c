@@ -43,7 +43,10 @@ static char	*expand_ep(char *line, char **ep)
 	ep_name = ft_substr(line_ptr, 0, line_ptr_stk - line_ptr);
 	ep_content = ft_getenv(ep_name, ep);
 	if (ep_content)
+	{
 		ret = ft_strjoin_free(ret, ep_content);
+		free(ep_content);
+	}
 	ret = ft_strjoin_free(ret, line_ptr_stk);
 	free(ep_name);
 	return (ret);
