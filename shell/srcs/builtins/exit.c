@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 19:29:42 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:25:58 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	argument_check(char *str)
 			i++;
 		if (str[i])
 		{
-			write(2, "bash: exit: too many arguments\n", 31);
+			write(2, "minishell: exit: too many arguments\n", 31);
 			stts(WRITE, 1);
 			return (ERROR);
 		}

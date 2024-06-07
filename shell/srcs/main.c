@@ -6,17 +6,17 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 16:22:01 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:43:28 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 // #include <libc.h>
 
-__attribute__((destructor)) static void destructor()
-{
-	system("leaks -q minishell");
-}
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q minishell");
+// }
 
 void	ready(void)
 {
