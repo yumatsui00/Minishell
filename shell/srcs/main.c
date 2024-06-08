@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/07 20:11:01 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:39:00 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 // #include <libc.h>
 
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q minishell");
-// }
+__attribute__((destructor)) static void destructor()
+{
+	system("leaks -q minishell");
+}
 
 void	ready(void)
 {
@@ -57,10 +57,9 @@ void	minishell(char **ep)
 		if (*line)
 			add_history(line);
 		cmd = lexer(line, ep);
-		// debug_cmd(cmd);
 		if (cmd)
 		{
-			exec_main(*cmd, ep);
+			// exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
 		}

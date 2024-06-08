@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:57:27 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:22:57 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,26 +88,35 @@ typedef struct s_nums
 
 typedef struct s_cut_int_space
 {
-	int		in_double_quotes;
-	int		in_single_quotes;
-}			t_cut_int_space;
+	int				in_double_quotes;
+	int				in_single_quotes;
+}					t_cut_int_space;
 
 typedef struct s_rearranges
 {
-	int		sankaku_count;
-	int		len;
-	int		is_ass;
-	int		start_len;
-}			t_rearranges;
+	int				sankaku_count;
+	int				len;
+	int				is_ass;
+	int				start_len;
+}					t_rearranges;
 
 typedef struct s_split_for_lexer
 {
-	int		in_double_quotes;
-	int		in_single_quotes;
-	int		index;
-	int		word_count;
-	int		in_word;
-}			t_split_for_lexer;
+	int				in_double_quotes;
+	int				in_single_quotes;
+	int				index;
+	int				word_count;
+	int				in_word;
+}					t_split_for_lexer;
+
+typedef struct s_union_friends
+{
+	char			**lp;
+	char			**ret;
+	char			*stk;
+	int				i;
+	int				is_ass;
+}					t_union_friends;
 
 //! yumatsui
 
@@ -213,6 +222,7 @@ char				*cut_in_main(char *line);
 char				**expan_env_var_main(char **line, char **ep);
 char				**expand_ep_main(char **line, char **ep);
 int					find_syntax_error(char **line);
+int					init_union_friends(t_union_friends *data, char **line);
 char				**union_friends(char **line);
 t_cmd				**lexer(char *before_line, char **ep);
 char				**rearranges_main(char **line);
