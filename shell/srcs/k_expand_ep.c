@@ -6,25 +6,34 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 09:19:18 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:52:25 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// #include <libc.h>
+static char	**expand_ep2(char *ret, char *line_ptr, char *line_ptr_stk,
+		char **ep)
+{
+	char	*ep_name;
+	char	*ep_content;
 
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q a.out");
-// }
+	ep_name = ft_substr(line_ptr, 0, line_ptr_stk - line_ptr);
+	ep_content = ft_getenv(ep_name, ep);
+	if (ep_content)
+	{
+		ret = ft_strjoin_free(ret, ep_content);
+		free(ep_content);
+	}
+	ret = ft_strjoin_free(ret, line_ptr_stk);
+	free(ep_name);
+	return (ret);
+}
 
 static char	*expand_ep(char *line, char **ep)
 {
 	char	*line_ptr;
 	char	*line_ptr_stk;
-	char	*ep_name;
-	char	*ep_content;
 	char	*ret;
 
 	line_ptr = line;
@@ -40,16 +49,34 @@ static char	*expand_ep(char *line, char **ep)
 	line_ptr_stk = line_ptr;
 	while (*line_ptr_stk && *line_ptr_stk != ' ' && *line_ptr_stk != '\"')
 		line_ptr_stk++;
-	ep_name = ft_substr(line_ptr, 0, line_ptr_stk - line_ptr);
-	ep_content = ft_getenv(ep_name, ep);
-	if (ep_content)
-	{
-		ret = ft_strjoin_free(ret, ep_content);
-		free(ep_content);
-	}
-	ret = ft_strjoin_free(ret, line_ptr_stk);
-	free(ep_name);
+	ret = expand_ep2(ret, line_ptr, line_ptr_stk, ep);
 	return (ret);
+}
+
+static int	expand_ep_main2(char **line, char **ret, char **ep)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i][0] == '\'')
+		{
+			ret[i] = ft_strdup(line[i]);
+			i++;
+			continue ;
+		}
+		ret[i] = expand_ep(line[i], ep);
+		if (!ret[i])
+		{
+			free_double_ptr(line);
+			free(ret);
+			return (0);
+		}
+	}
+	ret[i] = NULL;
+	free_double_ptr(line);
+	return (1);
 }
 
 char	**expand_ep_main(char **line, char **ep)
@@ -66,26 +93,8 @@ char	**expand_ep_main(char **line, char **ep)
 		free_double_ptr(line);
 		return (NULL);
 	}
-	i = 0;
-	while (line[i])
-	{
-		if (line[i][0] == '\'')
-		{
-			ret[i] = ft_strdup(line[i]);
-			i++;
-			continue ;
-		}
-		ret[i] = expand_ep(line[i], ep);
-		if (!ret[i])
-		{
-			free_double_ptr(line);
-			free(ret);
-			return (NULL);
-		}
-		i++;
-	}
-	ret[i] = NULL;
-	free_double_ptr(line);
+	if (!expand_ep_main2(line, ret, ep))
+		return (NULL);
 	return (ret);
 }
 

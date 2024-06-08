@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:36:00 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/04/16 13:20:17 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:34:55 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ret = (char *)malloc(end - start + 1);
 	if (!ret)
 		return (NULL);
-	i = 0;
-	while (start < end)
-	{
-		ret[i] = s1[start];
-		i++;
-		start++;
-	}
-	ret[i] = '\0';
+	i = -1;
+	while (start++ < end)
+		ret[++i] = s1[start];
+	ret[++i] = '\0';
 	return (ret);
 }
 

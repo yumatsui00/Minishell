@@ -6,16 +6,16 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:33:34 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/04/16 13:03:43 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:29:54 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1)
 {
-	int i;
-	char *ret;
+	int		i;
+	char	*ret;
 
 	i = 0;
 	ret = (char *)malloc(ft_strlen(s1) + 1);
@@ -27,7 +27,7 @@ char *ft_strdup(const char *s1)
 		i++;
 	}
 	ret[i] = '\0';
-	return ret;
+	return (ret);
 }
 
 // int	main(void)

@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_for_lexer.c                               :+:      :+:    :+:   */
+/*   k_ft_split_for_lexer.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:56 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/05/17 15:51:59 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:56:33 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct s_split
-{
-	int		in_double_quotes;
-	int		in_single_quotes;
-	int		index;
-	int		word_count;
-	int		in_word;
-}			t_split;
 
 static void	*free_split(char **ret)
 {
@@ -38,7 +29,7 @@ static void	*free_split(char **ret)
 	return (NULL);
 }
 
-static void	init(t_split *data)
+static void	init(t_split_for_lexer *data)
 {
 	data->in_double_quotes = 0;
 	data->in_single_quotes = 0;
@@ -49,7 +40,7 @@ static void	init(t_split *data)
 
 static int	count_word(char *line)
 {
-	t_split	data;
+	t_split_for_lexer	data;
 
 	init(&data);
 	while (*line)
@@ -74,7 +65,8 @@ static int	count_word(char *line)
 	return (data.word_count);
 }
 
-static int	logic(t_split *data, char **start, char *line, char ***ret)
+static int	logic(t_split_for_lexer *data, char **start, char *line,
+		char ***ret)
 {
 	if (*line == '\"' && !data->in_single_quotes)
 		data->in_double_quotes = !data->in_double_quotes;
@@ -100,9 +92,9 @@ static int	logic(t_split *data, char **start, char *line, char ***ret)
 
 char	**ft_split_for_lexer(char *line)
 {
-	t_split	data;
-	char	*start;
-	char	**ret;
+	t_split_for_lexer	data;
+	char				*start;
+	char				**ret;
 
 	init(&data);
 	start = NULL;

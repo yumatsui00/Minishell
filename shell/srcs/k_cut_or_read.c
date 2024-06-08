@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   k_cut_or_read.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/08 16:36:25 by kkomatsu          #+#    #+#             */
+/*   Updated: 2024/06/08 16:36:44 by kkomatsu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	quotes_is_odd(char *s)
@@ -23,7 +35,7 @@ static int	quotes_is_odd(char *s)
 		return (0);
 }
 
-static int exist_quotes(char *s)
+static int	exist_quotes(char *s)
 {
 	int	single_quotes;
 	int	double_quotes;
@@ -46,10 +58,10 @@ static int exist_quotes(char *s)
 		return (0);
 }
 
-static int how_many_quote(char first_quotes, char *s)
+static int	how_many_quote(char first_quotes, char *s)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	count = 0;
 	i = 0;
@@ -62,11 +74,11 @@ static int how_many_quote(char first_quotes, char *s)
 	return (count);
 }
 
-static char *delete_quotes_both_ends(char *s)
+static char	*delete_quotes_both_ends(char *s)
 {
-	char *ret;
-	int i;
-	char first_quotes;
+	char	*ret;
+	int		i;
+	char	first_quotes;
 
 	i = -1;
 	first_quotes = '\0';
@@ -75,14 +87,14 @@ static char *delete_quotes_both_ends(char *s)
 			first_quotes = s[i];
 	ret = (char *)malloc(ft_strlen(s) - how_many_quote(first_quotes, s));
 	if (!ret)
-		return NULL;
+		return (NULL);
 	i = -1;
 	while (*s)
 	{
 		if (*s == first_quotes)
 		{
 			s++;
-			continue;
+			continue ;
 		}
 		ret[++i] = *s;
 		s++;
@@ -100,7 +112,6 @@ int	cut_or_read(char **line)
 		if (!quotes_is_odd(*line) && exist_quotes(*line))
 		{
 			stk = delete_quotes_both_ends(*line);
-            // printf("%p\n", stk);
 			free(*line);
 			*line = stk;
 		}

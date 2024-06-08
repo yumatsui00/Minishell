@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:20:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 09:20:37 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:52:39 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ static int	select_output(char *item, char *next, int is_first)
 	return (0);
 }
 
-//左から一つずつ見ていく。
-//一つ右を確認
-// itemだったらsyntax error
 int	find_syntax_error(char **line)
 {
 	int	i;

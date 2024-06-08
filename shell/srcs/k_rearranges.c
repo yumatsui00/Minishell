@@ -6,19 +6,11 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:36 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 20:04:55 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:57:42 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct s_data
-{
-	int		sankaku_count;
-	int		len;
-	int		is_ass;
-	int		start_len;
-}			t_data;
 
 static int	count_sankaku(char **line, int len)
 {
@@ -37,7 +29,8 @@ static int	count_sankaku(char **line, int len)
 	return (count);
 }
 
-static void	logic_component(char **dest, char **src, t_data *data, int num)
+static void	logic_component(char **dest, char **src, t_rearranges *data,
+		int num)
 {
 	int	k;
 
@@ -64,18 +57,11 @@ static void	logic_component(char **dest, char **src, t_data *data, int num)
 	}
 }
 
-// static void	init_logic(t_data *data, char **src, int len, int is_ass)
-// {
-// 	data->is_ass = is_ass;
-// 	data->len = len;
-// 	data->sankaku_count = count_sankaku(src, len);
-// }
-
 static void	logic(char **dest, char **src, int len, int is_ass)
 {
-	int		i;
-	int		k;
-	t_data	data;
+	int				i;
+	int				k;
+	t_rearranges	data;
 
 	i = 0;
 	data.is_ass = is_ass;

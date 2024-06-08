@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
+/*   Updated: 2024/06/08 16:57:27 by kkomatsu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -57,8 +68,8 @@ typedef struct s_cmd
 
 typedef struct s_nums
 {
-	int 			i;
-	int				index;// heredoc_index
+	int				i;
+	int				index;
 	t_cmd			*first;
 	t_cmd			*end;
 	int				end_status;
@@ -72,15 +83,39 @@ typedef struct s_nums
 	int				outfds_i;
 	int				infile;
 	int				outfile;
-	struct s_nums *next; // after SEMQ
+	struct s_nums	*next;
 }					t_nums;
+
+typedef struct s_cut_int_space
+{
+	int		in_double_quotes;
+	int		in_single_quotes;
+}			t_cut_int_space;
+
+typedef struct s_rearranges
+{
+	int		sankaku_count;
+	int		len;
+	int		is_ass;
+	int		start_len;
+}			t_rearranges;
+
+typedef struct s_split_for_lexer
+{
+	int		in_double_quotes;
+	int		in_single_quotes;
+	int		index;
+	int		word_count;
+	int		in_word;
+}			t_split_for_lexer;
 
 //! yumatsui
 
 int					stts(int mode, int num);
 void				exec_main(t_cmd *mini, char **envp);
 void				exec_main1(t_cmd *mini, t_nums *nums, char **envp);
-int					exec_main2(t_cmd *mini, t_nums *nums, char **envp, int flag);
+int					exec_main2(t_cmd *mini, t_nums *nums, char **envp,
+						int flag);
 void				end_or_recurse(t_cmd **mini, t_nums *nums, char **envp);
 // 1
 int					change_heredoc_into_redirect(t_cmd *mini, t_nums *nums);
@@ -90,7 +125,8 @@ void				set_filename(char filename[6], int i);
 void				initializer(t_cmd *mini, t_nums *nums);
 // 3
 int					cmd_check(t_cmd *mini, t_nums *nums, char **envp);
-int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag, char **envp);
+int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag,
+						char **envp);
 int					check_bin2(t_cmd *mini, char *path, char **tmp);
 // 4
 void				get_start_location(t_cmd *mini, t_nums *nums);
@@ -103,7 +139,8 @@ int					dupdupdup(int fd1, int fd2);
 // 6
 void				builtin_execute(t_cmd *mini, t_nums *nums, char **envp);
 void				ft_execute(t_cmd *mini, t_nums *nums, char **envp);
-void				execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp);
+void				execute_without_pipe(t_cmd **mini, t_nums *nums,
+						char **envp);
 // builtins
 int					check_cd(t_cmd *mini, t_nums *nums);
 int					check_echo(t_cmd *mini, t_nums *nums);
@@ -146,7 +183,7 @@ void				freefree(char **ans);
 char				**ft_strdupdup(char **str, int i);
 char				*ft_strjoin_mini(char *s1, char *s2);
 char				*ft_strdup2(char *str);
-int	ft_strlen_tillspace(char *str); //!
+int					ft_strlen_tillspace(char *str);
 void				unlink_allfile(char filename[6], int i);
 void				t_cmd_free(t_cmd *mini);
 

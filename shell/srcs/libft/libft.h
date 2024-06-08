@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:37:19 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/02 19:20:28 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:30:22 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,11 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 
+int					ft_strcmp(char *s1, char *s2);
+char				*ft_strncpy(char *dest, char *src, unsigned int n);
+char				*ft_strndup(const char *s, size_t n);
+char				*ft_strndup_free(const char *s, size_t n);
 
-int	ft_strcmp(char *s1, char *s2);
-char	*ft_strncpy(char *dest, char *src, unsigned int n);
-char	*ft_strndup(const char *s, size_t n);
-char	*ft_strndup_free(const char *s, size_t n);
-
-
-char *ft_strjoin_free(char *s1, const char *s2);
+char				*ft_strjoin_free(char *s1, const char *s2);
 
 #endif

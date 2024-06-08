@@ -6,17 +6,11 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:01 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/06 19:39:54 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:55:29 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct s_data
-{
-	int		in_double_quotes;
-	int		in_single_quotes;
-}			t_data;
 
 static int	count_space(char *line)
 {
@@ -40,7 +34,7 @@ static int	count_space(char *line)
 
 static void	logic(char *line, char *new)
 {
-	t_data	data;
+	t_cut_int_space	data;
 
 	data.in_single_quotes = 0;
 	data.in_double_quotes = 0;
