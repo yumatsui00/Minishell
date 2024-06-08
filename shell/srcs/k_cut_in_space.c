@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:01 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:55:29 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:33:51 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,67 @@ static int	count_space(char *line)
 	return (space_count);
 }
 
+static int	joken(int num, t_cut_int_space data, char *line)
+{
+	if (num == 0)
+	{
+		if (!data.in_double_quotes && !data.in_single_quotes
+			&& (!ft_strncmp(line, "<<", 2) || !ft_strncmp(line, ">>", 2)))
+			return (1);
+	}
+	else if (num == 1)
+	{
+		if (!data.in_double_quotes && !data.in_single_quotes
+			&& (!ft_strncmp(line, "<", 1) || !ft_strncmp(line, ">", 1)
+				|| !ft_strncmp(line, "|", 1) || !ft_strncmp(line, ";", 1)))
+			return (1);
+	}
+	return (0);
+}
+
+static void	logic2(int num, char *line, char *new)
+{
+	if (num == 0)
+	{
+		*new = ' ';
+		*++new = *line;
+		*++new = *line;
+		*++new = ' ';
+		line++;
+	}
+	else if (num == 1)
+	{
+		*new = ' ';
+		*++new = *line;
+		*++new = ' ';
+	}
+}
+
 static void	logic(char *line, char *new)
 {
 	t_cut_int_space	data;
 
 	data.in_single_quotes = 0;
 	data.in_double_quotes = 0;
-	while (*line)
+	while (*line++)
 	{
 		if (*line == '\"' && !data.in_single_quotes)
 			data.in_double_quotes = !data.in_double_quotes;
 		else if (*line == '\'' && !data.in_double_quotes)
 			data.in_single_quotes = !data.in_single_quotes;
-		if (!data.in_double_quotes && !data.in_single_quotes
-			&& (!ft_strncmp(line, "<<", 2) || !ft_strncmp(line, ">>", 2)))
+		if (joken(0, data, line))
 		{
-			*new = ' ';
-			*++new = *line;
-			*++new = *line;
-			*++new = ' ';
-			line++;
+			logic2(0, line, new);
+			new += 3;
 		}
-		else if (!data.in_double_quotes && !data.in_single_quotes
-			&& (!ft_strncmp(line, "<", 1) || !ft_strncmp(line, ">", 1)
-				|| !ft_strncmp(line, "|", 1) || !ft_strncmp(line, ";", 1)))
+		else if (joken(1, data, line))
 		{
-			*new = ' ';
-			*++new = *line;
-			*++new = ' ';
+			logic2(1, line, new);
+			new += 2;
 		}
 		else
 			*new = *line;
 		new ++;
-		line++;
 	}
 	*new = '\0';
 }
