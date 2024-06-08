@@ -6,13 +6,13 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:52:25 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:26:04 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**expand_ep2(char *ret, char *line_ptr, char *line_ptr_stk,
+static char	*expand_ep2(char *ret, char *line_ptr, char *line_ptr_stk,
 		char **ep)
 {
 	char	*ep_name;

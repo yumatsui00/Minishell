@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:36:25 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:36:44 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:58:38 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,10 @@ int	cut_or_read(char **line)
 			*line = stk;
 		}
 		else if (quotes_is_odd(*line))
+		{
+			write(1, "error\n", 7);
 			return (1);
+		}
 		line++;
 	}
 	*line = NULL;

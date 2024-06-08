@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:20:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:52:39 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/08 23:38:52 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	find_syntax_error(char **line)
 	}
 	if (!ft_strcmp(line[i - 1], "|"))
 	{
-		printf("直ちに読み込みなさい\n");
+		write(1, "error\n", 7);
+		return (1);
 	}
 	return (0);
 }
