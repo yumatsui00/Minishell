@@ -6,42 +6,37 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 20:46:03 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:49:44 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_bin2(t_cmd *mini, char *path, char **tmp)
-{
-	int	i;
 
-	i = 0;
-	while (tmp[i])
+char	**unset_check(t_cmd *mini, char *path, char **envp)
+{
+	int		i;
+	char	**tmp;
+
+	i = -1;
+	while (envp[++i])
 	{
-		mini->abs_path = ft_strjoin_mini(tmp[i++], path);
-		if (mini->abs_path == NULL)
-			return (free_utils(path, tmp));
-		if (access(mini->abs_path, F_OK) == 0)
+		if (ft_strncmp((const char *)envp[i], "PATH=", 5) == 0)
 			break ;
-		free(mini->abs_path);
-		mini->abs_path = NULL;
 	}
-	if (mini->abs_path == NULL)
+	tmp = ft_split(envp[i], ':');
+	if (tmp == NULL)
 	{
-		stts(WRITE, 127);
-		mini->cmd_kind = ERRORCMD;
 		write(2, "minishell: ", 11);
 		write(2, path, ft_strlen(path));
 		write(2, ": command not found\n", 20);
+		free(path);
+		mini->cmd_kind = ERRORCMD;
 	}
-	else
-		mini->cmd_kind = BIN;
-	free_utils(path, tmp);
-	return (OK);
+	return (tmp);
 }
 
-int	check_bin(t_cmd *mini, char *str, int i)
+int	check_bin(t_cmd *mini, char *str, int i, char **envp)
 {
 	char	*path;
 	char	**tmp;
@@ -60,9 +55,9 @@ int	check_bin(t_cmd *mini, char *str, int i)
 	while (str[++i] && str[i] != ' ')
 		path[i] = str[i];
 	path[i] = '\0';
-	tmp = ft_split(getenv("PATH"), ':');
+	tmp = unset_check(mini, path, envp);
 	if (tmp == NULL)
-		return (free_utils(path, NULL));
+		return (ERROR);
 	if (check_bin2(mini, path, tmp) == MALLOCERROR)
 		return (MALLOCERROR);
 	return (OK);
@@ -86,7 +81,7 @@ int	check_abs_bin(t_cmd *cpy)
 	return (OK);
 }
 
-int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag)
+int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag, char **envp)
 {
 	if (ft_strncmp(cpy->input, "echo", 4) == 0)
 		flag = check_echo(cpy, nums);
@@ -107,14 +102,14 @@ int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag)
 	else
 	{
 		if (cpy->input[0] != '/')
-			flag = check_bin(cpy, cpy->input, 0);
+			flag = check_bin(cpy, cpy->input, 0, envp);
 		else
 			flag = check_abs_bin(cpy);
 	}
 	return (flag);
 }
 
-int	cmd_check(t_cmd *mini, t_nums *nums)
+int	cmd_check(t_cmd *mini, t_nums *nums, char **envp)
 {
 	t_cmd	*cpy;
 
@@ -123,7 +118,7 @@ int	cmd_check(t_cmd *mini, t_nums *nums)
 	{
 		if (cpy->status == COM)
 		{
-			if (check_bin_or_builtin(cpy, nums, OK) == MALLOCERROR)
+			if (check_bin_or_builtin(cpy, nums, OK, envp) == MALLOCERROR)
 			{
 				stts(WRITE, 1);
 				return (MALLOCERROR);

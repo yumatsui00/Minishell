@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 21:01:54 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:51:25 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp, int flag)
 void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 {
 	initializer(mini, nums);
-	if (cmd_check(mini, nums) == MALLOCERROR)
+	if (cmd_check(mini, nums, envp) == MALLOCERROR)
 		return (end_or_recurse(&mini, nums, envp));
 	if (creat_pipe(nums) == ERROR)
 	{

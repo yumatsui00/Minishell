@@ -89,8 +89,9 @@ void				set_filename(char filename[6], int i);
 // 2
 void				initializer(t_cmd *mini, t_nums *nums);
 // 3
-int					cmd_check(t_cmd *mini, t_nums *nums);
-int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag);
+int					cmd_check(t_cmd *mini, t_nums *nums, char **envp);
+int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag, char **envp);
+int					check_bin2(t_cmd *mini, char *path, char **tmp);
 // 4
 void				get_start_location(t_cmd *mini, t_nums *nums);
 int					redirect(t_nums *nums, int flag);

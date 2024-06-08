@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 20:27:55 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:06:38 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ void	bin_execute(t_cmd *mini, char **envp)
 		exit(1);
 	}
 	stts(WRITE, 0);
+	//
+	// int i = 0;
+	// while (envp[i])
+	// {
+	// 	printf("%s\n", envp[i]);
+	// 	i++;
+	// }
+	//
 	execve(mini->abs_path, mini->sec_args, envp);
 	perror("");
 	stts(WRITE, 1);
