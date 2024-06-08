@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:35:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 20:24:04 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/08 14:12:22 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	check_access(char *path, char *cd)
 {
+	int	i;
+
 	if (access(cd, F_OK | R_OK | W_OK) != 0)
 	{
 		write(2, "minishell: cd: ", 15);
@@ -21,7 +23,17 @@ void	check_access(char *path, char *cd)
 		stts(WRITE, 1);
 	}
 	else
-		chdir(cd);
+	{
+		i = open(path, O_RDONLY | O_DIRECTORY);
+		if (i < 0)
+		{
+			write(2, "minishell: cd: ", 15);
+			perror(path);
+			stts(WRITE, 1);
+		}
+		else
+			chdir(cd);
+	}
 }
 
 int	find_directory(t_cmd *mini, char *pwd)
