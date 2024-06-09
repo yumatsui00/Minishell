@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:20:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 23:38:52 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 17:26:10 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	output_error(char *item)
 	else
 		ft_putstr_fd("newline", 1);
 	ft_putstr_fd("'\n", 1);
+	stts(WRITE, 258);
 	return (1);
 }
 

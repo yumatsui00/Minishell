@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 23:26:04 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:06:18 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,30 @@ static char	*expand_ep(char *line, char **ep)
 	return (ret);
 }
 
+static int	exist_single_q(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\"')
+			return (0);
+		else if (s[i] == '\'')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 static int	expand_ep_main2(char **line, char **ret, char **ep)
 {
 	int	i;
 
-	i = -1;
-	while (line[++i])
+	i = 0;
+	while (line[i])
 	{
-		if (line[i][0] == '\'')
+		if (exist_single_q(line[i]))
 		{
 			ret[i] = ft_strdup(line[i]);
 			i++;
@@ -73,6 +89,7 @@ static int	expand_ep_main2(char **line, char **ret, char **ep)
 			free(ret);
 			return (0);
 		}
+		i++;
 	}
 	ret[i] = NULL;
 	free_double_ptr(line);
