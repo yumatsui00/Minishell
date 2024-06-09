@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 09:38:20 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:17:33 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	ready(void)
 void	signal_handler(int signum)
 {
 	(void)signum;
-	// rl_replace_line("", 0);
+	rl_replace_line("\n", 0);
 	rl_redisplay();
 	rl_on_new_line();
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -58,7 +58,7 @@ void	minishell(char **ep)
 		cmd = lexer(line, ep);
 		if (cmd)
 		{
-			// exec_main(*cmd, ep);
+			exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
 		}

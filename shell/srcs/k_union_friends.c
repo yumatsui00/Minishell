@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:40 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 23:56:16 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:10:41 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*union_friends2(t_union_friends *data, char **line)
 char	**union_friends(char **line)
 {
 	t_union_friends	data;
-	char			*stk;
 
 	if (!init_union_friends(&data, line))
 		return (NULL);
