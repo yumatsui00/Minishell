@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 18:54:07 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:45:17 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	minishell(char **ep)
 	write(1, "exit\n", 5);
 }
 
-int	ctlflag = 0;
+int	g_ctlflag = 0;
 
 int	main(int ac, char **av, char **ep)
 {

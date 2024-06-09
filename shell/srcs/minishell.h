@@ -6,14 +6,12 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 19:27:10 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:46:10 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-extern int	ctlflag;
 
 # include "libft/libft.h"
 # include <errno.h>
@@ -35,6 +33,8 @@ extern int	ctlflag;
 # include <unistd.h>
 
 # define MINISHELL "\x1b[33mMINISHELL$\x1b[m "
+
+extern int			g_ctlflag;
 
 // general
 # define READ 0
