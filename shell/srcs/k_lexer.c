@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 00:01:28 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:49:24 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ t_cmd	**lexer(char *before_line, char **ep)
 	line = expand_ep_main(line, ep);
 	if (!line)
 		return (NULL);
-	if (cut_or_read(line) || find_syntax_error(line))
+	if (cut_or_read(line))
 		return (free_double_ptr(line), (NULL));
+	if (find_syntax_error(line))
+		return (NULL);
 	line = rearranges_main(line);
 	if (!line)
 		return (free_double_ptr(line), (NULL));
