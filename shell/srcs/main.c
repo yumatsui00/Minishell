@@ -6,11 +6,12 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 15:17:33 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:41:03 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 // #include <libc.h>
 
 // __attribute__((destructor)) static void destructor()
@@ -30,12 +31,13 @@ void	ready(void)
 
 void	signal_handler(int signum)
 {
-	(void)signum;
-	rl_replace_line("\n", 0);
-	rl_redisplay();
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (signum == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void	minishell(char **ep)
@@ -45,9 +47,9 @@ void	minishell(char **ep)
 	int		is_exit;
 
 	is_exit = 0;
-	signal(SIGINT, signal_handler);
 	while (!is_exit)
 	{
+		signal(SIGINT, signal_handler);
 		line = readline("MINISHELL: ");
 		if (!line)
 		{
@@ -74,10 +76,9 @@ int	main(int ac, char **av, char **ep)
 	(void)av;
 	if (ac == 1)
 	{
-		ready();
+		// ready();
 		new_ep = envp_to_heap(ep);
 		minishell(new_ep);
 	}
 	return (0);
 }
-
