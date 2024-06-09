@@ -6,12 +6,11 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/08 17:39:08 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:46:04 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	**unset_check(t_cmd *mini, char *path, char **envp)
 {
