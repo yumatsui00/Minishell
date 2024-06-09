@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 15:41:03 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:54:07 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// #include <libc.h>
-
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q minishell");
-// }
 
 void	ready(void)
 {
@@ -69,6 +62,8 @@ void	minishell(char **ep)
 	write(1, "exit\n", 5);
 }
 
+int	ctlflag = 0;
+
 int	main(int ac, char **av, char **ep)
 {
 	char	**new_ep;
@@ -76,7 +71,6 @@ int	main(int ac, char **av, char **ep)
 	(void)av;
 	if (ac == 1)
 	{
-		// ready();
 		new_ep = envp_to_heap(ep);
 		minishell(new_ep);
 	}

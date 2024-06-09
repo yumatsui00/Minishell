@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 23:22:57 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:27:10 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+extern int	ctlflag;
 
 # include "libft/libft.h"
 # include <errno.h>
@@ -137,6 +139,7 @@ int					cmd_check(t_cmd *mini, t_nums *nums, char **envp);
 int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag,
 						char **envp);
 int					check_bin2(t_cmd *mini, char *path, char **tmp);
+void				checkforp2p(char *str);
 // 4
 void				get_start_location(t_cmd *mini, t_nums *nums);
 int					redirect(t_nums *nums, int flag);

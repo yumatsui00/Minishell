@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/09 16:46:04 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:22:09 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ char	**unset_check(t_cmd *mini, char *path, char **envp)
 		if (ft_strncmp((const char *)envp[i], "PATH=", 5) == 0)
 			break ;
 	}
-	tmp = ft_split(envp[i] + 5, ':');
+	if (envp[i] != NULL && ft_strlen(envp[i]) > 5)
+		tmp = ft_split(envp[i] + 5, ':');
+	else
+		tmp = NULL;
 	if (tmp == NULL)
 	{
 		write(2, "minishell: ", 11);
@@ -122,6 +125,7 @@ int	cmd_check(t_cmd *mini, t_nums *nums, char **envp)
 				stts(WRITE, 1);
 				return (MALLOCERROR);
 			}
+			checkforp2p(cpy->input);
 		}
 		else
 			cpy->cmd_kind = ELSE;

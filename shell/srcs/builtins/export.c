@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 20:44:23 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:20:28 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ int	check_export(t_cmd *mini, t_nums *nums)
 		free(mini->abs_path);
 		mini->abs_path = NULL;
 	}
+	stts(WRITE, 0);
 	return (OK);
 }

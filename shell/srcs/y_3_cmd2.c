@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:49:03 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/08 15:49:48 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:32:54 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,29 @@ int	check_bin2(t_cmd *mini, char *path, char **tmp)
 		mini->cmd_kind = BIN;
 	free_utils(path, tmp);
 	return (OK);
+}
+
+void	checkforp2p(char *str)
+{
+	char	**tmp;
+	int		i;
+
+	tmp = ft_split(str, ' ');
+	if (*tmp == NULL)
+		return ;
+	if (strncmp(tmp[0], "/bin/ls", 8) == 0 || strncmp(tmp[0], "/bin/cat", 9) \
+	== 0 || strncmp(tmp[0], "ls", 3) == 0 || strncmp(tmp[0], "cat", 4) == 0)
+	{
+		i = 0;
+		while (tmp[++i])
+		{
+			if (tmp[i][0] == ' ')
+				continue ;
+			else
+			{
+				if (access(tmp[i], F_OK) < 0)
+					stts(WRITE, 1);
+			}
+		}
+	}
 }
