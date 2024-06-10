@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/10 12:01:01 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:20:19 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	signal_handler(int signum)
 {
 	if (signum == SIGINT && !g_ctlflag)
 	{
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\033[13C\033[0K", 0);
+		ft_putstr_fd("\n", 0);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -37,16 +38,14 @@ void	minishell(char **ep)
 {
 	char	*line;
 	t_cmd	**cmd;
-	int		is_exit;
 
-	is_exit = 0;
-	while (!is_exit)
+	signal(SIGINT, signal_handler);
+	while (1)
 	{
-		signal(SIGINT, signal_handler);
-		line = readline("\033[0;33m\033[1mMINISHELL😻 ► \033[0m");
+		line = readline("MINISHELL😻👉 ");
 		if (!line)
 		{
-			write(1, "\b\b", 2);
+			ft_putstr_fd("\033[1A\033[14C", 0);
 			break ;
 		}
 		add_history(line);
@@ -68,6 +67,7 @@ int	main(int ac, char **av, char **ep)
 
 	(void)av;
 	g_ctlflag = 0;
+	signal(SIGINT, signal_handler);
 	if (ac == 1)
 	{
 		new_ep = envp_to_heap(ep);
