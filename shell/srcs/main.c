@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/10 15:20:19 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:22:40 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	signal_handler(int signum)
 {
 	if (signum == SIGINT && !g_ctlflag)
 	{
-		ft_putstr_fd("\033[13C\033[0K", 0);
-		ft_putstr_fd("\n", 0);
 		rl_on_new_line();
+		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
 		rl_redisplay();
+		// ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
 	}
 }
 
@@ -42,13 +42,14 @@ void	minishell(char **ep)
 	signal(SIGINT, signal_handler);
 	while (1)
 	{
-		line = readline("MINISHELL😻👉 ");
+		line = readline(MINISHELL);
 		if (!line)
 		{
 			ft_putstr_fd("\033[1A\033[14C", 0);
 			break ;
 		}
-		add_history(line);
+		if (*line)
+			add_history(line);
 		cmd = lexer(line, ep);
 		if (cmd)
 		{

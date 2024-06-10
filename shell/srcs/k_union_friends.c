@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:40 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 15:10:41 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:14:07 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	ass_space_delete(char *s)
 {
 	int	len;
 
-	if (!ft_strcmp(s, "|") || !ft_strcmp(s, "|"))
+	if (!ft_strcmp(s, "|") || !ft_strcmp(s, ";"))
 		return ;
 	len = ft_strlen(s);
 	s[len - 1] = '\0';

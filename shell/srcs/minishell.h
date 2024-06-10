@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/10 15:21:15 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:23:32 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <termios.h>
 # include <unistd.h>
 
-# define MINISHELL "\033[0;33m\033[1mMINISHELL😻 ► \033[0m"
+# define MINISHELL "\033[0;33m\033[1mKOMATSUSHELL😻 ► \033[0m"
 
 int					g_ctlflag;
 

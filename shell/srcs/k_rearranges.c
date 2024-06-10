@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:36 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:57:42 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:13:39 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ static void	logic(char **dest, char **src, int len, int is_ass)
 	t_rearranges	data;
 
 	i = 0;
-	data.is_ass = is_ass;
-	data.len = len;
-	data.sankaku_count = count_sankaku(src, len);
+	data = (t_rearranges){count_sankaku(src, len), len, is_ass, 0};
 	while (dest[i])
 		i++;
 	data.start_len = i;
@@ -74,17 +72,16 @@ static void	logic(char **dest, char **src, int len, int is_ass)
 		dest[i + len - 1] = src[len - 1];
 	logic_component(dest, src, &data, 0);
 	logic_component(dest, src, &data, 1);
-	k = 0;
-	while (src[k] && k < len - is_ass)
+	k = -1;
+	while (src[++k] && k < len - is_ass)
 	{
 		if (is_sankaku(src[k]))
 		{
-			k += 2;
+			k += 1;
 			continue ;
 		}
 		if (src[k] && ft_strcmp(src[k], "|") && ft_strcmp(src[k], ";"))
 			dest[i++] = src[k];
-		k++;
 	}
 }
 
@@ -100,10 +97,7 @@ char	**rearranges_main(char **line)
 		len++;
 	ret = (char **)ft_calloc(len + 1, sizeof(char *));
 	if (!ret)
-	{
-		free_double_ptr(line);
-		return (NULL);
-	}
+		return (free_double_ptr(line), NULL);
 	line_ptr = line;
 	while (*line_ptr)
 	{
@@ -112,10 +106,7 @@ char	**rearranges_main(char **line)
 				";"))
 			line_ptr++;
 		if (!ft_strcmp(*line_ptr, "|") || !ft_strcmp(*line_ptr, ";"))
-		{
-			logic(ret, stk, line_ptr - stk + 1, 1);
-			line_ptr++;
-		}
+			logic(ret, stk, line_ptr++ - stk + 1, 1);
 		else
 			logic(ret, stk, line_ptr - stk, 0);
 	}
