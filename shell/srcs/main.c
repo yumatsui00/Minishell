@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/10 17:22:40 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:25:15 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ void	signal_handler(int signum)
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
 		rl_redisplay();
-		// ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
 	}
 }
+
+// ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
 
 void	minishell(char **ep)
 {
