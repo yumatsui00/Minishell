@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 19:45:17 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:57:22 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ready(void)
 
 void	signal_handler(int signum)
 {
-	if (signum == SIGINT)
+	if (signum == SIGINT && !g_ctlflag)
 	{
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
@@ -43,7 +43,7 @@ void	minishell(char **ep)
 	while (!is_exit)
 	{
 		signal(SIGINT, signal_handler);
-		line = readline("MINISHELL: ");
+		line = readline("\033[0;33m\033[1mMINISHELL😻 ▸ \033[0m");
 		if (!line)
 		{
 			write(1, "\b\b", 2);
@@ -62,13 +62,12 @@ void	minishell(char **ep)
 	write(1, "exit\n", 5);
 }
 
-int	g_ctlflag = 0;
-
 int	main(int ac, char **av, char **ep)
 {
 	char	**new_ep;
 
 	(void)av;
+	g_ctlflag = 0;
 	if (ac == 1)
 	{
 		new_ep = envp_to_heap(ep);
