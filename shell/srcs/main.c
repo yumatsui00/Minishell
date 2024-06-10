@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/10 11:57:22 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:01:01 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	minishell(char **ep)
 	while (!is_exit)
 	{
 		signal(SIGINT, signal_handler);
-		line = readline("\033[0;33m\033[1mMINISHELL😻 ▸ \033[0m");
+		line = readline("\033[0;33m\033[1mMINISHELL😻 ► \033[0m");
 		if (!line)
 		{
 			write(1, "\b\b", 2);
