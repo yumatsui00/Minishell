@@ -39,7 +39,8 @@ $(TARGET): $(OBJS) $(LIBFT)
 
 $(TARGET1): $(OBJS)
 	@echo $(BRIGHT_YELLOW)
-	$(CC) $(CCFLAGS) $(DEBUG) -o $@ $^
+	$(MAKE) -C srcs/libft
+	$(CC) $(CCFLAGS) -o  $@ $^ $(LIBFT) -lreadline
 	@echo
 	@echo FSANITIZE=ADDRESS DONE
 

@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/10 17:25:15 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:57:13 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ready(void)
-{
-	write(1, "\x1b[35m  __  __ ___ _  _ ___ ___ _  _ ___ _    _     ", 47);
-	write(1, "\n", 1);
-	write(1, " |  \\/  |_ _| \\| |_ _/ __| || | __| |  | |   \n", 47);
-	write(1, " | |\\/| || || .` || |\\__ \\ __ | _|| |__| |__ \n", 47);
-	write(1, " |_|  |_|___|_|\\_|___|___/_||_|___|____|____|\n", 47);
-	write(1, "\n\x1b[m", 1);
-}
 
 void	signal_handler(int signum)
 {
@@ -31,6 +21,8 @@ void	signal_handler(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	else if (signum == SIGINT && g_ctlflag)
+		stts(WRITE, 130);
 }
 
 // ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
@@ -46,7 +38,7 @@ void	minishell(char **ep)
 		line = readline(MINISHELL);
 		if (!line)
 		{
-			ft_putstr_fd("\033[1A\033[14C", 0);
+			ft_putstr_fd("\033[1A\033[13C", 0);
 			break ;
 		}
 		if (*line)
@@ -77,3 +69,12 @@ int	main(int ac, char **av, char **ep)
 	}
 	return (0);
 }
+
+// void	ready(void)
+// {
+// 	write(1, "     __  __ ___ _  _ ___ ___ _  _ ___ _    _     \n", 49);
+// 	write(1, "  ⭐|  \\/  |_ _| \\| |_ _/ __| || | __| |  | |    ⭐\n", 55);
+// 	write(1, "  ⭐| |\\/| || || .` || |\\__ \\ __ | _|| |__| |__  ⭐\n", 55);
+// 	write(1, "  ⭐|_|  |_|___|_|\\_|___|___/_||_|___|____|____| ⭐\n", 55);
+// 	write(1, "\n", 1);
+// }
