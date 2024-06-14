@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 09:27:39 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:30:54 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	echo_output(char *str, t_nums *nums)
 
 int	execute_echo(t_cmd *mini, t_nums *nums)
 {
+	char	**tmp;
+	int		i;
+
 	stts(WRITE, 0);
 	if (ft_strncmp(mini->input, "echo -n", 7) == 0)
 	{
@@ -27,7 +30,15 @@ int	execute_echo(t_cmd *mini, t_nums *nums)
 			return (OK);
 		else if (mini->input[7] == ' ')
 		{
-			echo_output(mini->input + 8, nums);
+			tmp = ft_split(mini->input, ' ');
+			i = 1;
+			while (tmp[i + 1] && strncmp(tmp[i + 1], "-n", 3) == 0)
+				i++;
+			echo_output(mini->input + 5 + 3 * i, nums);
+			i = -1;
+			while (tmp[++i])
+				free(tmp[i]);
+			free(tmp);
 			return (OK);
 		}
 	}

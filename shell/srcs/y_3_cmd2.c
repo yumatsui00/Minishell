@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:49:03 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/09 19:32:54 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:23:16 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,8 @@ void	checkforp2p(char *str)
 			}
 		}
 	}
+	i = -1;
+	while (tmp[++i] != NULL)
+		free(tmp[i]);
+	free(tmp);
 }

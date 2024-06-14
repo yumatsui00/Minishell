@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/11 17:57:13 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:57:27 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ void	signal_handler(int signum)
 
 // ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
 
+static int	check_semiq(t_cmd *cmd)
+{
+	t_cmd	*first;
+
+	first = cmd;
+	while (cmd)
+	{
+		if (cmd->input && strncmp(cmd->input, ";", 2) == 0)
+		{
+			write(2, "error😡\n", 10);
+			while (first)
+			{
+				first->abs_path = NULL;
+				first = first->next;
+			}
+			return (ERROR);
+		}
+		cmd = cmd->next;
+	}
+	return (OK);
+}
+
 void	minishell(char **ep)
 {
 	char	*line;
@@ -46,7 +68,8 @@ void	minishell(char **ep)
 		cmd = lexer(line, ep);
 		if (cmd)
 		{
-			exec_main(*cmd, ep);
+			if (check_semiq((*cmd)) == OK)
+				exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
 		}
@@ -70,6 +93,11 @@ int	main(int ac, char **av, char **ep)
 	return (0);
 }
 
+// #include <libc.h>
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q minishell");
+// }
 // void	ready(void)
 // {
 // 	write(1, "     __  __ ___ _  _ ___ ___ _  _ ___ _    _     \n", 49);
