@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/09 19:20:28 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:49:32 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	add_envp(char *str, char **envp, int i)
 	j = 0;
 	while (envp[++count] != NULL)
 	{
-		if (!strncmp(str, envp[count], i))
+		if (strncmp(str, envp[count], i) == 0 && envp[count][i] == '=')
 		{
 			j = 1;
 			break ;
@@ -66,7 +66,7 @@ void	add_envp(char *str, char **envp, int i)
 		gambale(&envp[count], str);
 	else
 	{
-		ans = ft_strjoin(envp[count], &str[i + 3]);
+		ans = ft_strjoin(envp[count], &str[i + 2]);
 		free(envp[count]);
 		envp[count] = ans;
 		ans_modify(ans);

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:17:09 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 20:44:48 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:37:19 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	check_more2(char *str, char **envp, int i)
 	else if (str[i] == '+')
 	{
 		if (str[i + 1] && str[i + 1] == '=')
-			add_envp(str, envp, i - 1);
+			add_envp(str, envp, i);
 		else
 		{
 			write(2, "minishell: export: `", 20);
