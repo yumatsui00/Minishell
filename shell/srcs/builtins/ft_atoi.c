@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:09:34 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 19:38:10 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:21:09 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	atoerror(char *str)
 	write(2, str, ft_strlen_tillspace(str));
 	write(2, ": numeric argument required\n", 28);
 	stts(WRITE, 255);
-	exit(1);
+	exit(255);
 	return (1);
 }
 

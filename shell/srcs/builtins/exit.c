@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 13:59:54 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:19:29 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	atoi2(long long *ans, long long *ans_stock, char *str, int *i)
 			write(2, str, ft_strlen_tillspace(str));
 			write(2, ": numeric argument required\n", 28);
 			stts(WRITE, 255);
-			exit(1);
+			exit(255);
 		}
 		*ans_stock = *ans;
 	}
@@ -67,8 +67,9 @@ static int	argument_check(char *str)
 			i++;
 		if (str[i])
 		{
-			write(2, "minishell: exit: too many arguments\n", 31);
-			stts(WRITE, 1);
+			write(2, "exit\nminishell: exit: too many arguments\n", 41);
+			stts(WRITE, 255);
+			exit(255);
 			return (ERROR);
 		}
 	}
