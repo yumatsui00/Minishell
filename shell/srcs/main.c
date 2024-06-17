@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/17 17:36:03 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:23:59 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,14 @@ void	signal_handler(int signum)
 	}
 	else if (signum == SIGINT && g_ctlflag)
 		stts(WRITE, 130);
-	else if (signum == SIGQUIT)
+	else if (signum == SIGQUIT && !g_ctlflag)
 	{
-		printf("---\n");
+		rl_on_new_line();
+		write(STDOUT_FILENO, "", 1);
+		rl_redisplay();
 	}
+	else if (signum == SIGQUIT && g_ctlflag)
+		stts(WRITE, 131);
 }
 
 // ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
@@ -56,7 +60,7 @@ static int	check_semiq(t_cmd *cmd)
 void	sig_term(void)
 {
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, signal_handler);
 }
 
 void	minishell(char **ep)
