@@ -63,7 +63,7 @@ clean:
 	@echo ╰━╯╰━╯╰━╯╰╯╰╯╰┻━╯╰┻━╯╰━━╯╰┻━╯╰━━╯╰╯╰╯╰╯
 
 fclean:
-	@make clean -C srcs/libft
+	@make fclean -C srcs/libft
 	@rm -rf $(OBJDIR)
 	@rm -f $(TARGET) $(TARGET1) $(TARGET2)
 	@echo $(RED)╭━━━╮$(BRIGHT_MAGENTA)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/14 13:57:27 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:36:03 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	signal_handler(int signum)
 	}
 	else if (signum == SIGINT && g_ctlflag)
 		stts(WRITE, 130);
+	else if (signum == SIGQUIT)
+	{
+		printf("---\n");
+	}
 }
 
 // ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
@@ -49,12 +53,18 @@ static int	check_semiq(t_cmd *cmd)
 	return (OK);
 }
 
+void	sig_term(void)
+{
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 void	minishell(char **ep)
 {
 	char	*line;
 	t_cmd	**cmd;
 
-	signal(SIGINT, signal_handler);
+	sig_term();
 	while (1)
 	{
 		line = readline(MINISHELL);
