@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:22:44 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:59:02 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	check_bin(t_cmd *mini, char *str, int i, char **envp)
 	// if (tmp == NULL)
 	// 	return (ERROR);
 	if (tmp == NULL)
+	{
 		filecheck(mini, path);
+		free(path);
+	}
 	else
 	{
 		if (check_bin2(mini, path, tmp) == MALLOCERROR)

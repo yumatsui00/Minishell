@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_expand_ep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 19:06:18 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:06:19 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*expand_ep(char *line, char **ep)
 		ret = ft_strndup(line, line_ptr - line - 1);
 	}
 	line_ptr_stk = line_ptr;
-	while (*line_ptr_stk && *line_ptr_stk != ' ' && *line_ptr_stk != '\"')
+	while (*line_ptr_stk && !is_skip_in_expand(*line_ptr_stk))
 		line_ptr_stk++;
 	ret = expand_ep2(ret, line_ptr, line_ptr_stk, ep);
 	return (ret);

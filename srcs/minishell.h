@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 19:44:52 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:51:28 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void				piderror_process(t_nums *nums);
 int					creat_pipe(t_nums *nums);
 void				close_pipe(t_nums *nums);
 
-int					check_semiq(t_cmd *cmd);
+int					check_semiq(t_cmd **cmd);
 //! kkomatsu
 int					main(int ac, char **av, char **ep);
 void				minishell(char **envp);

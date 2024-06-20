@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 19:32:25 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:50:30 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	file_execute(t_cmd *mini, char **envp)
 		// debug_cmd(cmd);
 		if (cmd)
 		{
-			if (check_semiq((*cmd)) == OK)
+			if (check_semiq(cmd) == OK)
 				exec_main(*cmd, envp);
 			free_cmd(cmd);
 			free(cmd);

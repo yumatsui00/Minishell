@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 19:44:06 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:01:53 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ void	signal_handler(int signum)
 		stts(WRITE, 131);
 }
 
-static int	check_semiq(t_cmd **cmd)
+int	check_semiq(t_cmd **cmd)
 {
 	t_cmd	*tmp;
 
 	tmp = *cmd;
 	while (tmp)
 	{
+		tmp->abs_path = NULL;
 		if (tmp->status == SEMQ)
 		{
 			write(2, "error😡\n", 10);
@@ -75,7 +76,7 @@ void	minishell(char **ep)
 		cmd = lexer(line, ep);
 		if (cmd)
 		{
-			if (check_semiq((*cmd)) == OK)
+			if (check_semiq(cmd) == OK)
 				exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
