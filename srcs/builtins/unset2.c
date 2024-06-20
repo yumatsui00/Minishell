@@ -6,19 +6,18 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:00:36 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/05/28 20:19:54 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:09:49 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_unset(t_cmd *mini, t_nums *nums)
+int	check_unset(t_cmd *mini)
 {
 	if (mini->input[5] == ' ' || mini->input[5] == '\0')
 	{
 		mini->cmd_kind = BUILTIN;
 		mini->abs_path = NULL;
-		nums->builtin++;
 	}
 	else
 	{

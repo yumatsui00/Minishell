@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/14 14:49:32 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:08:57 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,12 @@ char	*ft_strjoin_tillspace(char *s1, char *s2)
 	return (ans);
 }
 
-int	check_export(t_cmd *mini, t_nums *nums)
+int	check_export(t_cmd *mini)
 {
 	if (mini->input[6] == ' ' || mini->input[6] == '\0')
 	{
 		mini->cmd_kind = BUILTIN;
 		mini->abs_path = NULL;
-		nums->builtin++;
 	}
 	else
 	{

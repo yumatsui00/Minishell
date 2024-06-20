@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 19:41:44 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:09:39 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ int	execute_pwd(t_cmd *mini, t_nums *nums)
 	return (stts(WRITE, 0), OK);
 }
 
-int	check_pwd(t_cmd *mini, t_nums *nums)
+int	check_pwd(t_cmd *mini)
 {
 	if (mini->input[3] == ' ' || mini->input[3] == '\0')
 	{
 		mini->cmd_kind = BUILTIN;
 		mini->abs_path = NULL;
-		nums->builtin++;
 	}
 	else
 	{

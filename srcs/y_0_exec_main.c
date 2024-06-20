@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 16:03:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/14 13:56:25 by yumatsui         ###   ########.fr       */
+/*   Created: 2024/06/20 14:57:47 by yumatsui          #+#    #+#             */
+/*   Updated: 2024/06/20 18:22:00 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,21 @@ int	stts(int mode, int num)
 	return (i);
 }
 
-void	end_or_recurse(t_cmd **mini, t_nums *nums, char **envp)
+void	initializer(t_cmd *mini, t_nums *nums)
 {
-	if (nums->end_status == END)
-		return ;
-	else if (nums->end_status == SEMQ)
+	t_cmd	*cpy;
+
+	nums->i = -1;
+	nums->first = mini;
+	cpy = mini;
+	nums->pipe_num = 0;
+	while (cpy)
 	{
-		while ((*mini)->status != SEMQ)
-			(*mini) = (*mini)->next;
-		(*mini) = (*mini)->next;
-		exec_main1((*mini), nums, envp);
+		cpy->abs_path = NULL;
+		if (cpy->status == PIPE)
+			nums->pipe_num++;
+		cpy = cpy->next;
 	}
-	else
-		printf("omg!\n");
-	return ;
 }
 
 int	exec_main2(t_cmd *mini, t_nums *nums, char **envp, int flag)
@@ -60,7 +61,7 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp, int flag)
 				if (flag == MALLOCERROR)
 					return (stts(WRITE, 1));
 				else if (flag == ERROR)
-					return (end_or_recurse(&mini, nums, envp), OK);
+					return (ERROR);
 				child_process(mini, nums, envp);
 			}
 			else
@@ -70,11 +71,13 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp, int flag)
 	return (OK);
 }
 
+
 void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 {
 	initializer(mini, nums);
-	if (cmd_check(mini, nums, envp) == MALLOCERROR)
-		return (end_or_recurse(&mini, nums, envp));
+	if (cmd_check(mini, envp) == MALLOCERROR)
+		return ;
+
 	if (creat_pipe(nums) == ERROR)
 	{
 		nums->infds = NULL;
@@ -82,7 +85,7 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 		return ;
 	}
 	exec_main2(mini, nums, envp, 0);
-	parent_process2(mini, nums, envp);
+	parent_process2(nums);
 	return ;
 }
 

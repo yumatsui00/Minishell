@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:35:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/08 14:12:22 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:07:17 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,12 @@ int	execute_cd(t_cmd *mini)
 	return (OK);
 }
 
-int	check_cd(t_cmd *mini, t_nums *nums)
+int	check_cd(t_cmd *mini)
 {
 	if (mini->input[2] == ' ' || mini->input[2] == '\0')
 	{
 		mini->cmd_kind = BUILTIN;
 		mini->abs_path = NULL;
-		nums->builtin++;
 	}
 	else
 	{

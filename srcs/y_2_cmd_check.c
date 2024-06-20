@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   y_3_cmd_check.c                                    :+:      :+:    :+:   */
+/*   y_2_cmd_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 19:11:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/09 19:22:09 by yumatsui         ###   ########.fr       */
+/*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
+/*   Updated: 2024/06/20 18:22:44 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**unset_check(t_cmd *mini, char *path, char **envp)
+static char	**unset_check(char **envp)
 {
 	int		i;
 	char	**tmp;
@@ -27,14 +27,14 @@ char	**unset_check(t_cmd *mini, char *path, char **envp)
 		tmp = ft_split(envp[i] + 5, ':');
 	else
 		tmp = NULL;
-	if (tmp == NULL)
-	{
-		write(2, "minishell: ", 11);
-		write(2, path, ft_strlen(path));
-		write(2, ": command not found\n", 20);
-		free(path);
-		mini->cmd_kind = ERRORCMD;
-	}
+	// if (tmp == NULL)
+	// {
+	// 	write(2, "minishell: ", 11);
+	// 	write(2, path, ft_strlen(path));
+	// 	write(2, ": command not found\n", 20);
+	// 	free(path);
+	// 	mini->cmd_kind = ERRORCMD;
+	// }
 	return (tmp);
 }
 
@@ -57,15 +57,23 @@ int	check_bin(t_cmd *mini, char *str, int i, char **envp)
 	while (str[++i] && str[i] != ' ')
 		path[i] = str[i];
 	path[i] = '\0';
-	tmp = unset_check(mini, path, envp);
+	tmp = unset_check(envp);
+	// if (tmp == NULL)
+	// 	return (ERROR);
 	if (tmp == NULL)
-		return (ERROR);
-	if (check_bin2(mini, path, tmp) == MALLOCERROR)
-		return (MALLOCERROR);
+		filecheck(mini, path);
+	else
+	{
+		if (check_bin2(mini, path, tmp) == MALLOCERROR)
+		{
+			free_utils(path, tmp);
+			return (MALLOCERROR);
+		}
+	}
 	return (OK);
 }
 
-int	check_abs_bin(t_cmd *cpy)
+static int	check_abs_bin(t_cmd *cpy)
 {
 	cpy->abs_path = ft_strdup2(cpy->input);
 	if (cpy->abs_path == NULL)
@@ -78,29 +86,30 @@ int	check_abs_bin(t_cmd *cpy)
 		write(2, "minishell: ", 11);
 		write(2, cpy->abs_path, ft_strlen(cpy->abs_path));
 		write(2, ": command not found\n", 20);
+		free(cpy->abs_path);
 		cpy->abs_path = NULL;
 	}
 	return (OK);
 }
 
-int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag, char **envp)
+int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
 {
 	if (ft_strncmp(cpy->input, "echo", 4) == 0)
-		flag = check_echo(cpy, nums);
+		flag = check_echo(cpy);
 	else if (ft_strncmp(cpy->input, "cd", 2) == 0)
-		flag = check_cd(cpy, nums);
+		flag = check_cd(cpy);
 	else if (ft_strncmp(cpy->input, "pwd", 3) == 0)
-		flag = check_pwd(cpy, nums);
+		flag = check_pwd(cpy);
 	else if (ft_strncmp(cpy->input, "export", 6) == 0)
-		flag = check_export(cpy, nums);
+		flag = check_export(cpy);
 	else if (ft_strncmp(cpy->input, "unset", 5) == 0)
-		flag = check_unset(cpy, nums);
+		flag = check_unset(cpy);
 	else if (ft_strncmp(cpy->input, "exit", 4) == 0)
-		flag = check_exit(cpy, nums);
+		flag = check_exit(cpy);
 	else if (ft_strncmp(cpy->input, "env", 3) == 0)
-		flag = check_env(cpy, nums);
-	else if (ft_strncmp(cpy->input, "./minishell", 11) == 0)
-		flag = check_bash(cpy, nums);
+		flag = check_env(cpy);
+	else if (cpy->input[0] == '.')
+		flag = check_file(cpy);
 	else
 	{
 		if (cpy->input[0] != '/')
@@ -111,21 +120,21 @@ int	check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag, char **envp)
 	return (flag);
 }
 
-int	cmd_check(t_cmd *mini, t_nums *nums, char **envp)
+int	cmd_check(t_cmd *mini, char **envp)
 {
 	t_cmd	*cpy;
 
 	cpy = mini;
-	while (cpy && cpy->status != SEMQ)
+	while (cpy)
 	{
 		if (cpy->status == COM)
 		{
-			if (check_bin_or_builtin(cpy, nums, OK, envp) == MALLOCERROR)
+			if (check_bin_or_builtin(cpy, OK, envp) == MALLOCERROR)
 			{
 				stts(WRITE, 1);
 				return (MALLOCERROR);
 			}
-			checkforp2p(cpy->input);
+			// checkforp2p(cpy->input);
 		}
 		else
 			cpy->cmd_kind = ELSE;

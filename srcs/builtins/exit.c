@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/14 14:19:29 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:08:51 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,12 @@ int	execute_exit(t_cmd *mini)
 	exit(0);
 }
 
-int	check_exit(t_cmd *mini, t_nums *nums)
+int	check_exit(t_cmd *mini)
 {
 	if (mini->input[4] == ' ' || mini->input[4] == '\0')
 	{
 		mini->cmd_kind = BUILTIN;
 		mini->abs_path = NULL;
-		nums->builtin++;
 		change_stts(mini);
 	}
 	else

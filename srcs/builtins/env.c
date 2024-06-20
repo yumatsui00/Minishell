@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/06 16:07:23 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:08:08 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ int	execute_env(t_nums *nums, char **envp)
 	return (OK);
 }
 
-int	check_env(t_cmd *mini, t_nums *nums)
+int	check_env(t_cmd *mini)
 {
 	if (mini->input[3] == ' ' || mini->input[3] == '\0')
 	{
 		mini->cmd_kind = BUILTIN;
 		mini->abs_path = NULL;
-		nums->builtin++;
 	}
 	else
 	{

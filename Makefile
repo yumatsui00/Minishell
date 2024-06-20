@@ -9,10 +9,10 @@ LIBFT = srcs/libft/libft.a
 SRCS = srcs/k_cut_in_space.c srcs/k_debug.c srcs/k_envp_to_heap.c srcs/k_expand_ep.c srcs/k_cut_or_read.c\
 		srcs/k_find_syntax_error.c srcs/k_free.c srcs/k_ft_getenv.c srcs/k_ft_split_for_lexer.c srcs/k_cut_or_read.c\
 		srcs/k_lexer.c srcs/k_rearranges.c srcs/k_make_cmd_line.c srcs/k_union_friends.c srcs/k_union_friends2.c srcs/main.c \
-		srcs/y_0_exec_main.c srcs/y_1_heredoc2red.c srcs/y_2_initializer.c srcs/y_3_cmd_check.c srcs/y_3_cmd2.c \
-		srcs/y_4_get_start_location.c srcs/y_4_redirect.c srcs/y_5_child_process.c srcs/y_5_parent_process.c \
-		srcs/y_6_ft_execute.c srcs/y_6_exec_without_pipe.c srcs/y_9_error.c srcs/y_creat_pipe.c \
-		srcs/builtins/cd.c srcs/builtins/echo.c srcs/builtins/env.c srcs/builtins/bash.c\
+		srcs/y_0_exec_main.c srcs/y_1_heredoc2red.c srcs/y_2_cmd_check.c srcs/y_2_cmd_check2.c \
+		srcs/y_3_get_start_location.c srcs/y_3_redirect.c srcs/y_4_child_process.c srcs/y_4_parent_process.c \
+		srcs/y_5_ft_execute.c srcs/y_5_exec_without_pipe.c srcs/y_9_error.c srcs/y_9_creat_pipe.c \
+		srcs/builtins/cd.c srcs/builtins/echo.c srcs/builtins/env.c\
 		srcs/builtins/exit.c srcs/builtins/exit2.c srcs/builtins/export.c srcs/builtins/export1.c \
 		srcs/builtins/ft_atoi.c srcs/builtins/pwd.c \
 		srcs/builtins/unset.c srcs/builtins/unset2.c \

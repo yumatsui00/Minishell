@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/17 18:23:59 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:06:27 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	signal_handler(int signum)
 
 // ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
 
-static int	check_semiq(t_cmd *cmd)
+int	check_semiq(t_cmd *cmd)
 {
 	t_cmd	*first;
 

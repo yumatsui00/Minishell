@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   y_6_exec_without_pipe.c                            :+:      :+:    :+:   */
+/*   y_5_exec_without_pipe.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:15:03 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 19:20:29 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:07:02 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	bin_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 			return ;
 		}
 		else if (flag == ERROR)
-			return (end_or_recurse(mini, nums, envp));
+			return ;
 		if (dupdupdup(nums->infile, nums->outfile) == ERROR)
 		{
 			write(2, "minishell: fork: Resource temporarily \
@@ -53,12 +53,12 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 			return ;
 		}
 		else if (flag == ERROR)
-			return (end_or_recurse(mini, nums, envp));
+			return ;
 		builtin_execute(*mini, nums, envp);
 		free(nums->infds);
 		free(nums->outfds);
 	}
-	else if ((*mini)->cmd_kind == BIN)
+	else if ((*mini)->cmd_kind == BIN || (*mini)->cmd_kind == FILE)
 		bin_without_pipe(mini, nums, envp);
 	waitpid(-1, NULL, 0);
 }

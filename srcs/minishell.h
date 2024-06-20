@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/17 17:39:44 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:18:52 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int					g_ctlflag;
 // cmd_kind
 # define BUILTIN 10
 # define BIN 11
-# define ELSE 12
+# define FILE 12
+# define ELSE 13
 # define ERRORCMD -10
 
 typedef struct s_cmd
@@ -73,8 +74,6 @@ typedef struct s_nums
 	int				index;
 	t_cmd			*first;
 	t_cmd			*end;
-	int				end_status;
-	int				builtin;
 	int				pipe_num;
 	int				*pipe;
 	pid_t			pid;
@@ -126,7 +125,6 @@ void				exec_main(t_cmd *mini, char **envp);
 void				exec_main1(t_cmd *mini, t_nums *nums, char **envp);
 int					exec_main2(t_cmd *mini, t_nums *nums, char **envp,
 						int flag);
-void				end_or_recurse(t_cmd **mini, t_nums *nums, char **envp);
 // 1
 int					change_heredoc_into_redirect(t_cmd *mini, t_nums *nums);
 void				set_filename(char filename[6], int i);
@@ -134,8 +132,8 @@ void				set_filename(char filename[6], int i);
 // 2
 void				initializer(t_cmd *mini, t_nums *nums);
 // 3
-int					cmd_check(t_cmd *mini, t_nums *nums, char **envp);
-int					check_bin_or_builtin(t_cmd *cpy, t_nums *nums, int flag,
+int					cmd_check(t_cmd *mini, char **envp);
+int					check_bin_or_builtin(t_cmd *cpy, int flag,
 						char **envp);
 int					check_bin2(t_cmd *mini, char *path, char **tmp);
 void				checkforp2p(char *str);
@@ -145,7 +143,7 @@ int					redirect(t_nums *nums, int flag);
 // 5
 void				child_process(t_cmd *mini, t_nums *nums, char **envp);
 void				parent_process(t_cmd **mini, t_nums *nums);
-void				parent_process2(t_cmd *mini, t_nums *nums, char **envp);
+void				parent_process2(t_nums *nums);
 int					dupdupdup(int fd1, int fd2);
 // 6
 void				builtin_execute(t_cmd *mini, t_nums *nums, char **envp);
@@ -153,16 +151,17 @@ void				ft_execute(t_cmd *mini, t_nums *nums, char **envp);
 void				execute_without_pipe(t_cmd **mini, t_nums *nums,
 						char **envp);
 // builtins
-int					check_cd(t_cmd *mini, t_nums *nums);
-int					check_echo(t_cmd *mini, t_nums *nums);
-int					check_env(t_cmd *mini, t_nums *nums);
-int					check_exit(t_cmd *mini, t_nums *nums);
+int					check_file(t_cmd *mini);
+int					filecheck(t_cmd *mini, char *path);
+int					check_cd(t_cmd *mini);
+int					check_echo(t_cmd *mini);
+int					check_env(t_cmd *mini);
+int					check_exit(t_cmd *mini);
 void				change_stts(t_cmd *mini);
-int					check_export(t_cmd *mini, t_nums *nums);
+int					check_export(t_cmd *mini);
 int					ft_atoi2(char *str);
-int					check_pwd(t_cmd *mini, t_nums *nums);
-int					check_unset(t_cmd *mini, t_nums *nums);
-int					check_bash(t_cmd *mini, t_nums *nums);
+int					check_pwd(t_cmd *mini);
+int					check_unset(t_cmd *mini);
 int					execute_echo(t_cmd *mini, t_nums *nums);
 int					execute_cd(t_cmd *mini);
 int					execute_env(t_nums *nums, char **envp);
@@ -208,6 +207,8 @@ void				piderror_process(t_nums *nums);
 int					creat_pipe(t_nums *nums);
 void				close_pipe(t_nums *nums);
 
+
+int	check_semiq(t_cmd *cmd);
 //! kkomatsu
 int					main(int ac, char **av, char **ep);
 void				minishell(char **envp);
@@ -237,5 +238,8 @@ void				free_cmd(t_cmd **cmd);
 void				free_double_ptr(char **s);
 
 void				pri(char **ss);
+
+char	*get_next_line(int fd, int *flag);
+
 
 #endif

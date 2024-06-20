@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   y_6_ft_execute.c                                   :+:      :+:    :+:   */
+/*   y_5_ft_execute.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/09 19:23:59 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:32:25 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 		flag = execute_exit(mini);
 	else if (ft_strncmp(mini->input, "env", 3) == 0)
 		flag = execute_env(nums, envp);
-	else if (ft_strncmp(mini->input, "./minishell", 11) == 0)
-		flag = execute_bash(nums, envp);
 	if (flag == MALLOCERROR || flag == ERROR)
 		stts(WRITE, 1);
 }
@@ -58,12 +56,55 @@ void	bin_execute(t_cmd *mini, char **envp)
 	exit(1);
 }
 
+static void	file_execute(t_cmd *mini, char **envp)
+{
+	int		fd;
+	int		flag;
+	char	*line;
+	t_cmd	**cmd;
+
+	mini->sec_args = ft_split(mini->input, ' ');
+	if (mini->sec_args == NULL)
+		exit(1);
+	// printf("%s\n", mini->abs_path);
+	execve(mini->abs_path, mini->sec_args, envp);
+	fd = open(mini->abs_path, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("");
+		exit(0);
+	}
+	flag = OK;
+	while (flag == OK)
+	{
+		// printf("line = %s\n", line);
+		line = get_next_line(fd, &flag);
+		if (flag == OK && !line)
+			continue ;
+		// printf("flag = %d\n", flag);
+		// printf("line = %s\n", line);
+		cmd = lexer(line, envp);
+		// debug_cmd(cmd);
+		if (cmd)
+		{
+			if (check_semiq((*cmd)) == OK)
+				exec_main(*cmd, envp);
+			free_cmd(cmd);
+			free(cmd);
+		}
+	}
+	close(fd);
+	exit(0);
+}
+
 void	ft_execute(t_cmd *mini, t_nums *nums, char **envp)
 {
 	if (mini->cmd_kind == BUILTIN)
 		builtin_execute(mini, nums, envp);
 	else if (mini->cmd_kind == BIN)
 		bin_execute(mini, envp);
+	else if (mini->cmd_kind == FILE)
+		file_execute(mini, envp);
 	else if (mini->cmd_kind == ERRORCMD)
 		exit(1);
 	else

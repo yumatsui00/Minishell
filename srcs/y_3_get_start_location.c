@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:25:11 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/04 12:15:31 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:10:45 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	get_start_location(t_cmd *mini, t_nums *nums)
 
 	cpy = mini;
 	nums->first = mini;
-	while (cpy != NULL && cpy->status != PIPE && cpy->status != SEMQ)
+	while (cpy != NULL && cpy->status != PIPE)
 		cpy = cpy->next;
 	nums->end = cpy;
 }
