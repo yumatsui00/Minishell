@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_lexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/11 17:23:25 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:47:08 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ int	is_sankaku(char *item)
 	if (!ft_strcmp(item, "<") || !ft_strcmp(item, ">") || !ft_strcmp(item, "<<")
 		|| !ft_strcmp(item, ">>"))
 		return (1);
+	return (0);
+}
+
+int	check_semq_komatsu(char **lines)
+{
+	int	i;
+
+	i = 0;
+	while (lines[i])
+	{
+
+		i++;
+	}
 	return (0);
 }
 
