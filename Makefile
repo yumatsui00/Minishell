@@ -37,6 +37,9 @@ $(TARGET): $(OBJS) $(LIBFT)
 	@echo
 	@echo $(YELLOW)$(BOLD)MAKE DONE
 
+$(LIBFT):
+	$(MAKE) -C srcs/libft
+
 $(TARGET1): $(OBJS)
 	@echo $(BRIGHT_YELLOW)
 	$(MAKE) -C srcs/libft
