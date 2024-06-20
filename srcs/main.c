@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 20:42:46 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/21 00:13:51 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	minishell(char **ep)
 		cmd = lexer(line, ep);
 		if (cmd)
 		{
-			if (check_semiq(cmd) == OK)
+			// debug_cmd(cmd);
+			// if (check_semiq(cmd) == OK)
 				exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);

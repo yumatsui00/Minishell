@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:29 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 20:57:47 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/21 00:08:32 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	select_status(char *input)
 	else if (!ft_strncmp(input, "|", 1))
 		return (PIPE);
 	else if (!ft_strncmp(input, ";", 1))
-		return (SEMQ);
+		return (COM);
 	else
 		return (COM);
 }

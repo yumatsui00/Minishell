@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:20:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/09 17:26:10 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/21 00:18:11 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,12 @@ int	find_syntax_error(char **line)
 	while (line[i])
 	{
 		if (select_output(line[i], line[i + 1], i == 0))
-		{
-			free_double_ptr(line);
 			return (1);
-		}
 		i++;
 	}
 	if (!ft_strcmp(line[i - 1], "|"))
 	{
-		write(1, "error\n", 7);
+		write(2, "error😡\n", 10);
 		return (1);
 	}
 	return (0);
