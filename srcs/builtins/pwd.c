@@ -6,16 +6,31 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:09:39 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 22:03:52 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	execute_pwd(t_cmd *mini, t_nums *nums)
+void	outputpwd(t_nums *nums)
 {
 	char	pwd[PATH_MAX];
 
+	getcwd(pwd, sizeof(pwd));
+	if (nums->pipe_num > 0)
+	{
+		write(1, pwd, ft_strlen(pwd));
+		write(1, "\n", 1);
+	}
+	else
+	{
+		write(nums->outfile, pwd, ft_strlen(pwd));
+		write(nums->outfile, "\n", 1);
+	}
+}
+
+int	execute_pwd(t_cmd *mini, t_nums *nums)
+{
 	stts(WRITE, 1);
 	if (mini->input[3] == ' ')
 	{
@@ -31,13 +46,7 @@ int	execute_pwd(t_cmd *mini, t_nums *nums)
 			}
 		}
 	}
-	if (getcwd(pwd, sizeof(pwd)) == NULL)
-		return (perror(""), ERROR);
-	else
-	{
-		write(nums->outfile, pwd, ft_strlen(pwd));
-		write(nums->outfile, "\n", 1);
-	}
+	outputpwd(nums);
 	return (stts(WRITE, 0), OK);
 }
 

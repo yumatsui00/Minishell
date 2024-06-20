@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   y_4_redirect.c                                     :+:      :+:    :+:   */
+/*   y_3_redirect.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 18:59:45 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 21:55:09 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,23 @@ int	red_send(t_nums *nums, int status)
 	outfile = ft_strdup(nums->first->input + status);
 	if (outfile == NULL)
 		return (MALLOCERROR);
-	if (status == SEND)
-		nums->outfds[nums->outfds_i] = open((const char *)outfile, \
-					O_CREAT | O_WRONLY | O_TRUNC, 0000644);
-	else if (status == POST)
-		nums->outfds[nums->outfds_i] = open((const char *)outfile, \
-					O_CREAT | O_WRONLY | O_APPEND, 0000644);
-	if (nums->outfds[nums->outfds_i] < 0)
+	if (ft_strcmp(outfile, "/dev/stdout") == 0)
+		nums->outfds[nums->outfds_i] = 1;
+	else
 	{
-		write(2, "minishell: ", 11);
-		perror(outfile);
-		stts(WRITE, 1);
-		return (free_utils2(outfile, NULL));
+		if (status == SEND)
+			nums->outfds[nums->outfds_i] = open((const char *)outfile, \
+						O_CREAT | O_WRONLY | O_TRUNC, 0000644);
+		else if (status == POST)
+			nums->outfds[nums->outfds_i] = open((const char *)outfile, \
+						O_CREAT | O_WRONLY | O_APPEND, 0000644);
+		if (nums->outfds[nums->outfds_i] < 0)
+		{
+			write(2, "minishell: ", 11);
+			perror(outfile);
+			stts(WRITE, 1);
+			return (free_utils2(outfile, NULL));
+		}
 	}
 	return (free(outfile), OK);
 }
@@ -52,13 +57,19 @@ int	red_recieve(t_nums *nums)
 	infile = ft_strdup(nums->first->input + 2);
 	if (infile == NULL)
 		return (MALLOCERROR);
-	nums->infds[nums->infds_i] = open((const char *)infile, O_RDONLY, 0000644);
-	if (nums->infds[nums->infds_i] < 0)
+	if (ft_strcmp(infile, "/dev/stdin") == 0)
+		nums->infds[nums->infds_i] = 1;
+	else
 	{
-		write(2, "minishell: ", 11);
-		perror(infile);
-		stts(WRITE, 1);
-		return (free(infile), ERROR);
+		nums->infds[nums->infds_i] = open((const char *)infile, \
+				O_RDONLY, 0000644);
+		if (nums->infds[nums->infds_i] < 0)
+		{
+			write(2, "minishell: ", 11);
+			perror(infile);
+			stts(WRITE, 1);
+			return (free(infile), ERROR);
+		}
 	}
 	free(infile);
 	return (OK);

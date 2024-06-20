@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:08:08 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 22:06:06 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,16 @@ int	execute_env(t_nums *nums, char **envp)
 	i = -1;
 	while (envp[++i] != NULL)
 	{
-		write(nums->outfile, envp[i], ft_strlen(envp[i]));
-		write(nums->outfile, "\n", 1);
+		if (nums->pipe_num > 0)
+		{
+			write(1, envp[i], ft_strlen(envp[i]));
+			write(1, "\n", 1);
+		}
+		else
+		{
+			write(nums->outfile, envp[i], ft_strlen(envp[i]));
+			write(nums->outfile, "\n", 1);
+		}
 	}
 	stts(WRITE, 0);
 	return (OK);

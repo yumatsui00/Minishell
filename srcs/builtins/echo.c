@@ -6,15 +6,26 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:07:57 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 22:10:14 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	echo_output(char *str, t_nums *nums)
+void	echo_output(char *str, t_nums *nums, int flag)
 {
-	write(nums->outfile, str, ft_strlen(str));
+	if (nums->pipe_num > 0)
+	{
+		write(1, str, ft_strlen(str));
+		if (flag == 1)
+			write(1, "\n", 1);
+	}
+	else
+	{
+		write(nums->outfile, str, ft_strlen(str));
+		if (flag == 1)
+			write(nums->outfile, "\n", 1);
+	}
 	return ;
 }
 
@@ -34,7 +45,7 @@ int	execute_echo(t_cmd *mini, t_nums *nums)
 			i = 1;
 			while (tmp[i + 1] && strncmp(tmp[i + 1], "-n", 3) == 0)
 				i++;
-			echo_output(mini->input + 5 + 3 * i, nums);
+			echo_output(mini->input + 5 + 3 * i, nums, 0);
 			i = -1;
 			while (tmp[++i])
 				free(tmp[i]);
@@ -42,8 +53,7 @@ int	execute_echo(t_cmd *mini, t_nums *nums)
 			return (OK);
 		}
 	}
-	echo_output(mini->input + 5, nums);
-	write(nums->outfile, "\n", 1);
+	echo_output(mini->input + 5, nums, 1);
 	return (OK);
 }
 
