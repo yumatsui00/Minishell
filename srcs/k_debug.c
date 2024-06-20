@@ -6,11 +6,18 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:28:28 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:36:48 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:44:32 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_skip_in_expand(char c)
+{
+	if (ft_isalnum(c) || c == '|' || c == ';' || c == '<' || c == '>')
+		return (0);
+	return (1);
+}
 
 void	debug_cmd(t_cmd **cmd_po)
 {

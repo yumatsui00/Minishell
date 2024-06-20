@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 19:18:52 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:44:52 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,7 @@ void				set_filename(char filename[6], int i);
 void				initializer(t_cmd *mini, t_nums *nums);
 // 3
 int					cmd_check(t_cmd *mini, char **envp);
-int					check_bin_or_builtin(t_cmd *cpy, int flag,
-						char **envp);
+int					check_bin_or_builtin(t_cmd *cpy, int flag, char **envp);
 int					check_bin2(t_cmd *mini, char *path, char **tmp);
 void				checkforp2p(char *str);
 // 4
@@ -207,8 +206,7 @@ void				piderror_process(t_nums *nums);
 int					creat_pipe(t_nums *nums);
 void				close_pipe(t_nums *nums);
 
-
-int	check_semiq(t_cmd *cmd);
+int					check_semiq(t_cmd *cmd);
 //! kkomatsu
 int					main(int ac, char **av, char **ep);
 void				minishell(char **envp);
@@ -239,7 +237,7 @@ void				free_double_ptr(char **s);
 
 void				pri(char **ss);
 
-char	*get_next_line(int fd, int *flag);
-
+char				*get_next_line(int fd, int *flag);
+int					is_skip_in_expand(char c);
 
 #endif

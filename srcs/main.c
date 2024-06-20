@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 18:06:27 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:44:06 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,19 @@ void	signal_handler(int signum)
 		stts(WRITE, 131);
 }
 
-// ft_putstr_fd("\033[1A\033[0K\033[1B", 0);
-
-int	check_semiq(t_cmd *cmd)
+static int	check_semiq(t_cmd **cmd)
 {
-	t_cmd	*first;
+	t_cmd	*tmp;
 
-	first = cmd;
-	while (cmd)
+	tmp = *cmd;
+	while (tmp)
 	{
-		if (cmd->input && strncmp(cmd->input, ";", 2) == 0)
+		if (tmp->status == SEMQ)
 		{
 			write(2, "error😡\n", 10);
-			while (first)
-			{
-				first->abs_path = NULL;
-				first = first->next;
-			}
 			return (ERROR);
 		}
-		cmd = cmd->next;
+		tmp = tmp->next;
 	}
 	return (OK);
 }
