@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/21 00:13:51 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/21 00:22:48 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	minishell(char **ep)
 		line = readline(MINISHELL);
 		if (!line)
 		{
-			ft_putstr_fd("\033[1A\033[13C", 0);
+			ft_putstr_fd("\033[1A\033[15C", 0);
 			break ;
 		}
 		if (*line)
@@ -76,9 +76,7 @@ void	minishell(char **ep)
 		cmd = lexer(line, ep);
 		if (cmd)
 		{
-			// debug_cmd(cmd);
-			// if (check_semiq(cmd) == OK)
-				exec_main(*cmd, ep);
+			exec_main(*cmd, ep);
 			free_cmd(cmd);
 			free(cmd);
 		}
