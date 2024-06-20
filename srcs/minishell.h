@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 19:51:28 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:16:00 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int					cmd_check(t_cmd *mini, char **envp);
 int					check_bin_or_builtin(t_cmd *cpy, int flag, char **envp);
 int					check_bin2(t_cmd *mini, char *path, char **tmp);
 void				checkforp2p(char *str);
+int					check_abs_bin(t_cmd *cpy);
 // 4
 void				get_start_location(t_cmd *mini, t_nums *nums);
 int					redirect(t_nums *nums, int flag);

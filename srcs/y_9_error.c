@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 18:58:15 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 13:49:37 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:18:32 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,12 @@ void	fd_closer(t_nums *nums)
 	i = 0;
 	while (nums->outfds[++i])
 		close(nums->outfds[i]);
+}
+
+void	piderror_process(t_nums *nums)
+{
+	write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
+	stts(WRITE, 1);
+	close_pipe(nums);
+	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:34:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:05:21 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:10:18 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	parent_process2(t_nums *nums)
 			waitpid(-1, NULL, 0);
 	}
 	close_pipe(nums);
-	// end_or_recurse(&mini, nums, envp);
 }
 
 void	parent_process(t_cmd **mini, t_nums *nums)

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:21 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:33:31 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:16:46 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,24 @@ int	check_bin2(t_cmd *mini, char *path, char **tmp)
 	else
 		mini->cmd_kind = BIN;
 	free_utils(path, tmp);
+	return (OK);
+}
+
+int	check_abs_bin(t_cmd *cpy)
+{
+	cpy->abs_path = ft_strdup2(cpy->input);
+	if (cpy->abs_path == NULL)
+		return (MALLOCERROR);
+	if (access(cpy->abs_path, F_OK) == 0)
+		cpy->cmd_kind = BIN;
+	else
+	{
+		cpy->cmd_kind = ERRORCMD;
+		write(2, "minishell: ", 11);
+		write(2, cpy->abs_path, ft_strlen(cpy->abs_path));
+		write(2, ": command not found\n", 20);
+		free(cpy->abs_path);
+		cpy->abs_path = NULL;
+	}
 	return (OK);
 }

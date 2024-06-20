@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 19:59:02 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:17:19 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,12 @@ static char	**unset_check(char **envp)
 		tmp = ft_split(envp[i] + 5, ':');
 	else
 		tmp = NULL;
-	// if (tmp == NULL)
-	// {
-	// 	write(2, "minishell: ", 11);
-	// 	write(2, path, ft_strlen(path));
-	// 	write(2, ": command not found\n", 20);
-	// 	free(path);
-	// 	mini->cmd_kind = ERRORCMD;
-	// }
 	return (tmp);
 }
 
-int	check_bin(t_cmd *mini, char *str, int i, char **envp)
+char	*getfirstcomp(char *str, int i)
 {
 	char	*path;
-	char	**tmp;
 
 	while (str[i] == ' ')
 		i++;
@@ -49,7 +40,7 @@ int	check_bin(t_cmd *mini, char *str, int i, char **envp)
 		i++;
 	path = (char *)malloc(sizeof(char) * (i + 1));
 	if (path == NULL)
-		return (MALLOCERROR);
+		return (NULL);
 	i = -1;
 	while (str[++i] == ' ')
 		path[i] = str[i];
@@ -57,9 +48,18 @@ int	check_bin(t_cmd *mini, char *str, int i, char **envp)
 	while (str[++i] && str[i] != ' ')
 		path[i] = str[i];
 	path[i] = '\0';
+	return (path);
+}
+
+int	check_bin(t_cmd *mini, char *str, int i, char **envp)
+{
+	char	*path;
+	char	**tmp;
+
+	path = getfirstcomp(str, i);
+	if (path == NULL)
+		return (MALLOCERROR);
 	tmp = unset_check(envp);
-	// if (tmp == NULL)
-	// 	return (ERROR);
 	if (tmp == NULL)
 	{
 		filecheck(mini, path);
@@ -72,25 +72,6 @@ int	check_bin(t_cmd *mini, char *str, int i, char **envp)
 			free_utils(path, tmp);
 			return (MALLOCERROR);
 		}
-	}
-	return (OK);
-}
-
-static int	check_abs_bin(t_cmd *cpy)
-{
-	cpy->abs_path = ft_strdup2(cpy->input);
-	if (cpy->abs_path == NULL)
-		return (MALLOCERROR);
-	if (access(cpy->abs_path, F_OK) == 0)
-		cpy->cmd_kind = BIN;
-	else
-	{
-		cpy->cmd_kind = ERRORCMD;
-		write(2, "minishell: ", 11);
-		write(2, cpy->abs_path, ft_strlen(cpy->abs_path));
-		write(2, ": command not found\n", 20);
-		free(cpy->abs_path);
-		cpy->abs_path = NULL;
 	}
 	return (OK);
 }
@@ -137,7 +118,6 @@ int	cmd_check(t_cmd *mini, char **envp)
 				stts(WRITE, 1);
 				return (MALLOCERROR);
 			}
-			// checkforp2p(cpy->input);
 		}
 		else
 			cpy->cmd_kind = ELSE;

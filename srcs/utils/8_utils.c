@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:38:26 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 19:20:19 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:09:58 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*get_next_line(int fd, int *flag)
 			break ;
 		}
 		if (buf == '\n')
-			break;
+			break ;
 		ret = ft_strjoinfree(ret, buf);
 	}
 	if (ret[0] == '\0')

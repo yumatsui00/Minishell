@@ -6,19 +6,11 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 19:50:30 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:21:07 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	piderror_process(t_nums *nums)
-{
-	write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
-	stts(WRITE, 1);
-	close_pipe(nums);
-	return ;
-}
 
 void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 {
@@ -56,35 +48,19 @@ void	bin_execute(t_cmd *mini, char **envp)
 	exit(1);
 }
 
-static void	file_execute(t_cmd *mini, char **envp)
+static void	non_binary_exec(int fd, char **envp)
 {
-	int		fd;
 	int		flag;
 	char	*line;
 	t_cmd	**cmd;
 
-	mini->sec_args = ft_split(mini->input, ' ');
-	if (mini->sec_args == NULL)
-		exit(1);
-	// printf("%s\n", mini->abs_path);
-	execve(mini->abs_path, mini->sec_args, envp);
-	fd = open(mini->abs_path, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("");
-		exit(0);
-	}
 	flag = OK;
 	while (flag == OK)
 	{
-		// printf("line = %s\n", line);
 		line = get_next_line(fd, &flag);
 		if (flag == OK && !line)
 			continue ;
-		// printf("flag = %d\n", flag);
-		// printf("line = %s\n", line);
 		cmd = lexer(line, envp);
-		// debug_cmd(cmd);
 		if (cmd)
 		{
 			if (check_semiq(cmd) == OK)
@@ -93,6 +69,23 @@ static void	file_execute(t_cmd *mini, char **envp)
 			free(cmd);
 		}
 	}
+}
+
+static void	file_execute(t_cmd *mini, char **envp)
+{
+	int		fd;
+
+	mini->sec_args = ft_split(mini->input, ' ');
+	if (mini->sec_args == NULL)
+		exit(1);
+	execve(mini->abs_path, mini->sec_args, envp);
+	fd = open(mini->abs_path, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("");
+		exit(0);
+	}
+	non_binary_exec(fd, envp);
 	close(fd);
 	exit(0);
 }
