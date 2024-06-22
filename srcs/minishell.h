@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 20:16:00 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:28:15 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int					exec_main2(t_cmd *mini, t_nums *nums, char **envp,
 						int flag);
 // 1
 int					change_heredoc_into_redirect(t_cmd *mini, t_nums *nums);
-void				set_filename(char filename[6], int i);
+void				set_filename(char filename[8], int i);
 
 // 2
 void				initializer(t_cmd *mini, t_nums *nums);
@@ -194,7 +194,7 @@ char				**ft_strdupdup(char **str, int i);
 char				*ft_strjoin_mini(char *s1, char *s2);
 char				*ft_strdup2(char *str);
 int					ft_strlen_tillspace(char *str);
-void				unlink_allfile(char filename[6], int i);
+void				unlink_allfile(char filename[8], int i);
 void				t_cmd_free(t_cmd *mini);
 
 // 9error

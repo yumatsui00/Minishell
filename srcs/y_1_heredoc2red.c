@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:00:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/22 15:05:14 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:18:06 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,19 @@ static int	read_heredoc(int fd, char *filename, t_cmd *mini)
 	return (OK);
 }
 
-void	set_filename(char filename[7], int i)
+void	set_filename(char filename[8], int i)
 {
 	filename[0] = '/';
 	filename[1] = 't';
 	filename[2] = 'm';
 	filename[3] = 'p';
 	filename[4] = '/';
-	filename[5] = '0' + i;
-	filename[6] = '\0';
+	filename[5] = '.';
+	filename[6] = '0' + i;
+	filename[7] = '\0';
 }
 
-void	unlink_allfile(char filename[7], int i)
+void	unlink_allfile(char filename[8], int i)
 {
 	while (--i >= 0)
 	{
@@ -60,7 +61,7 @@ void	unlink_allfile(char filename[7], int i)
 
 static int	creat_heredoc(t_cmd *mini, t_nums *nums)
 {
-	char	filename[7];
+	char	filename[8];
 	int		fd;
 
 	set_filename(filename, nums->index);
@@ -75,7 +76,7 @@ static int	creat_heredoc(t_cmd *mini, t_nums *nums)
 	}
 	if (read_heredoc(fd, filename, mini) == MALLOCERROR)
 	{
-		unlink_allfile(filename, nums->index);
+		unlink_allfile(filename, nums->index + 1);
 		return (MALLOCERROR);
 	}
 	return (close(fd));
