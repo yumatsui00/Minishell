@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:21 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 20:16:46 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:51:43 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	check_file(t_cmd *mini)
 	}
 	else
 	{
-		printf("here\n");
 		mini->cmd_kind = ERRORCMD;
 		free(abs);
 		mini->abs_path = NULL;

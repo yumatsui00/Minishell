@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:57:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 21:30:50 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:05:46 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 void	exec_main(t_cmd *mini, char **envp)
 {
 	t_nums	nums;
-	char	filename[6];
+	char	filename[7];
 
 	g_ctlflag = 1;
 	stts(WRITE, 0);

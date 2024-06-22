@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 20:17:19 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:43:11 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
 		flag = check_file(cpy);
 	else
 	{
-		if (cpy->input[0] != '/')
+		if (cpy->input[0] != '/' && cpy->input[0] != '\0')
 			flag = check_bin(cpy, cpy->input, 0, envp);
 		else
 			flag = check_abs_bin(cpy);

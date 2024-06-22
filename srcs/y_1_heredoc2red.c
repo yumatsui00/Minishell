@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:00:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 20:12:02 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:05:14 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,18 @@ static int	read_heredoc(int fd, char *filename, t_cmd *mini)
 	return (OK);
 }
 
-void	set_filename(char filename[6], int i)
+void	set_filename(char filename[7], int i)
 {
-	filename[0] = '.';
+	filename[0] = '/';
 	filename[1] = 't';
 	filename[2] = 'm';
 	filename[3] = 'p';
-	filename[4] = '0' + i;
-	filename[5] = '\0';
+	filename[4] = '/';
+	filename[5] = '0' + i;
+	filename[6] = '\0';
 }
 
-void	unlink_allfile(char filename[6], int i)
+void	unlink_allfile(char filename[7], int i)
 {
 	while (--i >= 0)
 	{
@@ -59,7 +60,7 @@ void	unlink_allfile(char filename[6], int i)
 
 static int	creat_heredoc(t_cmd *mini, t_nums *nums)
 {
-	char	filename[6];
+	char	filename[7];
 	int		fd;
 
 	set_filename(filename, nums->index);
