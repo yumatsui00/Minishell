@@ -1,5 +1,5 @@
 CC = cc
-CCFLAGS =
+CCFLAGS = -Wall -Wextra -Werror
 DEBUG = -g -fsanitize=address
 
 SRCDIR = srcs
