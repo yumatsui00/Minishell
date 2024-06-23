@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:34:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 20:10:18 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:19:39 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	parent_process2(t_nums *nums)
 {
+	int	endstatus;
+
 	if (nums->pipe_num != 0)
 	{
-		while ((nums->i)-- > 0)
+		while ((nums->i)-- > 1)
 			waitpid(-1, NULL, 0);
+		waitpid(-1, &endstatus, 0);
+		if (WIFEXITED(endstatus))
+			stts(WRITE, WEXITSTATUS(endstatus));
 	}
 	close_pipe(nums);
 }

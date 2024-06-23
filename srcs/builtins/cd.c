@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:35:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:07:17 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:06:54 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	execute_cd(t_cmd *mini)
 	if (ft_strncmp(mini->input, "cd", 3) == 0 || \
 			ft_strncmp(mini->input, "cd ~", 5) == 0)
 		chdir(getenv("HOME"));
+	else if (ft_strncmp(mini->input, "cd /", 5) == 0)
+		chdir("/");
 	else if (ft_strncmp(mini->input, "cd ..", 6) == 0)
 	{
 		if (getcwd(pwd, sizeof(pwd)) == NULL)

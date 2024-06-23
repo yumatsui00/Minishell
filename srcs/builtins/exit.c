@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/22 14:27:10 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 20:04:04 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,7 @@ int	execute_exit(t_cmd *mini)
 	int	i;
 
 	if (strncmp(mini->input, "exit", 5) == 0)
-	{
-		stts(WRITE, 0);
-		exit(0);
-	}
+		exit(stts(READ, 0));
 	else if (strncmp(mini->input, "exit ", 5) == 0)
 	{
 		if (argument_check(mini->input + 5) == ERROR)
@@ -92,7 +89,7 @@ int	execute_exit(t_cmd *mini)
 		stts(WRITE, i % 256);
 		exit(i % 256);
 	}
-	exit(0);
+	exit(stts(READ, 0));
 }
 
 int	check_exit(t_cmd *mini)

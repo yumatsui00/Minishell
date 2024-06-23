@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:15:03 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:07:02 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:25:25 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	bin_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 {
 	int	flag;
+	int	status;
 
-	if ((*mini)->cmd_kind == BUILTIN)
+	if ((*mini)->cmd_kind == BUILTIN || (*mini)->cmd_kind == ELSE)
 	{
 		flag = redirect(nums, OK);
 		if (flag == MALLOCERROR)
@@ -58,7 +59,10 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 		free(nums->infds);
 		free(nums->outfds);
 	}
-	else if ((*mini)->cmd_kind == BIN || (*mini)->cmd_kind == FILE)
+	else
 		bin_without_pipe(mini, nums, envp);
-	waitpid(-1, NULL, 0);
+	status = 0;
+	waitpid(-1, &status, 0);
+	if (WIFEXITED(status))
+		stts(WRITE, WEXITSTATUS(status));
 }

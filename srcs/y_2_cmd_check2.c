@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:21 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 15:49:24 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 20:49:48 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	check_abs_bin(t_cmd *cpy)
 		write(2, ": command not found\n", 20);
 		free(cpy->abs_path);
 		cpy->abs_path = NULL;
+		stts(WRITE, 127);
 	}
 	return (OK);
 }
