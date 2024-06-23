@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 22:10:14 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 19:42:51 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,51 @@ void	echo_output(char *str, t_nums *nums, int flag)
 	return ;
 }
 
+static int	skip_n(char **tmp)
+{
+	int	i;
+	int	n;
+	int	count;
+	int	flag;
+
+	count = 0;
+	i = 0;
+	while (tmp[++i] && strncmp(tmp[i], "-n", 2) == 0)
+	{
+		flag = 0;
+		n = 1;
+		while (tmp[i][++n])
+		{
+			if (tmp[i][n] != 'n')
+			{
+				flag = 1;
+				break ;
+			}
+		}
+		if (flag == 0)
+			count += n + 1;
+		if (flag == 1)
+			return (count);
+	}
+	return (count);
+}
+
 int	execute_echo(t_cmd *mini, t_nums *nums)
 {
 	char	**tmp;
 	int		i;
+	int		count;
 
 	stts(WRITE, 0);
 	if (ft_strncmp(mini->input, "echo -n", 7) == 0)
 	{
 		if (mini->input[7] == '\0')
 			return (OK);
-		else if (mini->input[7] == ' ')
+		else
 		{
 			tmp = ft_split(mini->input, ' ');
-			i = 1;
-			while (tmp[i + 1] && strncmp(tmp[i + 1], "-n", 3) == 0)
-				i++;
-			echo_output(mini->input + 5 + 3 * i, nums, 0);
+			count = skip_n(tmp);
+			echo_output(mini->input + 5 + count, nums, 0);
 			i = -1;
 			while (tmp[++i])
 				free(tmp[i]);
