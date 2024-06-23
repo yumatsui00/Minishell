@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 15:48:06 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:30:09 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ int	cmd_check(t_cmd *mini, char **envp)
 				stts(WRITE, 1);
 				return (MALLOCERROR);
 			}
-			if (cpy->cmd_kind == BIN)
-				checkforp2p(cpy->input);
 		}
 		else
 			cpy->cmd_kind = ELSE;

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 13:59:31 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 14:05:37 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:31:50 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	change_stts(t_cmd *mini)
 {
 	int	i;
 
-	if (strncmp(mini->input, "exit ", 5) == 0)
+	if (ft_strncmp(mini->input, "exit ", 5) == 0)
 	{
 		if (argument_check(mini->input + 5) == ERROR)
 		{

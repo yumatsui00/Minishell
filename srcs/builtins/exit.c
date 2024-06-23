@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 20:04:04 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:31:45 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ int	execute_exit(t_cmd *mini)
 {
 	int	i;
 
-	if (strncmp(mini->input, "exit", 5) == 0)
+	if (ft_strncmp(mini->input, "exit", 5) == 0)
 		exit(stts(READ, 0));
-	else if (strncmp(mini->input, "exit ", 5) == 0)
+	else if (ft_strncmp(mini->input, "exit ", 5) == 0)
 	{
 		if (argument_check(mini->input + 5) == ERROR)
 			return (ERROR);

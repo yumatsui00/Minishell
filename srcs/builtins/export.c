@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/20 18:08:57 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:31:55 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	add_envp(char *str, char **envp, int i)
 	j = 0;
 	while (envp[++count] != NULL)
 	{
-		if (strncmp(str, envp[count], i) == 0 && envp[count][i] == '=')
+		if (ft_strncmp(str, envp[count], i) == 0 && envp[count][i] == '=')
 		{
 			j = 1;
 			break ;

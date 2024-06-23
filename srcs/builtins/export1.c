@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 15:17:09 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/14 14:37:19 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:32:02 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	equal_envp(char *str, char **envp, int i)
 	count = -1;
 	while (envp[++count])
 	{
-		if (!strncmp(str, envp[count], i))
+		if (!ft_strncmp(str, envp[count], i))
 			break ;
 	}
 	if (envp[count] == NULL)

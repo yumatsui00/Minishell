@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 19:42:51 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 21:31:32 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	skip_n(char **tmp)
 
 	count = 0;
 	i = 0;
-	while (tmp[++i] && strncmp(tmp[i], "-n", 2) == 0)
+	while (tmp[++i] && ft_strncmp(tmp[i], "-n", 2) == 0)
 	{
 		flag = 0;
 		n = 1;
