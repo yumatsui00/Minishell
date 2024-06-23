@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/21 00:22:48 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/23 14:58:51 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	signal_handler(int signum)
 		rl_redisplay();
 	}
 	else if (signum == SIGINT && g_ctlflag)
+	{
+		g_heredocstr = "\0";
 		stts(WRITE, 130);
+	}
 	else if (signum == SIGQUIT && !g_ctlflag)
 	{
 		rl_on_new_line();
@@ -30,7 +33,11 @@ void	signal_handler(int signum)
 		rl_redisplay();
 	}
 	else if (signum == SIGQUIT && g_ctlflag)
+	{
 		stts(WRITE, 131);
+		write(STDOUT_FILENO, "Quit: 3", 7);
+		write(STDOUT_FILENO, "\n", 1);
+	}
 }
 
 int	check_semiq(t_cmd **cmd)
