@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/22 16:28:15 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:15:57 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ char				**envp_to_heap(char **ep);
 char				*cut_in_main(char *line);
 char				**expan_env_var_main(char **line, char **ep);
 char				**expand_ep_main(char **line, char **ep);
-int					find_syntax_error(char **line);
+int					find_syntax_error(char **line, int flag);
 int					init_union_friends(t_union_friends *data, char **line);
 char				**union_friends(char **line);
 t_cmd				**lexer(char *before_line, char **ep);

@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/21 00:12:08 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:22:25 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ t_cmd	**lexer(char *before_line, char **ep)
 	if (!ft_strcmp(before_line, "") || is_space_only(before_line))
 		return (free(before_line), NULL);
 	before_line = cut_in_main(before_line);
-	if (!before_line)
-		return (NULL);
 	line = ft_split_for_lexer(before_line);
 	free(before_line);
 	if (!line || !*line)
@@ -62,14 +60,14 @@ t_cmd	**lexer(char *before_line, char **ep)
 	if (check_semq_komatsu(line))
 		return (write(2, "error😡\n", 10), free_double_ptr(line), (NULL));
 	line = expand_ep_main(line, ep);
-	if (!line)
-		return (NULL);
-	if (cut_or_read(line) || find_syntax_error(line))
+	if (find_syntax_error(line, 0))
 		return (free_double_ptr(line), (NULL));
 	line = rearranges_main(line);
 	if (!line)
 		return (free_double_ptr(line), (NULL));
 	line = union_friends(line);
+	if (cut_or_read(line) || find_syntax_error(line, 1))
+		return (free_double_ptr(line), (NULL));
 	ret = make_cmd_line(line);
 	return (ret);
 }
