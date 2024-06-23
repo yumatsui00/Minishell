@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:06 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:36:51 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/23 19:25:32 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**envp_to_heap(char **ep)
 	i = 0;
 	while (ep[i])
 		i++;
-	new_ep = (char **)calloc(i + 50, sizeof(char *));
+	new_ep = (char **)ft_calloc(i + 50, sizeof(char *));
 	i = 0;
 	while (ep[i])
 	{
