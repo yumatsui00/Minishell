@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:21 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/22 14:51:43 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:49:24 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,33 @@ int	check_abs_bin(t_cmd *cpy)
 		cpy->abs_path = NULL;
 	}
 	return (OK);
+}
+
+void	checkforp2p(char *str)
+{
+	char	**tmp;
+	int		i;
+
+	tmp = ft_split(str, ' ');
+	if (*tmp == NULL)
+		return ;
+	if (strncmp(tmp[0], "/bin/ls", 8) == 0 || strncmp(tmp[0], "/bin/cat", 9) \
+	== 0 || strncmp(tmp[0], "ls", 3) == 0 || strncmp(tmp[0], "cat", 4) == 0)
+	{
+		i = 0;
+		while (tmp[++i])
+		{
+			if (tmp[i][0] == ' ')
+				continue ;
+			else
+			{
+				if (tmp[i][0] != '-' && access(tmp[i], F_OK) < 0)
+					stts(WRITE, 1);
+			}
+		}
+	}
+	i = -1;
+	while (tmp[++i] != NULL)
+		free(tmp[i]);
+	free(tmp);
 }

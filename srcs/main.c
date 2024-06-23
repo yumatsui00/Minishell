@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/23 14:58:51 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:11:12 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	signal_handler(int signum)
 	}
 	else if (signum == SIGINT && g_ctlflag)
 	{
-		g_heredocstr = "\0";
 		stts(WRITE, 130);
 	}
 	else if (signum == SIGQUIT && !g_ctlflag)
