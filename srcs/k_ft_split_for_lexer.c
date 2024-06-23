@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:56 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:56:33 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/23 19:23:04 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static int	count_word(char *line)
 			data.in_double_quotes = !data.in_double_quotes;
 		else if (*line == '\'' && !data.in_double_quotes)
 			data.in_single_quotes = !data.in_single_quotes;
-		if (!data.in_double_quotes && !data.in_single_quotes && *line == ' ')
+		if (!data.in_double_quotes && !data.in_single_quotes && (*line == ' '
+				|| *line == '\t'))
 		{
 			if (data.in_word)
 				data.word_count++;
@@ -72,7 +73,8 @@ static int	logic(t_split_for_lexer *data, char **start, char *line,
 		data->in_double_quotes = !data->in_double_quotes;
 	else if (*line == '\'' && !data->in_double_quotes)
 		data->in_single_quotes = !data->in_single_quotes;
-	if (!data->in_double_quotes && !data->in_single_quotes && *line == ' ')
+	if (!data->in_double_quotes && !data->in_single_quotes && (*line == ' '
+			|| *line == '\t'))
 	{
 		if (*start)
 		{
