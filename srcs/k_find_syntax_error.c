@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:20:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/21 00:18:11 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:15:49 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	select_output(char *item, char *next, int is_first)
 	return (0);
 }
 
-int	find_syntax_error(char **line)
+int	find_syntax_error(char **line, int flag)
 {
 	int	i;
 
@@ -55,7 +55,7 @@ int	find_syntax_error(char **line)
 			return (1);
 		i++;
 	}
-	if (!ft_strcmp(line[i - 1], "|"))
+	if (flag && !ft_strcmp(line[i - 1], "|"))
 	{
 		write(2, "error😡\n", 10);
 		return (1);
