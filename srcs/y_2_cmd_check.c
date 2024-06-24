@@ -6,16 +6,16 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 21:30:09 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:12:33 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**unset_check(char **envp)
+static char	**check_path_exist(char **envp)
 {
 	int		i;
-	char	**tmp;
+	char	**path_split;
 
 	i = -1;
 	while (envp[++i])
@@ -24,59 +24,61 @@ static char	**unset_check(char **envp)
 			break ;
 	}
 	if (envp[i] != NULL && ft_strlen(envp[i]) > 5)
-		tmp = ft_split(envp[i] + 5, ':');
+		path_split = ft_split(envp[i] + 5, ':');
 	else
-		tmp = NULL;
-	return (tmp);
+		path_split = NULL;
+	return (path_split);
 }
 
-char	*getfirstcomp(char *str, int i)
+char	*get_first_element(char *input)
 {
 	char	*path;
+	int		i;
 
-	while (str[i] == ' ')
+	i = 0;
+	while (input[i] == ' ')
 		i++;
-	while (str[i] && str[i] != ' ')
+	while (input[i] && input[i] != ' ')
 		i++;
 	path = (char *)malloc(sizeof(char) * (i + 1));
 	if (path == NULL)
 		return (NULL);
 	i = -1;
-	while (str[++i] == ' ')
-		path[i] = str[i];
+	while (input[++i] == ' ')
+		path[i] = input[i];
 	i--;
-	while (str[++i] && str[i] != ' ')
-		path[i] = str[i];
+	while (input[++i] && input[i] != ' ')
+		path[i] = input[i];
 	path[i] = '\0';
 	return (path);
 }
 
-int	check_bin(t_cmd *mini, char *str, int i, char **envp)
+static int	check_bin(t_cmd *mini, char **envp)
 {
 	char	*path;
-	char	**tmp;
+	char	**path_in_env;
 
-	path = getfirstcomp(str, i);
+	path = get_first_element(mini->input);
 	if (path == NULL)
 		return (MALLOCERROR);
-	tmp = unset_check(envp);
-	if (tmp == NULL)
+	path_in_env = check_path_exist(envp);
+	if (path_in_env == NULL)
 	{
-		filecheck(mini, path);
+		check_file(mini, path);
 		free(path);
 	}
 	else
 	{
-		if (check_bin2(mini, path, tmp) == MALLOCERROR)
+		if (check_bin2(mini, path, path_in_env) == MALLOCERROR)
 		{
-			free_utils(path, tmp);
+			free_utils(path, path_in_env);
 			return (MALLOCERROR);
 		}
 	}
 	return (OK);
 }
 
-int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
+static int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
 {
 	if (ft_strncmp(cpy->input, "echo", 4) == 0)
 		flag = check_echo(cpy);
@@ -93,11 +95,11 @@ int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
 	else if (ft_strncmp(cpy->input, "env", 3) == 0)
 		flag = check_env(cpy);
 	else if (cpy->input[0] == '.')
-		flag = check_file(cpy);
+		flag = check_file(cpy, cpy->input);
 	else
 	{
 		if (cpy->input[0] != '/' && cpy->input[0] != '\0')
-			flag = check_bin(cpy, cpy->input, 0, envp);
+			flag = check_bin(cpy, envp);
 		else
 			flag = check_abs_bin(cpy);
 	}
@@ -114,10 +116,7 @@ int	cmd_check(t_cmd *mini, char **envp)
 		if (cpy->status == COM)
 		{
 			if (check_bin_or_builtin(cpy, OK, envp) == MALLOCERROR)
-			{
-				stts(WRITE, 1);
-				return (MALLOCERROR);
-			}
+				return (stts(WRITE, 1) + MALLOCERROR);
 		}
 		else
 			cpy->cmd_kind = ELSE;

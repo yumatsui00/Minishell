@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:57:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 21:35:30 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:11:50 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	stts(int mode, int num)
 	else if (mode == WRITE)
 	{
 		i = num;
-		return (i);
+		return (0);
 	}
 	return (i);
 }
 
-void	initializer(t_cmd *mini, t_nums *nums)
+static void	initializer(t_cmd *mini, t_nums *nums)
 {
 	t_cmd	*cpy;
 
@@ -54,14 +54,14 @@ int	exec_main2(t_cmd *mini, t_nums *nums, char **envp, int flag)
 		{
 			nums->pid = fork();
 			if (nums->pid < 0)
-				return (piderror_process(nums), OK);
+				return (resource_unavailable(nums), OK);
 			else if (nums->pid == 0)
 			{
 				flag = redirect(nums, OK);
 				if (flag == MALLOCERROR)
-					return (stts(WRITE, 1));
+					exit(stts(READ, 1) % 256);
 				else if (flag == ERROR)
-					return (ERROR);
+					exit(stts(READ, 1) % 256);
 				child_process(mini, nums, envp);
 			}
 			else
@@ -90,15 +90,18 @@ void	exec_main1(t_cmd *mini, t_nums *nums, char **envp)
 void	exec_main(t_cmd *mini, char **envp)
 {
 	t_nums	nums;
+	t_cmd	*init;
 	char	filename[8];
 
 	g_ctlflag = 1;
-	if (change_heredoc_into_redirect(mini, &nums) == MALLOCERROR)
+	init = mini;
+	while (init != NULL)
 	{
-		stts(WRITE, 1);
-		g_ctlflag = 0;
-		return ;
+		init->abs_path = NULL;
+		init = init->next;
 	}
+	if (change_heredoc_into_redirect(mini, &nums) == MALLOCERROR)
+		return ;
 	exec_main1(mini, &nums, envp);
 	while (nums.index >= 0)
 	{

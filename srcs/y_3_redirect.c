@@ -6,21 +6,11 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:41:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 21:11:15 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:17:46 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	dup2_error(int fd, char *file)
-{
-	write(2, "minishell: ", 11);
-	write(2, &fd, sizeof(int));
-	perror("");
-	stts(WRITE, 1);
-	close(fd);
-	return (free_utils2(file, NULL));
-}
 
 int	red_send(t_nums *nums, int status)
 {
@@ -40,12 +30,7 @@ int	red_send(t_nums *nums, int status)
 			nums->outfds[nums->outfds_i] = open((const char *)outfile, \
 						O_CREAT | O_WRONLY | O_APPEND, 0000644);
 		if (nums->outfds[nums->outfds_i] < 0)
-		{
-			write(2, "minishell: ", 11);
-			perror(outfile);
-			stts(WRITE, 1);
-			return (free_utils2(outfile, NULL));
-		}
+			return (open_failed(outfile));
 	}
 	return (free(outfile), OK);
 }
@@ -64,12 +49,7 @@ int	red_recieve(t_nums *nums)
 		nums->infds[nums->infds_i] = open((const char *)infile, \
 				O_RDONLY, 0000644);
 		if (nums->infds[nums->infds_i] < 0)
-		{
-			write(2, "minishell: ", 11);
-			perror(infile);
-			stts(WRITE, 1);
-			return (free(infile), ERROR);
-		}
+			return (open_failed(infile));
 	}
 	free(infile);
 	return (OK);

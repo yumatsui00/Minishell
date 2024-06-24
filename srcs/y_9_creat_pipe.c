@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   y_creat_pipe.c                                     :+:      :+:    :+:   */
+/*   y_9_creat_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 14:19:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/05 13:42:11 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:04:45 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	close_pipe(t_nums *nums)
 	i = -1;
 	while (++i <= nums->pipe_num * 2 - 1)
 		close(nums->pipe[i]);
+	free(nums->pipe);
+	nums->pipe = NULL;
 }
 
 int	creat_pipe(t_nums *nums)
@@ -35,14 +37,7 @@ int	creat_pipe(t_nums *nums)
 	while (i < nums->pipe_num)
 	{
 		if (pipe(nums->pipe + (i * 2)) < 0)
-		{
-			close_pipe(nums);
-			free(nums->pipe);
-			nums->pipe = NULL;
-			write(2, "minishell: fork: Resource temporarily unavailable\n", 50);
-			stts(WRITE, 1);
-			return (ERROR);
-		}
+			return (resource_unavailable(nums));
 		i++;
 	}
 	return (OK);

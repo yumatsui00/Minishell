@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 21:22:55 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:48:55 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	bin_execute(t_cmd *mini, char **envp)
 	}
 	execve(mini->abs_path, mini->sec_args, envp);
 	perror("");
-	exit(stts(READ, 1));
+	exit(1);
 }
 
 static void	non_binary_exec(int fd, char **envp)
@@ -82,12 +82,12 @@ static void	file_execute(t_cmd *mini, char **envp)
 	fd = open(mini->abs_path, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("");
-		exit(1);
+		open_failed(mini->sec_args[0]);
+		exit(stts(READ, 1));
 	}
 	non_binary_exec(fd, envp);
 	close(fd);
-	exit(stts(READ, 1));
+	exit(stts(READ, 1) % 256);
 }
 
 void	ft_execute(t_cmd *mini, t_nums *nums, char **envp)
@@ -99,8 +99,8 @@ void	ft_execute(t_cmd *mini, t_nums *nums, char **envp)
 	else if (mini->cmd_kind == FILE)
 		file_execute(mini, envp);
 	else if (mini->cmd_kind == ERRORCMD)
-		exit(stts(READ, 1));
+		exit(stts(READ, 1) % 256);
 	else
-		write(2, "ここには来ないはずなんだが\n", 25);
-	exit(1);
+		write(2, "ここには来ないはずなんだが\n", 28);
+	exit(stts(READ, 0) % 256);
 }

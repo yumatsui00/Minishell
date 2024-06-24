@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 21:31:32 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 20:25:28 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,24 @@ static int	skip_n(char **tmp)
 	return (count);
 }
 
+static int	norminette(t_cmd *mini, t_nums *nums)
+{
+	int	i;
+
+	if (ft_strncmp(mini->input, "echo -n", 7) == 0 && mini->input[7] != ' ')
+	{
+		i = 7;
+		while (mini->input[i] == 'n')
+			i++;
+		if (mini->input[i] != ' ')
+		{
+			echo_output(mini->input + 5, nums, 1);
+			return (OK);
+		}
+	}
+	return (ERROR);
+}
+
 int	execute_echo(t_cmd *mini, t_nums *nums)
 {
 	char	**tmp;
@@ -65,6 +83,8 @@ int	execute_echo(t_cmd *mini, t_nums *nums)
 	int		count;
 
 	stts(WRITE, 0);
+	if (norminette(mini, nums) == OK)
+		return (OK);
 	if (ft_strncmp(mini->input, "echo -n", 7) == 0)
 	{
 		if (mini->input[7] == '\0')
@@ -94,14 +114,10 @@ int	check_echo(t_cmd *mini)
 	}
 	else
 	{
-		mini->cmd_kind = ERRORCMD;
 		mini->abs_path = ft_strdup2(mini->input);
 		if (mini->abs_path == NULL)
 			return (MALLOCERROR);
-		write(2, "minishell: ", 11);
-		write(2, mini->abs_path, ft_strlen(mini->abs_path));
-		write(2, ": command not found\n", 20);
-		stts(WRITE, 127);
+		command_not_found(mini, mini->abs_path);
 		free(mini->abs_path);
 		mini->abs_path = NULL;
 	}

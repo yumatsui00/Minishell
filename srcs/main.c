@@ -6,11 +6,18 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/23 16:36:36 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 16:46:33 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// #include <libc.h>
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q minishell");
+// }
 
 void	signal_handler(int signum)
 {

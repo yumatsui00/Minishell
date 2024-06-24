@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:48 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 21:31:55 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:45:29 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,10 @@ int	check_export(t_cmd *mini)
 	}
 	else
 	{
-		mini->cmd_kind = ERRORCMD;
 		mini->abs_path = ft_strdup2(mini->input);
 		if (mini->abs_path == NULL)
 			return (MALLOCERROR);
-		write(2, "minishell: ", 11);
-		write(2, mini->abs_path, ft_strlen(mini->abs_path));
-		write(2, ": command not found\n", 20);
-		stts(WRITE, 127);
+		command_not_found(mini, mini->abs_path);
 		free(mini->abs_path);
 		mini->abs_path = NULL;
 	}

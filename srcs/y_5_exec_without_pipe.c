@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 19:15:03 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/23 21:25:25 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:37:33 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,19 @@ void	bin_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 
 	nums->pid = fork();
 	if (nums->pid < 0)
-		return (piderror_process(nums));
+	{
+		resource_unavailable(nums);
+		return ;
+	}
 	else if (nums->pid == 0)
 	{
 		flag = redirect(nums, OK);
 		if (flag == MALLOCERROR)
-		{
-			stts(WRITE, 1);
-			return ;
-		}
-		else if (flag == ERROR)
-			return ;
-		if (dupdupdup(nums->infile, nums->outfile) == ERROR)
-		{
-			write(2, "minishell: fork: Resource temporarily \
-											unavailable\n", 50);
-			stts(WRITE, 1);
 			exit(1);
-		}
+		else if (flag == ERROR)
+			exit(stts(READ, 1));
+		if (dupdupdup(nums->infile, nums->outfile, nums) == ERROR)
+			exit(1);
 		ft_execute(*mini, nums, envp);
 	}
 }
@@ -60,9 +55,11 @@ void	execute_without_pipe(t_cmd **mini, t_nums *nums, char **envp)
 		free(nums->outfds);
 	}
 	else
+	{
 		bin_without_pipe(mini, nums, envp);
-	status = 0;
-	waitpid(-1, &status, 0);
-	if (WIFEXITED(status))
-		stts(WRITE, WEXITSTATUS(status));
+		status = 0;
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			stts(WRITE, WEXITSTATUS(status));
+	}
 }

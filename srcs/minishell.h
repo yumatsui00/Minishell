@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 14:56:58 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:17:01 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,28 +139,25 @@ int					change_heredoc_into_redirect(t_cmd *mini, t_nums *nums);
 void				set_filename(char filename[8], int i);
 
 // 2
-void				initializer(t_cmd *mini, t_nums *nums);
-// 3
 int					cmd_check(t_cmd *mini, char **envp);
-int					check_bin_or_builtin(t_cmd *cpy, int flag, char **envp);
 int					check_bin2(t_cmd *mini, char *path, char **tmp);
-void				checkforp2p(char *str);
 int					check_abs_bin(t_cmd *cpy);
-// 4
+void				unset_checker(char *str, char **envp);
+// 3
 void				get_start_location(t_cmd *mini, t_nums *nums);
 int					redirect(t_nums *nums, int flag);
-// 5
+// 4
 void				child_process(t_cmd *mini, t_nums *nums, char **envp);
 void				parent_process(t_cmd **mini, t_nums *nums);
 void				parent_process2(t_nums *nums);
-int					dupdupdup(int fd1, int fd2);
-// 6
+int					dupdupdup(int fd1, int fd2, t_nums *nums);
+// 5
 void				builtin_execute(t_cmd *mini, t_nums *nums, char **envp);
 void				ft_execute(t_cmd *mini, t_nums *nums, char **envp);
 void				execute_without_pipe(t_cmd **mini, t_nums *nums,
 						char **envp);
 // builtins
-int					check_file(t_cmd *mini);
+int					check_file(t_cmd *mini, char *path);
 int					filecheck(t_cmd *mini, char *path);
 int					check_cd(t_cmd *mini);
 int					check_echo(t_cmd *mini);
@@ -185,11 +182,9 @@ char				**post_line(char *str, char **envp, int count);
 // int					isalnum(int c);
 int					execute_pwd(t_cmd *mini, t_nums *nums);
 int					execute_unset(t_cmd *mini, char **envp);
-void				unset_checker(char *str, char **envp);
 int					check_unset2(char *str, char **envp);
 int					ft_atoi2(char *str);
 int					atoerror(char *str);
-int					execute_bash(t_nums *nums, char **envp);
 
 // utils
 // char	**ft_split(char *s, char c);
@@ -211,10 +206,17 @@ void				fd_closer(t_nums *nums);
 
 int					free_utils(char *a, char **b);
 int					free_utils2(char *a, char **b);
-void				piderror_process(t_nums *nums);
+
 // pipe
 int					creat_pipe(t_nums *nums);
 void				close_pipe(t_nums *nums);
+
+int					heredoc_open_failed(int fd, char *filename, t_nums *nums);
+void				no_such_file_or_directory(t_cmd *mini, \
+										char *abs, char *path);
+void				command_not_found(t_cmd *mini, char *path);
+int					resource_unavailable(t_nums *nums);
+int					open_failed(char *filename);
 
 int					check_semiq(t_cmd **cmd);
 //! kkomatsu
