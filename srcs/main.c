@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 21:22:16 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 22:21:34 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //     system("leaks -q minishell");
 // }
 
-void	signal_handler(int signum)
+void	sigint_handler(int signum)
 {
 	if (signum == SIGINT && !g_ctlflag)
 	{
@@ -29,11 +29,18 @@ void	signal_handler(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (signum == SIGINT && g_ctlflag)
+	else if (signum == SIGINT && g_ctlflag != 0)
 	{
-		stts(WRITE, 130);
+		if (g_ctlflag == HERE)
+			stts(WRITE, 1);
+		else
+			stts(WRITE, 130);
 	}
-	else if (signum == SIGQUIT && !g_ctlflag)
+}
+
+void	sigquit_handler(int signum)
+{
+	if (signum == SIGQUIT && !g_ctlflag)
 	{
 		rl_on_new_line();
 		write(STDOUT_FILENO, "", 1);
@@ -42,8 +49,7 @@ void	signal_handler(int signum)
 	else if (signum == SIGQUIT && g_ctlflag)
 	{
 		stts(WRITE, 131);
-		write(STDOUT_FILENO, "Quit: 3", 7);
-		write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "Quit: 3\n", 8);
 	}
 }
 
@@ -65,18 +71,13 @@ int	check_semiq(t_cmd **cmd)
 	return (OK);
 }
 
-void	sig_term(void)
-{
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-}
-
 void	minishell(char **ep)
 {
 	char	*line;
 	t_cmd	**cmd;
 
-	sig_term();
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	while (1)
 	{
 		line = readline(MINISHELL);
@@ -105,7 +106,6 @@ int	main(int ac, char **av, char **ep)
 
 	(void)av;
 	g_ctlflag = 0;
-	signal(SIGINT, signal_handler);
 	if (ac == 1)
 	{
 		new_ep = envp_to_heap(ep);
