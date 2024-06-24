@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 14:38:55 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:02:13 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,40 @@ ft_getenv("++++hello)
 5. '\0'が来るまで2に戻る
 */
 
+static int	expand_ep2(char *line, char **ep, t_expand *data)
+{
+	data->j = data->i;
+	data->special = line[data->i];
+	while (line[data->i] && !ft_isalnum(line[data->i])
+		&& line[data->i] == data->special)
+		data->i++;
+	if (data->special == '$' && line[data->i] == '?')
+	{
+		data->ret = ft_strjoin_free2(data->ret, ft_itoa(stts(READ, 1)));
+		data->i++;
+		return (0);
+	}
+	while (line[data->i] && ft_isalnum(line[data->i]))
+		data->i++;
+	data->expand_name = ft_substr(line, data->j, data->i - data->j);
+	data->ret = ft_strjoin_free2(data->ret, ft_getenv(data->expand_name, ep));
+	if (!data->ret)
+		return (free(data->ret), 1);
+	free(data->expand_name);
+	return (0);
+}
+
 static char	*expand_ep(char *line, char **ep)
 {
-	int		i;
-	int		j;
-	char	special;
-	char	*expand_name;
-	char	*ret;
+	t_expand	data;
 
-	i = 0;
-	while (line[i] && line[i] != '$')
-		i++;
-	ret = ft_strndup(line, i);
-	while (line[i])
-	{
-		j = i;
-		special = line[i];
-		while (line[i] && !ft_isalnum(line[i]) && line[i] == special)
-			i++;
-		while (line[i] && ft_isalnum(line[i]))
-			i++;
-		expand_name = ft_substr(line, j, i - j);
-		ret = ft_strjoin_free2(ret, ft_getenv(expand_name, ep));
-		if (!ret)
-			return (free(ret), NULL);
-		free(expand_name);
-	}
-	return (ret);
+	data.i = 0;
+	while (line[data.i] && line[data.i] != '$')
+		data.i++;
+	data.ret = ft_strndup(line, data.i);
+	while (line[data.i])
+		expand_ep2(line, ep, &data);
+	return (data.ret);
 }
 
 static int	exist_single_q(char *s)

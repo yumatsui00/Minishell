@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 11:30:37 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:56:58 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,15 @@ typedef struct s_split_for_lexer
 	int				word_count;
 	int				in_word;
 }					t_split_for_lexer;
+
+typedef struct s_expand
+{
+	int		i;
+	int		j;
+	char	special;
+	char	*expand_name;
+	char	*ret;
+}			t_expand;
 
 typedef struct s_union_friends
 {
