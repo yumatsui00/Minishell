@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 13:44:00 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:14:35 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ t_cmd	**lexer(char *before_line, char **ep)
 	if (cut_or_read(line) || find_syntax_error(line, 1))
 		return (free_double_ptr(line), (NULL));
 	ret = make_cmd_line(line);
-	debug_cmd(ret);
 	return (ret);
 }
 
