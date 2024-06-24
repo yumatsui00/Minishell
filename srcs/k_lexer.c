@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 14:14:35 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 21:26:24 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_cmd	**lexer(char *before_line, char **ep)
 	line = ft_split_for_lexer(before_line);
 	free(before_line);
 	if (!line || !*line)
-		return (NULL);
+		return (free_double_ptr(line), NULL);
 	if (check_semq_komatsu(line))
 		return (write(2, "error😡\n", 10), free_double_ptr(line), (NULL));
 	line = expand_ep_main(line, ep);

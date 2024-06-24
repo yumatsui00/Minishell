@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:08:45 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 16:46:33 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 21:22:16 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	signal_handler(int signum)
 {
 	if (signum == SIGINT && !g_ctlflag)
 	{
+		stts(WRITE, 1);
 		rl_on_new_line();
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
