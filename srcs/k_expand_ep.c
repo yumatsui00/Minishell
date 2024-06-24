@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 14:13:18 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:38:55 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ static char	*expand_ep(char *line, char **ep)
 	i = 0;
 	while (line[i] && line[i] != '$')
 		i++;
-	if (line[i] == '\0')
-		return (ft_strndup(line, i));
-	else
-		ret = ft_strndup(line, i);
+	ret = ft_strndup(line, i);
 	while (line[i])
 	{
 		j = i;
@@ -72,6 +69,8 @@ static char	*expand_ep(char *line, char **ep)
 			i++;
 		expand_name = ft_substr(line, j, i - j);
 		ret = ft_strjoin_free2(ret, ft_getenv(expand_name, ep));
+		if (!ret)
+			return (free(ret), NULL);
 		free(expand_name);
 	}
 	return (ret);

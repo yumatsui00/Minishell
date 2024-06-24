@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:34:06 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 14:11:43 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:39:35 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_strjoin_free2(char *s1, char *s2)
 	int		j;
 
 	if (!s1)
-		s1 = ft_strdup("\0");
+		s1 = ft_strdup(NULL);
 	if (!s2)
 	{
 		ret = ft_strdup(s1);
