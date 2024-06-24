@@ -3,53 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   k_expand_ep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/20 20:06:19 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:13:18 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expand_ep2(char *ret, char *line_ptr, char *line_ptr_stk,
-		char **ep)
-{
-	char	*ep_name;
-	char	*ep_content;
+/*
 
-	ep_name = ft_substr(line_ptr, 0, line_ptr_stk - line_ptr);
-	ep_content = ft_getenv(ep_name, ep);
-	if (ep_content)
-	{
-		ret = ft_strjoin_free(ret, ep_content);
-		free(ep_content);
-	}
-	ret = ft_strjoin_free(ret, line_ptr_stk);
-	free(ep_name);
-	return (ret);
-}
+example
+expand_ep_6_23("hello$HOME$HOME", ep)
+-> hello/Users/iniad/Users/iniad
+
+expand_ep_6_23("hello$HOMEhello$HOME", ep)
+-> hello/Users/iniad
+
+expand_ep_6_23("hello$HOME$", ep)
+-> hello/Users/iniad$
+
+expand_ep_6_23("$HOME--$HOME", ep)
+-> /Users/iniad--/Users/iniad
+
+expand_ep_6_23("$HOME--11$HOME--", ep)
+-> /Users/iniad--11/Users/iniad--
+$HOME  --11  $HOME --
+つまり、-, +などは$と同じ扱い。展開しないだけ
+
+
+ft_getenv("$HOME")
+-> /Users/iniad
+
+ft_getenv("++++hello)
+-> ++++hello
+
+
+1. $が来るまで読み進める。
+2. '\0', '$'が来るまで$~を読み取る
+3. 読み取ったものを展開
+4. 展開したものをくっつける
+5. '\0'が来るまで2に戻る
+*/
 
 static char	*expand_ep(char *line, char **ep)
 {
-	char	*line_ptr;
-	char	*line_ptr_stk;
+	int		i;
+	int		j;
+	char	special;
+	char	*expand_name;
 	char	*ret;
 
-	line_ptr = line;
-	while (*line_ptr && *line_ptr != '$')
-		line_ptr++;
-	if (*line_ptr == '\0')
-		return (ft_strndup(line, line_ptr - line));
+	i = 0;
+	while (line[i] && line[i] != '$')
+		i++;
+	if (line[i] == '\0')
+		return (ft_strndup(line, i));
 	else
+		ret = ft_strndup(line, i);
+	while (line[i])
 	{
-		line_ptr++;
-		ret = ft_strndup(line, line_ptr - line - 1);
+		j = i;
+		special = line[i];
+		while (line[i] && !ft_isalnum(line[i]) && line[i] == special)
+			i++;
+		while (line[i] && ft_isalnum(line[i]))
+			i++;
+		expand_name = ft_substr(line, j, i - j);
+		ret = ft_strjoin_free2(ret, ft_getenv(expand_name, ep));
+		free(expand_name);
 	}
-	line_ptr_stk = line_ptr;
-	while (*line_ptr_stk && !is_skip_in_expand(*line_ptr_stk))
-		line_ptr_stk++;
-	ret = expand_ep2(ret, line_ptr, line_ptr_stk, ep);
 	return (ret);
 }
 
@@ -76,7 +100,7 @@ static int	expand_ep_main2(char **line, char **ret, char **ep)
 	i = 0;
 	while (line[i])
 	{
-		if (exist_single_q(line[i]))
+		if (exist_single_q(line[i]) || !ft_strcmp(line[i], "\"$\""))
 		{
 			ret[i] = ft_strdup(line[i]);
 			i++;
@@ -115,7 +139,9 @@ char	**expand_ep_main(char **line, char **ep)
 	return (ret);
 }
 
-// int main(int ac, char **av, char **ep)
+// int	main(int ac, char **av, char **ep)
 // {
-//     printf("%s\n", expand_ep("dijcij$LANGddqw aa", ep));
+// 	printf("av1 = %s\n", av[1]);
+// 	printf("ans = %s\n", expand_ep_6_23(av[1], ep));
+// 	return (0);
 // }

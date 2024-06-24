@@ -6,11 +6,35 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:44 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:56:43 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:01:56 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// int	stts(int mode, int num)
+// {
+// 	static int	i;
+
+// 	if (mode == READ)
+// 		return (i);
+// 	else if (mode == WRITE)
+// 	{
+// 		i = num;
+// 		return (i);
+// 	}
+// 	return (i);
+// }
+
+int	is_skip_in_expand(char c)
+{
+	// if (ft_isalnum(c) || c == '|' || c == ';' || c == '<' || c == '>')
+	// 	return (0);
+	if (ft_isalnum(c))
+		return (0);
+
+	return (1);
+}
 
 static char	*until_eq(char *ep)
 {
@@ -41,6 +65,9 @@ char	*ft_getenv(char *name, char **ep)
 
 	if (!name)
 		return (NULL);
+	if (!ft_strcmp(name, "$") || *name != '$')
+		return (ft_strdup(name));
+	name++;
 	if (!ft_strcmp(name, "?"))
 		return (ft_itoa(stts(READ, 1)));
 	while (*ep)
@@ -62,6 +89,6 @@ char	*ft_getenv(char *name, char **ep)
 
 // int main(int ac, char **av, char **ep)
 // {
-//     printf("%s \n", ft_getenv(av[1], ep));
+//     printf("%s\n", ft_getenv(av[1], ep));
 //     return (0);
 // }
