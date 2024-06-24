@@ -6,33 +6,16 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:44 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 14:01:56 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:04:55 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	stts(int mode, int num)
-// {
-// 	static int	i;
-
-// 	if (mode == READ)
-// 		return (i);
-// 	else if (mode == WRITE)
-// 	{
-// 		i = num;
-// 		return (i);
-// 	}
-// 	return (i);
-// }
-
 int	is_skip_in_expand(char c)
 {
-	// if (ft_isalnum(c) || c == '|' || c == ';' || c == '<' || c == '>')
-	// 	return (0);
 	if (ft_isalnum(c))
 		return (0);
-
 	return (1);
 }
 
