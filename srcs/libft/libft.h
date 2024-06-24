@@ -6,7 +6,7 @@
 /*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:37:19 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/08 16:30:22 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:11:56 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ char				*ft_strndup(const char *s, size_t n);
 char				*ft_strndup_free(const char *s, size_t n);
 
 char				*ft_strjoin_free(char *s1, const char *s2);
+char				*ft_strjoin_free2(char *s1, char *s2);
 
 #endif
