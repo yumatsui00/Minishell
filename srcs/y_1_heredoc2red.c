@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:00:37 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 18:06:14 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/24 21:53:15 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,14 @@ int	change_heredoc_into_redirect(t_cmd *mini, t_nums *nums)
 		{
 			nums->index += 1;
 			cpy->status = RECI;
+			g_ctlflag = HERE;
 			flag = creat_heredoc(cpy, nums);
 			if (flag == MALLOCERROR)
 			{
 				g_ctlflag = 0;
 				return (stts(WRITE, 1), MALLOCERROR);
 			}
+			g_ctlflag = 1;
 		}
 		cpy = cpy->next;
 	}
