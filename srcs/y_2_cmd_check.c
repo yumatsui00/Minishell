@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 18:12:33 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:48:40 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
 		flag = check_exit(cpy);
 	else if (ft_strncmp(cpy->input, "env", 3) == 0)
 		flag = check_env(cpy);
-	else if (cpy->input[0] == '.')
+	else if (ft_strchr(cpy->input + 1, '/') && cpy->input[0] != '/')
 		flag = check_file(cpy, cpy->input);
 	else
 	{

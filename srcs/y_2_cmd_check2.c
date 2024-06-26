@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:21 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 18:06:46 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:45:25 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,14 @@ int	check_abs_bin(t_cmd *cpy)
 	if (cpy->abs_path == NULL)
 		return (MALLOCERROR);
 	if (access(cpy->abs_path, F_OK) == 0)
-		cpy->cmd_kind = BIN;
+		cpy->cmd_kind = FILE;
 	else
 	{
-		command_not_found(cpy, cpy->abs_path);
+		stts(WRITE, 127);
+		cpy->cmd_kind = ERRORCMD;
+		write(2, "minishell: ", 11);
+		write(2, cpy->abs_path, ft_strlen(cpy->abs_path));
+		write(2, ": No such file or directory\n", 28);
 		free(cpy->abs_path);
 		cpy->abs_path = NULL;
 	}
@@ -75,7 +79,7 @@ int	check_abs_bin(t_cmd *cpy)
 // 	tmp = ft_split(str, ' ');
 // 	if (*tmp == NULL)
 // 		return ;
-// 	if (ft_strncmp(tmp[0], "/bin/ls", 8) == 0 || 
+// 	if (ft_strncmp(tmp[0], "/bin/ls", 8) == 0 ||
 //ft_strncmp(tmp[0], "/bin/cat", 9) \
 // 	== 0 || strncmp(tmp[0], "ls"
 //, 3) == 0 || strncmp(tmp[0], "cat", 4) == 0)
