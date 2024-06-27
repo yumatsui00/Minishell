@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:35 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 19:46:54 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:19:09 by kkomatsu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ int	execute_exit(t_cmd *mini)
 	int	i;
 
 	if (ft_strncmp(mini->input, "exit", 5) == 0)
+	{
+		write(2, "exit\n", 5);
 		exit(stts(READ, 0));
+	}
 	else if (ft_strncmp(mini->input, "exit ", 5) == 0)
 	{
 		if (argument_check(mini->input + 5) == ERROR)
