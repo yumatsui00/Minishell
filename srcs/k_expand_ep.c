@@ -3,49 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   k_expand_ep.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:16 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 15:02:13 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:42:44 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-
-example
-expand_ep_6_23("hello$HOME$HOME", ep)
--> hello/Users/iniad/Users/iniad
-
-expand_ep_6_23("hello$HOMEhello$HOME", ep)
--> hello/Users/iniad
-
-expand_ep_6_23("hello$HOME$", ep)
--> hello/Users/iniad$
-
-expand_ep_6_23("$HOME--$HOME", ep)
--> /Users/iniad--/Users/iniad
-
-expand_ep_6_23("$HOME--11$HOME--", ep)
--> /Users/iniad--11/Users/iniad--
-$HOME  --11  $HOME --
-つまり、-, +などは$と同じ扱い。展開しないだけ
-
-
-ft_getenv("$HOME")
--> /Users/iniad
-
-ft_getenv("++++hello)
--> ++++hello
-
-
-1. $が来るまで読み進める。
-2. '\0', '$'が来るまで$~を読み取る
-3. 読み取ったものを展開
-4. 展開したものをくっつける
-5. '\0'が来るまで2に戻る
-*/
 
 static int	expand_ep2(char *line, char **ep, t_expand *data)
 {
@@ -144,10 +109,3 @@ char	**expand_ep_main(char **line, char **ep)
 		return (NULL);
 	return (ret);
 }
-
-// int	main(int ac, char **av, char **ep)
-// {
-// 	printf("av1 = %s\n", av[1]);
-// 	printf("ans = %s\n", expand_ep_6_23(av[1], ep));
-// 	return (0);
-// }

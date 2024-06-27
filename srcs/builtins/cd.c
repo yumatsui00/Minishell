@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:35:47 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 17:41:19 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:47:39 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,23 +121,3 @@ int	check_cd(t_cmd *mini)
 	}
 	return (OK);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	t_cmd *mini;
-// 	int i;
-// 	mini = ft_listadd();
-// 	mini->status = BUILTIN;
-// 	mini->input = strdup("pwd");
-// 	mini->next = NULL;
-// 	write(1, "cuurent directory = ", 20);
-// 	execute_pwd(mini);
-// 	free(mini->input);
-// 	mini->input = strdup("cd -asdaf");
-// 	printf("-------execute [%s]--------\n", mini->input);
-// 	execute_cd(mini);
-// 	free(mini->input);
-// 	mini->input = strdup("pwd");
-// 	write(1, "current directory = ", 20);
-// 	execute_pwd(mini);
-// }

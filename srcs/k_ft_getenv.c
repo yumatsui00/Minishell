@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_ft_getenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:19:44 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 15:04:55 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:42:30 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,3 @@ char	*ft_getenv(char *name, char **ep)
 	}
 	return (NULL);
 }
-
-// int main(int ac, char **av, char **ep)
-// {
-//     printf("%s\n", ft_getenv(av[1], ep));
-//     return (0);
-// }

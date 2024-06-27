@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:14 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/07 20:39:26 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:47:12 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,3 @@ int	execute_unset(t_cmd *cmd, char **ep)
 	free_double_ptr(line_ptr);
 	return (OK);
 }
-
-// void    test(char *line, char **ep)
-// {
-//     if (!is_ok(line))
-//         return ;
-//     ep = envp_to_heap(ep);
-//     logic(line, ep);
-//     debug_double_ptr(ep);
-//     free_double_ptr(ep);
-//     return ;
-// }
-// int main(int ac, char **av, char **ep)
-// {
-//     test(av[1], ep);
-// }

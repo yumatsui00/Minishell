@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:09:01 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/23 21:30:43 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:43:09 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ static void	logic(char *line, char *new)
 	*new = '\0';
 }
 
-//  <,>,<<,>>,|,;の前後に空白を入れる
-// ", 'の中は入れない。。
 char	*cut_in_main(char *line)
 {
 	int		space_count;
@@ -114,9 +112,3 @@ char	*cut_in_main(char *line)
 	free(line);
 	return (new);
 }
-
-// int main(int ac, char **av)
-// {
-//     separate_main(av[1]);
-//     return (0);
-// }

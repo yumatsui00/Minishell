@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_lexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:35 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 21:26:24 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:42:20 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,3 @@ t_cmd	**lexer(char *before_line, char **ep)
 	ret = make_cmd_line(line);
 	return (ret);
 }
-
-// int	main(int ac, char **av, char **ep)
-// {
-// 	t_cmd	**ret;
-
-// 	ret = lexer(av[1], ep);
-// 	printf("完璧じゃ！！\n");
-// 	debug_cmd(ret);
-// 	// if (ret)
-// 	// {
-// 	// 	for (int i = 0; ret[i] != NULL; i++)
-// 	// 		printf("ret[%d]: %s\n", i, ret[i]);
-// 	// }
-// 	return (0);
-// }

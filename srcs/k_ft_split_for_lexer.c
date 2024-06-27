@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   k_ft_split_for_lexer.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkomatsu <kkomatsu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 15:51:56 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 21:23:53 by kkomatsu         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:42:26 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,22 +119,3 @@ char	**ft_split_for_lexer(char *line)
 	ret[data.index] = NULL;
 	return (ret);
 }
-
-// int main(int ac, char **av)
-// {
-//     char **ret = ft_split_for_lexer(av[1]);
-//     if (ret)
-//     {
-//         for (int i = 0; ret[i] != NULL; i++)
-//         {
-//             printf("ret[%d]: %s\n", i, ret[i]);
-//         }
-
-//         free_split(ret);
-//     }
-
-//     int word_count = count_word(av[1]);
-//     printf("Number of words: %d\n", word_count);
-
-//     return (0);
-// }

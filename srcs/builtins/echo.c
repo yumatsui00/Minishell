@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:18:44 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 20:25:28 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:47:31 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,3 @@ int	check_echo(t_cmd *mini)
 	}
 	return (OK);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	t_cmd *mini;
-// 	mini = ft_listadd();
-// 	mini->status = BUILTIN;
-// 	mini->input = strdup("echo");
-// 	mini->next = NULL;
-// 	execute_echo(mini);
-// }

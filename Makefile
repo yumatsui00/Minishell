@@ -6,7 +6,7 @@ SRCDIR = srcs
 OBJDIR = objs
 LIBFT = srcs/libft/libft.a
 
-SRCS = srcs/k_cut_in_space.c srcs/k_debug.c srcs/k_envp_to_heap.c srcs/k_expand_ep.c srcs/k_cut_or_read.c\
+SRCS = srcs/k_cut_in_space.c srcs/k_envp_to_heap.c srcs/k_expand_ep.c srcs/k_cut_or_read.c\
 		srcs/k_find_syntax_error.c srcs/k_free.c srcs/k_ft_getenv.c srcs/k_ft_split_for_lexer.c srcs/k_cut_or_read.c\
 		srcs/k_lexer.c srcs/k_rearranges.c srcs/k_make_cmd_line.c srcs/k_union_friends.c srcs/k_union_friends2.c srcs/main.c \
 		srcs/y_0_exec_main.c srcs/y_1_heredoc2red.c srcs/y_2_cmd_check.c srcs/y_2_cmd_check2.c \
@@ -16,7 +16,7 @@ SRCS = srcs/k_cut_in_space.c srcs/k_debug.c srcs/k_envp_to_heap.c srcs/k_expand_
 		srcs/builtins/exit.c srcs/builtins/exit2.c srcs/builtins/export.c srcs/builtins/export1.c \
 		srcs/builtins/ft_atoi.c srcs/builtins/pwd.c \
 		srcs/builtins/unset.c srcs/builtins/unset2.c \
-		srcs/utils/8_ft_split.c srcs/utils/8_utils.c srcs/utils/8_utils2.c
+		srcs/utils/8_utils.c srcs/utils/8_utils2.c
 OBJS = $(SRCS:$(SRCDIR)%.c=$(OBJDIR)/%.o)
 
 TARGET = minishell

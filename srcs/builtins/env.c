@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:36:06 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 17:44:53 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:47:35 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,3 @@ int	check_env(t_cmd *mini)
 	}
 	return (OK);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	execute_env(envp);
-// }

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 13:37:01 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/24 17:45:46 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:47:18 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,3 @@ int	check_pwd(t_cmd *mini)
 	}
 	return (OK);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	t_cmd *mini;
-// 	int i;
-
-// 	mini = ft_listadd();
-// 	mini->status = BUILTIN;
-// 	mini->input = strdup("pwd -aaaaaaaaaaaaaaaa");
-// 	mini->next = NULL;
-// 	execute_pwd(mini);
-// }
