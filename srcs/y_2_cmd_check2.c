@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:21 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/27 12:10:36 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:29:38 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	check_dir(t_cmd *mini)
 	write(2, "minishell: ", 11);
 	write(2, mini->input, ft_strlen_tillspace(mini->input));
 	write(2, ": is a directory\n", 17);
+	stts(WRITE, 126);
 	return (ERROR);
 }
 
