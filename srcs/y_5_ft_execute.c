@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/27 12:02:12 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:06:20 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	non_binary_exec(int fd, char **envp)
 void	bin_execute(t_cmd *mini, char **envp)
 {
 	int	fd;
+
 	mini->sec_args = ft_split(mini->input, ' ');
 	if (mini->sec_args == NULL)
 	{
