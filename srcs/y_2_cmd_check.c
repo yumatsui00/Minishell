@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 15:15:22 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/26 16:48:40 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 09:56:23 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ static int	check_bin(t_cmd *mini, char **envp)
 
 static int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
 {
-	if (ft_strncmp(cpy->input, "echo", 4) == 0)
+	if (!cpy->input[0])
+		command_not_found(cpy, cpy->input);
+	else if (ft_strncmp(cpy->input, "echo", 4) == 0)
 		flag = check_echo(cpy);
 	else if (ft_strncmp(cpy->input, "cd", 2) == 0)
 		flag = check_cd(cpy);
@@ -94,15 +96,12 @@ static int	check_bin_or_builtin(t_cmd *cpy, int flag, char **envp)
 		flag = check_exit(cpy);
 	else if (ft_strncmp(cpy->input, "env", 3) == 0)
 		flag = check_env(cpy);
-	else if (ft_strchr(cpy->input + 1, '/') && cpy->input[0] != '/')
+	else if (cpy->input[0] == '/')
+		flag = check_abs_bin(cpy);
+	else if (ft_strchr(cpy->input + 1, '/'))
 		flag = check_file(cpy, cpy->input);
 	else
-	{
-		if (cpy->input[0] != '/' && cpy->input[0] != '\0')
-			flag = check_bin(cpy, envp);
-		else
-			flag = check_abs_bin(cpy);
-	}
+		flag = check_bin(cpy, envp);
 	return (flag);
 }
 
