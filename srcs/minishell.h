@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:53:12 by kkomatsu          #+#    #+#             */
-/*   Updated: 2024/06/24 18:17:01 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:00:51 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int					g_ctlflag;
 // cmd_kind
 # define BUILTIN 10
 # define BIN 11
-# define FILE 12
 # define ELSE 13
 # define ERRORCMD -10
 
@@ -217,7 +216,6 @@ void				no_such_file_or_directory(t_cmd *mini, \
 void				command_not_found(t_cmd *mini, char *path);
 int					resource_unavailable(t_nums *nums);
 int					open_failed(char *filename);
-
 int					check_semiq(t_cmd **cmd);
 //! kkomatsu
 int					main(int ac, char **av, char **ep);

@@ -6,7 +6,7 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:06:19 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/26 16:28:53 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:56:14 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	no_such_file_or_directory(t_cmd *mini, char *abs, char *path)
 	free(abs);
 	mini->abs_path = NULL;
 	write(2, "minishell: ", 11);
-	write(2, path, ft_strlen(path));
+	write(2, path, ft_strlen_tillspace(path));
 	write(2, ": No such file or directory\n", 28);
 	stts(WRITE, 127);
 }

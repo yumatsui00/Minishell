@@ -6,11 +6,25 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:00:21 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/27 10:45:13 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:10:36 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check_dir(t_cmd *mini)
+{
+	struct stat	sb;
+
+	if (stat(mini->abs_path, &sb) == -1)
+		return (OK);
+	if (S_ISDIR(sb.st_mode) != 1)
+		return (OK);
+	write(2, "minishell: ", 11);
+	write(2, mini->input, ft_strlen_tillspace(mini->input));
+	write(2, ": is a directory\n", 17);
+	return (ERROR);
+}
 
 int	check_file(t_cmd *mini, char *path)
 {
@@ -21,8 +35,9 @@ int	check_file(t_cmd *mini, char *path)
 	abs = ft_strjoin_mini(pwd, path);
 	if (access(abs, F_OK) == 0)
 	{
-		mini->cmd_kind = FILE;
+		mini->cmd_kind = BIN;
 		mini->abs_path = abs;
+		check_dir(mini);
 	}
 	else
 		no_such_file_or_directory(mini, abs, path);
@@ -57,8 +72,10 @@ int	check_abs_bin(t_cmd *cpy)
 	cpy->abs_path = ft_strdup2(cpy->input);
 	if (cpy->abs_path == NULL)
 		return (MALLOCERROR);
-	if (access(cpy->abs_path, F_OK) == 0)
-		cpy->cmd_kind = FILE;
+	if (check_dir(cpy) == ERROR)
+		return (OK);
+	else if (access(cpy->abs_path, F_OK) == 0)
+		cpy->cmd_kind = BIN;
 	else
 	{
 		stts(WRITE, 127);

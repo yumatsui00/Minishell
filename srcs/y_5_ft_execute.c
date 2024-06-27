@@ -6,13 +6,11 @@
 /*   By: yumatsui <yumatsui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:03:13 by yumatsui          #+#    #+#             */
-/*   Updated: 2024/06/27 10:51:58 by yumatsui         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:02:12 by yumatsui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	non_binary_exec(int fd, char **envp);
 
 void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 {
@@ -35,34 +33,6 @@ void	builtin_execute(t_cmd *mini, t_nums *nums, char **envp)
 		flag = execute_env(nums, envp);
 	if (flag == MALLOCERROR || flag == ERROR)
 		stts(WRITE, 1);
-}
-
-void	bin_execute(t_cmd *mini, char **envp)
-{
-	int	fd;
-
-	mini->sec_args = ft_split(mini->input, ' ');
-	if (mini->sec_args == NULL)
-	{
-		stts(WRITE, 1);
-		exit(1);
-	}
-	if (access(mini->abs_path, X_OK) == 0)
-		execve(mini->abs_path, mini->sec_args, envp);
-	else
-	{
-		fd = open(mini->abs_path, O_RDONLY);
-		if (fd < 0)
-		{
-			open_failed(mini->sec_args[0]);
-			exit(stts(READ, 1));
-		}
-		non_binary_exec(fd, envp);
-		close(fd);
-		exit(stts(READ, 1) % 256);
-	}
-	perror("");
-	exit(1);
 }
 
 static void	non_binary_exec(int fd, char **envp)
@@ -88,13 +58,15 @@ static void	non_binary_exec(int fd, char **envp)
 	}
 }
 
-static void	file_execute(t_cmd *mini, char **envp)
+void	bin_execute(t_cmd *mini, char **envp)
 {
-	int		fd;
-
+	int	fd;
 	mini->sec_args = ft_split(mini->input, ' ');
 	if (mini->sec_args == NULL)
+	{
+		stts(WRITE, 1);
 		exit(1);
+	}
 	execve(mini->abs_path, mini->sec_args, envp);
 	fd = open(mini->abs_path, O_RDONLY);
 	if (fd < 0)
@@ -113,11 +85,7 @@ void	ft_execute(t_cmd *mini, t_nums *nums, char **envp)
 		builtin_execute(mini, nums, envp);
 	else if (mini->cmd_kind == BIN)
 		bin_execute(mini, envp);
-	else if (mini->cmd_kind == FILE)
-		file_execute(mini, envp);
 	else if (mini->cmd_kind == ERRORCMD)
 		exit(stts(READ, 1) % 256);
-	else
-		write(2, "ここには来ないはずなんだが\n", 28);
 	exit(stts(READ, 0) % 256);
 }
